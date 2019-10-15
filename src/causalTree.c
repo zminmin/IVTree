@@ -54,6 +54,9 @@
 #include "causalTreeproto.h"
 
 
+#include <time.h>
+
+
 SEXP
 causalTree(SEXP ncat2, SEXP split_Rule2, SEXP bucketnum2, SEXP bucketMax2, SEXP method2, 
            SEXP crossmeth2, SEXP crosshonest2, SEXP opt2,
@@ -61,6 +64,15 @@ causalTree(SEXP ncat2, SEXP split_Rule2, SEXP bucketnum2, SEXP bucketMax2, SEXP 
         SEXP ymat2, SEXP xmat2, SEXP wt2, SEXP treatment2, SEXP treatment12, SEXP IV2, SEXP ny2, SEXP cost2, 
         SEXP xvar2, SEXP split_alpha2, SEXP cv_alpha2, SEXP NumHonest2, SEXP gamma2)
 {
+
+
+    //=============================//
+    clock_t start_time, midpoint_time, end_time;
+    int ifShowTime = 0;
+
+    start_time = clock();
+
+
     //Rprintf("Entered causalTree.c.");    
     pNode tree;          /* top node of the tree */
     char *errmsg;
@@ -293,6 +305,10 @@ causalTree(SEXP ncat2, SEXP split_Rule2, SEXP bucketnum2, SEXP bucketMax2, SEXP 
     
     if (i > 0)
         error(errmsg);
+
+
+
+
    
 
     nodesize = sizeof(Node) + (ct.num_resp - 20) * sizeof(double);
@@ -354,7 +370,18 @@ causalTree(SEXP ncat2, SEXP split_Rule2, SEXP bucketnum2, SEXP bucketMax2, SEXP 
     }
     tree->complexity = tree->risk;
     ct.alpha = ct.complexity * tree->risk;
-           
+
+
+
+    midpoint_time = clock();
+    if(ifShowTime == 1){
+        Rprintf("Time check point one: %.3f \n", ((double) (midpoint_time - start_time)) / CLOCKS_PER_SEC);
+    }
+        
+
+
+
+
     /*
      * Do the basic tree
      */
@@ -469,6 +496,13 @@ causalTree(SEXP ncat2, SEXP split_Rule2, SEXP bucketnum2, SEXP bucketMax2, SEXP 
                 }
             k /= 2;
         } while (j >= nodecount);
+    }
+
+
+
+    end_time = clock();
+    if(ifShowTime == 1){    
+        Rprintf("Time check point two: %.3f \n", ((double) (end_time - start_time)) / CLOCKS_PER_SEC);
     }
 
     /* Create the output list */

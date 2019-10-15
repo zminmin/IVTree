@@ -141,27 +141,27 @@ IV_causalTree_mod=function(form,data_tr,data_es,data_te){
   }
   list(nodes=leaf,prediction=pd,tree=tree_prune,mincov=mincov,maxcov=maxcov, split_freq=split_freq)
 }
-SA_causalTree_mod=function(form, data_gen, n){
-  tree <- honest.causalTree(form, data=data_tr, treatment=data_tr$T,
-                            split.Rule='CT', split.Honest=T, cv.option='CT', cv.Honest=T, 
-                            minsize = 25, split.alpha = .5, cv.alpha = .5,
-                            est_data=data_es, est_treatment=data_es$T)
-  opcp <- tree$cptable[,1][which.min(tree$cptable[,4])]
-  tree_prune <- prune(tree, opcp)
+# SA_causalTree_mod=function(form, data_gen, n){
+#   tree <- honest.causalTree(form, data=data_tr, treatment=data_tr$T,
+#                             split.Rule='CT', split.Honest=T, cv.option='CT', cv.Honest=T, 
+#                             minsize = 25, split.alpha = .5, cv.alpha = .5,
+#                             est_data=data_es, est_treatment=data_es$T)
+#   opcp <- tree$cptable[,1][which.min(tree$cptable[,4])]
+#   tree_prune <- prune(tree, opcp)
   
-  leaf=sum(tree_prune$frame$var=='<leaf>')
-  pd=predict(tree_prune, newdata=data_te, type="vector")
-  mse=mean((pd - data_te$kappa)^2)
-  tree2 <- honest.causalTree(form, data=data_tr, treatment=data_tr$T,
-                             split.Rule='CT', split.Honest=T,cv.option='CT', cv.Honest=T,
-                             minsize = 25, split.alpha = .5, cv.alpha = .5,
-                             est_data=data_te, est_treatment=data_te$T)
-  opcp <- tree2$cptable[,1][which.min(tree2$cptable[,4])]
-  tree2_prune <- prune(tree2, opcp)
+#   leaf=sum(tree_prune$frame$var=='<leaf>')
+#   pd=predict(tree_prune, newdata=data_te, type="vector")
+#   mse=mean((pd - data_te$kappa)^2)
+#   tree2 <- honest.causalTree(form, data=data_tr, treatment=data_tr$T,
+#                              split.Rule='CT', split.Honest=T,cv.option='CT', cv.Honest=T,
+#                              minsize = 25, split.alpha = .5, cv.alpha = .5,
+#                              est_data=data_te, est_treatment=data_te$T)
+#   opcp <- tree2$cptable[,1][which.min(tree2$cptable[,4])]
+#   tree2_prune <- prune(tree2, opcp)
 
-  mse2=mean((predict(tree2_prune, newdata=data_te, type="vector") - pd)^2)
-  list(leaf,pd,mse,mse2)
-}
+#   mse2=mean((predict(tree2_prune, newdata=data_te, type="vector") - pd)^2)
+#   list(leaf,pd,mse,mse2)
+# }
 
 
 ##smlt_ivf.R
@@ -170,10 +170,14 @@ cp1=0.6
 omitted=T
 
 report.all=data.frame()
-for (s in 1:100){
+for (s in 1:10){
 for (cp2 in c(0.5)){
 for (k in c(5)){#
 for (n in c(1000, 2000, 3000, 4000, 5000)){#
+
+  start_time <- proc.time()
+
+
   set.seed(s) 
   print(paste("CONFIG", s, cp1, cp2, k, n, sep="-"))
   if(k==5){
@@ -198,6 +202,10 @@ for (n in c(1000, 2000, 3000, 4000, 5000)){#
   report=data.frame()
   prediction=data.frame()
   freq_table=matrix(0, 30, ncol(data_all)-6)
+
+  print('Running time before tree construct:')
+  print(proc.time() - start_time)
+
   for (i in 1:100){
     #print(paste(k,n,i, collapse = ','))
     train_ind <- sample(1:(n), size = n/2)
@@ -223,9 +231,15 @@ for (n in c(1000, 2000, 3000, 4000, 5000)){#
   report.all = rbind(report.all, colMeans(report))
   names(report.all)=c('no_leaf', 'mse', 'mincov', 'maxcov', 'cover_prob', 'mse')
   print(report.all)
+
+  print('Total running time for one case is:')
+  print(proc.time() - start_time)
 }
 }
 }
 }
+
 print(report.all)
 report.all
+
+# target beat time is about 20 seconds
