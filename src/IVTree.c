@@ -17,7 +17,7 @@
  *                  5 - CTH
  *                  6 - CTA
  *                  
- *      opt  =  vector of options.  Same order as causalTree.control, as a vector
+ *      opt  =  vector of options.  Same order as IVTree.control, as a vector
  *                   of doubles.
  *      minsize = minimum number of treated observations, control observations in a leaf
  *      p = propensity score
@@ -48,17 +48,17 @@
 #define MAINRP
 #include <math.h>
 #include<stdio.h>
-#include "causalTree.h"
+#include "IVTree.h"
 #include "node.h"
 #include "func_table.h"
-#include "causalTreeproto.h"
+#include "IVTreeproto.h"
 
 
 #include <time.h>
 
 
 SEXP
-causalTree(SEXP ncat2, SEXP split_Rule2, SEXP bucketnum2, SEXP bucketMax2, SEXP method2, 
+IVTree(SEXP ncat2, SEXP split_Rule2, SEXP bucketnum2, SEXP bucketMax2, SEXP method2, 
            SEXP crossmeth2, SEXP crosshonest2, SEXP opt2,
            SEXP minsize2, SEXP p2, SEXP xvals2, SEXP xgrp2,
         SEXP ymat2, SEXP xmat2, SEXP wt2, SEXP treatment2, SEXP treatment12, SEXP IV2, SEXP ny2, SEXP cost2, 
@@ -73,7 +73,7 @@ causalTree(SEXP ncat2, SEXP split_Rule2, SEXP bucketnum2, SEXP bucketMax2, SEXP 
     start_time = clock();
 
 
-    //Rprintf("Entered causalTree.c.");    
+    //Rprintf("Entered IVTree.c.");    
     pNode tree;          /* top node of the tree */
     char *errmsg;
     int i, j, k, n;

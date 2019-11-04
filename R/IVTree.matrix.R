@@ -1,4 +1,4 @@
-causalTree.matrix <- function(frame)
+IVTree.matrix <- function(frame)
 {
 
     if (!inherits(frame, "data.frame") ||
@@ -12,7 +12,7 @@ causalTree.matrix <- function(frame)
     X <- model.matrix(attr(frame, "terms"), frame)[, -1L, drop = FALSE]
 
     colnames(X) <- sub("^`(.*)`", "\\1", colnames(X))
-    class(X) <- c("causalTree.matrix", class(X)) 
+    class(X) <- c("IVTree.matrix", class(X)) 
     X
 }
 

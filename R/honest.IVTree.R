@@ -2,9 +2,9 @@
 #  The honest re-estimation function.
 #
 
-honest.causalTree <- function(formula, data, weights, treatment, treatment1, IV, subset, 
+honest.IVTree <- function(formula, data, weights, treatment, treatment1, IV, subset, 
 							  est_data, est_weights, est_treatment, est_treatment1, est_IV, est_subset,
-							  na.action = na.causalTree, split.Rule, split.Honest,
+							  na.action = na.IVTree, split.Rule, split.Honest,
 							  HonestSampleSize, split.Bucket, bucketNum = 10,
 							  bucketMax = 40, cv.option, cv.Honest, minsize = 2L, model = FALSE,
 							  x = FALSE, y = TRUE, propensity, control, split.alpha = 0.5, 
@@ -32,7 +32,7 @@ honest.causalTree <- function(formula, data, weights, treatment, treatment1, IV,
 	if (any(wt < 0)) stop("negative weights not allowed")
 	if (!length(wt)) wt <- rep(1, nrow(m))
 	offset <- model.offset(m)
-	X <- causalTree.matrix(m)
+	X <- IVTree.matrix(m)
 
 	nobs <- nrow(X)
 	nvar <- ncol(X)
@@ -71,7 +71,7 @@ honest.causalTree <- function(formula, data, weights, treatment, treatment1, IV,
 	if (any(est_wts < 0)) stop("negative weights not allowed")
 	if (!length(est_wts)) est_wts <- rep(1, nrow(m2))
 	est_offset <- model.offset(m2)
-	est_X <- causalTree.matrix(m2)
+	est_X <- IVTree.matrix(m2)
 	est_nobs <- nrow(est_X)
 	est_nvar <- ncol(est_X)
 	
@@ -262,9 +262,9 @@ honest.causalTree <- function(formula, data, weights, treatment, treatment1, IV,
 		stop("HonestSampleSize should be an integer.")
 	# -------------------------------- cv checking ends -------------------------------- #
 
-	init <- get(paste("causalTree", method, sep = "."), envir = environment())(Y, offset, wt) 
+	init <- get(paste("IVTree", method, sep = "."), envir = environment())(Y, offset, wt) 
 
-	ns <- asNamespace("causalTree")
+	ns <- asNamespace("IVTree")
 	if (!is.null(init$print)) environment(init$print) <- ns
 	if (!is.null(init$summary)) environment(init$summary) <- ns
 	if (!is.null(init$text)) environment(init$text) <- ns
@@ -287,7 +287,7 @@ honest.causalTree <- function(formula, data, weights, treatment, treatment1, IV,
 					 domain = NA)
 		}
 
-		controls <- causalTree.control(...)
+		controls <- IVTree.control(...)
 		if (!missing(control)) controls[names(control)] <- control
 
 		xval <- controls$xval
@@ -308,7 +308,7 @@ honest.causalTree <- function(formula, data, weights, treatment, treatment1, IV,
 		} else {
 			## Check to see if observations were removed due to missing
 			if (!is.null(attr(m, "na.action"))) {
-				## if na.causalTree was used, then na.action will be a vector
+				## if na.IVTree was used, then na.action will be a vector
 				temp <- as.integer(attr(m, "na.action"))
 				xval <- xval[-temp]
 				if (length(xval) == nobs) {
@@ -346,8 +346,8 @@ honest.causalTree <- function(formula, data, weights, treatment, treatment1, IV,
 	        storage.mode(treatment1) <- "double"
 		storage.mode(IV) <- "double"
 		minsize <- as.integer(minsize) # minimum number of obs for treated and control cases in one leaf node
-	        #print("Entered honest.causalTree.R. Before ctfit.")
-		ctfit <- .Call(C_causalTree,
+	        #print("Entered honest.IVTree.R. Before ctfit.")
+		ctfit <- .Call(C_IVTree,
 					   ncat = as.integer(cats * !isord),
 					   split_Rule = as.integer(split.Rule.int), # tot, ct, fit, tstats, totD, ctD, fitD, tstatsD
 					   bucketNum = as.integer(bucketNum), # if == 0, no discrete; else do discrete
@@ -374,7 +374,7 @@ honest.causalTree <- function(formula, data, weights, treatment, treatment1, IV,
 					   as.integer(HonestSampleSize),
 					   as.double(cv.gamma)
 					   )
-                # print("Entered honest.causalTree.R. After ct.fit.")
+                # print("Entered honest.IVTree.R. After ct.fit.")
 		nsplit <- nrow(ctfit$isplit) # total number of splits, primary and surrogate
 		## total number of categorical splits
 		ncat <- if (!is.null(ctfit$csplit)) nrow(ctfit$csplit) else 0L
@@ -480,7 +480,7 @@ honest.causalTree <- function(formula, data, weights, treatment, treatment1, IV,
 		if(ncol(ans$cptable) >= 4) {
 			ans$cptable[,4]  <- ans$cptable[,4] / ans$cptable[1, 4]
 		}
-		ans <- honest.est.causalTree(ans, est_X, est_wts, est_treatment, est_treatment1, est_IV, est_Y)
-		#estimate honest causaltree with train X and compare with est.causaltree after pruning
+		ans <- honest.est.IVTree(ans, est_X, est_wts, est_treatment, est_treatment1, est_IV, est_Y)
+		#estimate honest IVTree with train X and compare with est.IVTree after pruning
 		ans
 }

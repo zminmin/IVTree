@@ -1,5 +1,5 @@
 # requirement when missing values are included in sample.
-na.causalTree <- function(x)
+na.IVTree <- function(x)
 {
     Terms <- attr(x, "terms")
     if (!is.null(Terms)) yvar <- attr(Terms, "response") else yvar <- 0L
@@ -21,7 +21,7 @@ na.causalTree <- function(x)
 	temp <- seq(keep)[!keep]
 	names(temp) <- row.names(x)[!keep]
         ## the methods for this group are all the same as for na.omit
-	class(temp) <- c("na.causalTree", "omit")
+	class(temp) <- c("na.IVTree", "omit")
 	structure(x[keep , , drop = FALSE], na.action = temp)
     }
 }

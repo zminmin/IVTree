@@ -2,9 +2,9 @@
  * some tool functions for cross validation
  */
 #include <math.h>
-#include "causalTree.h"
+#include "IVTree.h"
 #include "node.h"
-#include "causalTreeproto.h"
+#include "IVTreeproto.h"
 
 
 #ifdef NAN

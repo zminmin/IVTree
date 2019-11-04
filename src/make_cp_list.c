@@ -14,7 +14,7 @@
  * be removed when its parent collapses. So this routine also adjusts each
  * C.P. to = minimum(my C.P., parent's C.P.).
  *
- *   This routine is called at the top level by causalTree, after causalTree has
+ *   This routine is called at the top level by IVTree, after IVTree has
  * initialized the first member of the linked cp-list, set its number of
  * splits to zero, and its risk to that for no splits at all.  This routine
  * allocates and links in the rest of the cp-list.  The make_cp_table
@@ -26,9 +26,9 @@
  *   When it comes time to cross-validate, we fill in xrisk and xstd
  */
 #include <math.h>
-#include "causalTree.h"
+#include "IVTree.h"
 #include "node.h"
-#include "causalTreeproto.h"
+#include "IVTreeproto.h"
 
 void
 make_cp_list(pNode me, double parent, CpTable cptable_head)

@@ -1,9 +1,9 @@
 /*
  * rundown function fot tot
  */
-#include "causalTree.h"
+#include "IVTree.h"
 #include "node.h"
-#include "causalTreeproto.h"
+#include "IVTreeproto.h"
 
 void
 totrundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp)

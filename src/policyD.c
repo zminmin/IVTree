@@ -2,8 +2,8 @@
  * The discrte version for user (set temporarily as CTD)
  */
 
-#include "causalTree.h"
-#include "causalTreeproto.h"
+#include "IVTree.h"
+#include "IVTreeproto.h"
 
 #ifndef min
 #define min(a,b) (((a) < (b)) ? (a) : (b))

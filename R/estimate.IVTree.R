@@ -1,4 +1,4 @@
-estimate.causalTree <- function(object, data, weights, treatment, na.action = na.causalTree)
+estimate.IVTree <- function(object, data, weights, treatment, na.action = na.IVTree)
 {
     if (!inherits(object, "rpart")) stop("Not a legitimate \"rpart\" object")
     # get the leaf of the object
@@ -22,12 +22,12 @@ estimate.causalTree <- function(object, data, weights, treatment, na.action = na
     treatment <- m$`(treatment)`
     n <- nrow(m)
     Y <- model.response(m)
-    X <- causalTree.matrix(m)
+    X <- IVTree.matrix(m)
     if (missing(weights))
         wts <- rep(1, nrow(m))
     else 
         wts <- model.weights(m)
     new_object <- data.table::copy(object)
-    ans <- honest.est.causalTree(new_object, X, wts, treatment, Y)
+    ans <- honest.est.IVTree(new_object, X, wts, treatment, Y)
     return(ans)
 }

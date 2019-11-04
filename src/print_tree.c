@@ -14,7 +14,7 @@
  */
 #include <stdio.h>
 #include "node.h"
-#include "causalTree.h"
+#include "IVTree.h"
 
 static void printme(pNode me, int id);
 static void print_tree2(pNode me, int id, int mydepth, int target);

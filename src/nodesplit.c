@@ -9,9 +9,9 @@
  *            to the right.  Beware-  for certain settings of the
  *            usesurrogate option, some obs go neither left nor right
  */
-#include "causalTree.h"
+#include "IVTree.h"
 #include "node.h"
-#include "causalTreeproto.h"
+#include "IVTreeproto.h"
 #include <stdio.h>
 
 void

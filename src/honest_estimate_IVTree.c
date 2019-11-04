@@ -1,13 +1,13 @@
 /* 
- * Do honest causalTree estimation with parameters
+ * Do honest IVTree estimation with parameters
  * 
  */
  
-#include "causalTree.h"
-#include "causalTreeproto.h"
+#include "IVTree.h"
+#include "IVTreeproto.h"
 
     static void
-honest_estimate_causalTree0(const int *dimx, int nnode, int nsplit, const int *dimc, 
+honest_estimate_IVTree0(const int *dimx, int nnode, int nsplit, const int *dimc, 
                             const int *nnum, const int *nodes2, const int *vnum,
                             const double *split2, const int *csplit2, const int *usesur,
                             int *n1, double *wt1, double *dev1, double *yval1, const double *xdata2, 
@@ -233,7 +233,7 @@ next:
 #include <Rinternals.h>
 
 SEXP
-honest_estimate_causalTree(SEXP dimx, SEXP nnode, 
+honest_estimate_IVTree(SEXP dimx, SEXP nnode, 
                            SEXP nsplit, SEXP dimc, SEXP nnum, 
                            SEXP nodes2, 
                            SEXP n1, SEXP wt1, SEXP dev1, SEXP yval1, 
@@ -245,7 +245,7 @@ honest_estimate_causalTree(SEXP dimx, SEXP nnode,
 {
     int n = asInteger(dimx);
     SEXP where = PROTECT(allocVector(INTSXP, n));
-    honest_estimate_causalTree0(INTEGER(dimx), asInteger(nnode), asInteger(nsplit),
+    honest_estimate_IVTree0(INTEGER(dimx), asInteger(nnode), asInteger(nsplit),
             INTEGER(dimc), INTEGER(nnum), INTEGER(nodes2),
             INTEGER(vnum), REAL(split2), INTEGER(csplit2),
             INTEGER(usesur), 

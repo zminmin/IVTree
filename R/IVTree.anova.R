@@ -1,4 +1,4 @@
-causalTree.anova <- function(y, offset, wt)
+IVTree.anova <- function(y, offset, wt)
 {
     if (!is.null(offset)) y <- y - offset
       list(y = y, numresp = 1L, numy = 1L,

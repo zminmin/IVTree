@@ -5,9 +5,9 @@
  *   returns 0 if the new element isn't good enough,
  *   the address of the new element otherwise
  */
-#include "causalTree.h"
+#include "IVTree.h"
 #include "node.h"
-#include "causalTreeproto.h"
+#include "IVTreeproto.h"
 
 pSplit
 insert_split(pSplit *listhead, int ncat, double improve, int max)

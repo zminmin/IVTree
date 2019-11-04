@@ -4,9 +4,9 @@
  *  Gather the counts for myself, add in those of my children, and
  *    pass the total back to my parent
  */
-#include "causalTree.h"
+#include "IVTree.h"
 #include "node.h"
-#include "causalTreeproto.h"
+#include "IVTreeproto.h"
 
 void
 ctcountup(pNode me, int *nnode, int *nsplit, int *ncat)

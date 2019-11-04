@@ -1,13 +1,13 @@
 /*
- * callback routines for "user" splitting functions in causalTree
+ * callback routines for "user" splitting functions in IVTree
  */
 #include <R.h>
 #include <Rinternals.h>
-/* don't include causalTree.h: it conflicts */
+/* don't include IVTree.h: it conflicts */
 
 #ifdef ENABLE_NLS
 #include <libintl.h>
-#define _(String) dgettext ("causalTree", String)
+#define _(String) dgettext ("IVTree", String)
 #else
 #define _(String) (String)
 #endif
@@ -67,7 +67,7 @@ init_ctcallback(SEXP rhox, SEXP ny, SEXP nr, SEXP expr1x, SEXP expr2x)
  *  their init routine, but here we need to grab it from outside.
  */
 void
-causalTree_callback0(int *nr)
+IVTree_callback0(int *nr)
 {
     *nr = rsave;
 }
@@ -76,7 +76,7 @@ causalTree_callback0(int *nr)
  * This is called by the evaluation function
  */
 void
-causalTree_callback1(int n, double *y[], double *wt, double *z)
+IVTree_callback1(int n, double *y[], double *wt, double *z)
 {
     int i, j, k;
     SEXP value;
@@ -110,11 +110,11 @@ causalTree_callback1(int n, double *y[], double *wt, double *z)
 }
 
 /*
- * This part is called by the causalTree "split" function.
+ * This part is called by the IVTree "split" function.
  * It is expected to return an n-1 length vector of "goodness of split"
  */
 void
-causalTree_callback2(int n, int ncat, double *y[], double *wt,
+IVTree_callback2(int n, int ncat, double *y[], double *wt,
 		double *x, double *good)
 {
     int i, j, k;
@@ -130,7 +130,7 @@ causalTree_callback2(int n, int ncat, double *y[], double *wt,
 	xdata[i] = x[i];
     }
     ndata[0] = (ncat > 0) ? -n : n;
-	/* the negative serves as a marker for causalTree.R */
+	/* the negative serves as a marker for IVTree.R */
 
     /* no need to protect as no memory allocation (or error) below */
     goodness = eval(expr1, rho);

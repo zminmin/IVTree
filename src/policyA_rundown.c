@@ -2,9 +2,9 @@
  * This rundown functions You may change it to make it compatibel with other splitting funcitons.
  *
  */
-#include "causalTree.h"
+#include "IVTree.h"
 #include "node.h"
-#include "causalTreeproto.h"
+#include "IVTreeproto.h"
 
 #ifdef NAN
 /* NAN is supported */

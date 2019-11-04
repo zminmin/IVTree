@@ -1,7 +1,7 @@
 #
 # Run down the built tree and get the final leaf ids for estimation sample
 #
-est.causalTree <- function(fit, x)
+est.IVTree <- function(fit, x)
 {
     frame <- fit$frame
     if (nrow(frame) == 1L)                # root only tree
@@ -14,7 +14,7 @@ est.causalTree <- function(fit, x)
     vnum <- match(rownames(fit$split), colnames(x))
     if (any(is.na(vnum)))
         stop("Tree has variables not found in new data")
-    temp <- .Call(C_estimate_causalTree,
+    temp <- .Call(C_estimate_IVTree,
                   as.integer(dim(x)),
                   as.integer(dim(frame)[1L]),
                   as.integer(dim(fit$splits)),

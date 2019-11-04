@@ -1,5 +1,5 @@
 ##presetting.T
-library(causalTree)
+library(IVTree)
 library(LaplacesDemon)
 library(dplyr)
 
@@ -108,7 +108,7 @@ data_build_4 <- function(n){
 }
 
 IV_causalTree_mod=function(form,data_tr,data_es,data_te){
-  tree <- honest.causalTree(form, data=data_tr, treatment=data_tr$T1, treatment1=data_tr$T, IV=data_tr$IV,
+  tree <- honest.IVTree(form, data=data_tr, treatment=data_tr$T1, treatment1=data_tr$T, IV=data_tr$IV,
                             split.Rule='CT', split.Honest=T, cv.option='CT', cv.Honest=T, 
                             minsize = 25, split.alpha = 0.5, cv.alpha = 0.5, split.Bucket = F, 
                             est_data=data_es, est_treatment=data_es$T1, est_treatment1=data_es$T, est_IV=data_es$IV)

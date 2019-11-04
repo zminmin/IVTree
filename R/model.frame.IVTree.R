@@ -1,5 +1,5 @@
-# get model frame of causalTree, same as rpart
-model.frame.causalTree <- function(formula, ...)
+# get model frame of IVTree, same as rpart
+model.frame.IVTree <- function(formula, ...)
 {
     m <- formula$model
     if (!is.null(m)) return(m)
@@ -8,11 +8,11 @@ model.frame.causalTree <- function(formula, ...)
         m <- eval(oc$newdata)
         if (is.null(attr(m, "terms"))) {
             object <- eval(oc$object)
-            m <- model.frame(object$terms, m, na.causalTree)
+            m <- model.frame(object$terms, m, na.IVTree)
         }
         return(m)
     }
-    while(!deparse(oc[[1L]]) %in%  c("causalTree", "causalTree::causalTree", "causalTree:::causalTree"))
+    while(!deparse(oc[[1L]]) %in%  c("IVTree", "IVTree::IVTree", "IVTree:::IVTree"))
         oc <- eval(oc[[2L]])$call
     oc$subset <- names(formula$where)
     oc$method <- formula$method

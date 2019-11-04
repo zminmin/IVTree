@@ -2,9 +2,9 @@
  * This rundown function for matching
  *
  */
-#include "causalTree.h"
+#include "IVTree.h"
 #include "node.h"
-#include "causalTreeproto.h"
+#include "IVTreeproto.h"
 
 void
 matching_rundown(pNode tree, int obs, int neighbor, double *cp, double *xpred, 

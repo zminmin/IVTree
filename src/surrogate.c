@@ -12,9 +12,9 @@
  * Uses:        The global vector tempvec (integer) as a temporary, assumed
  *                to be of length n.
  */
-#include "causalTree.h"
+#include "IVTree.h"
 #include "node.h"
-#include "causalTreeproto.h"
+#include "IVTreeproto.h"
 
 void
 surrogate(pNode me, int n1, int n2)

@@ -1,14 +1,14 @@
 ##
-## Compute the "branches" to be drawn for an causalTree object
+## Compute the "branches" to be drawn for an IVTree object
 ##
 ## most likely this could simply default to branch = 1
-causalTree.branch <- function(x, y, node, branch)
+IVTree.branch <- function(x, y, node, branch)
 {
     if (missing(branch)) {
         pn <- paste0("device", dev.cur())
-        if (!exists(pn, envir = causalTree_env, inherits = FALSE))
+        if (!exists(pn, envir = IVTree_env, inherits = FALSE))
             stop("no information available on parameters from previous call to plot()")
-        parms <- get(pn, envir = causalTree_env, inherits = FALSE)
+        parms <- get(pn, envir = IVTree_env, inherits = FALSE)
         branch <- parms$branch
     }
 

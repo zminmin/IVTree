@@ -4,9 +4,9 @@
  *  appropriate if it were the top of the tree.  Actually, the complexity
  *  should be min(me, any-node-above-me).  This routine fixes that.
  */
-#include "causalTree.h"
+#include "IVTree.h"
 #include "node.h"
-#include "causalTreeproto.h"
+#include "IVTreeproto.h"
 
 void
 fix_cp(pNode me, double parent_cp)

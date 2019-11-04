@@ -2,8 +2,8 @@
  * discrete verion of tot:
  */
 #include <math.h>
-#include "causalTree.h"
-#include "causalTreeproto.h"
+#include "IVTree.h"
+#include "IVTreeproto.h"
 
 #ifndef min
 #define min(a,b) (((a) < (b)) ? (a) : (b))

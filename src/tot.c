@@ -2,8 +2,8 @@
  * split.Rule = TOT
  */
 #include <math.h>
-#include "causalTree.h"
-#include "causalTreeproto.h"
+#include "IVTree.h"
+#include "IVTreeproto.h"
 
 /*
  * Warning: need to change to discrete version of TOT

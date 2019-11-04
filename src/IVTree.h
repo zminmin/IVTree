@@ -1,5 +1,5 @@
 /*
- * commom variables for the causalTree routine
+ * commom variables for the IVTree routine
  *
  * Start with things that depend on R.h
  */
@@ -9,7 +9,7 @@
 
 #ifdef ENABLE_NLS
 #include <libintl.h>
-#define _(String) dgettext ("causalTree", String)
+#define _(String) dgettext ("IVTree", String)
 #else
 #define _(String) (String)
 #endif

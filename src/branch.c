@@ -12,9 +12,9 @@
  *  without the mediation of the ct.sorts array.  For missing value
  *  information it thus has to look at X directly using a macro.
  */
-#include "causalTree.h"
+#include "IVTree.h"
 #include "node.h"
-#include "causalTreeproto.h"
+#include "IVTreeproto.h"
 
 pNode
 branch(pNode tree, int obs)

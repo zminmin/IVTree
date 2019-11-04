@@ -11,9 +11,9 @@
  *
  *  parent: complexity of the parent node
 */
-#include "causalTree.h"
+#include "IVTree.h"
 #include "node.h"
-#include "causalTreeproto.h"
+#include "IVTreeproto.h"
 
 CpTable
 make_cp_table(pNode me, double parent, int nsplit)

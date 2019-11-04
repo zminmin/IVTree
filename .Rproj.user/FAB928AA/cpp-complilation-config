@@ -1,14 +1,11 @@
 {
     "args" : [
-        "-IC:/Users/mxz180015/AppData/Local/Continuum/anaconda3/envs/rstudio/Library/share/rstudio/resources/libclang/builtin-headers/3.4",
-        "-IC:/Rtools/mingw_64/x86_64-w64-mingw32/include",
-        "-IC:/Rtools/mingw_64/x86_64-w64-mingw32/include/c++",
-        "-IC:/Rtools/mingw_64/x86_64-w64-mingw32/include/c++/x86_64-w64-mingw32",
-        "-IC:/Users/MXZ180~1/AppData/Local/CONTIN~1/ANACON~1/envs/rstudio/lib/R/include",
-        "-DNDEBUG",
-        "-IC:/Users/MXZ180~1/AppData/Local/CONTIN~1/ANACON~1/envs/rstudio/lib/R/../../Library/mingw-w64/include"
+        "-IC:/Program Files/RStudio/resources/libclang/builtin-headers/5.0.2",
+        "-IC:/Program Files/RStudio/resources/libclang/builtin-headers/libc++/5.0.2",
+        "-IC:/PROGRA~1/R/R-36~1.1/include",
+        "-DNDEBUG"
     ],
-    "hash" : "1570199234",
+    "hash" : "1572881570",
     "is_cpp" : false,
     "pch" : ""
 }

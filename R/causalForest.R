@@ -29,7 +29,7 @@ predict.causalForest <- function(forest, newdata, predict.all = FALSE, type="vec
 }
 
 causalForest <- function(formula, data, treatment,  
-                         na.action = na.causalTree, 
+                         na.action = na.IVTree, 
                          split.Rule="CT", split.Honest=T, split.Bucket=F, bucketNum = 5,
                          bucketMax = 100, cv.option="CT", cv.Honest=T, minsize = 2L, 
                          propensity, control, split.alpha = 0.5, cv.alpha = 0.5,
@@ -38,7 +38,7 @@ causalForest <- function(formula, data, treatment,
                          mtry = ceiling(ncol(data)/3), nodesize = 1, num.trees=nrow(data),
                          cost=F, weights=F,ncolx,ncov_sample) {
   
-  # do not implement subset option of causalTree, that is inherited from rpart but have not implemented it here yet
+  # do not implement subset option of IVTree, that is inherited from rpart but have not implemented it here yet
 
   num.obs <-nrow(data)
   causalForest.hon <- init.causalForest(formula=formula, data=data, treatment=treatment, weights=weights, cost=cost, num.trees=num.trees,ncov_sample=ncov_sample)
@@ -110,7 +110,7 @@ causalForest <- function(formula, data, treatment,
     
     #save rdata for debug here, if needed
     formula<-paste("y~",fsample,sep="")
-    tree.honest <- honest.causalTree(formula, data = dataTree, 
+    tree.honest <- honest.IVTree(formula, data = dataTree, 
                                      treatment = treatmentdf[train.idx,], 
                                      est_data=dataEstim, est_treatment=treatmentdf[reestimation.idx,],
                                      split.Rule="CT", split.Honest=T, split.Bucket=split.Bucket, 
@@ -131,7 +131,7 @@ causalForest <- function(formula, data, treatment,
 
 
 propensityForest <- function(formula, data, treatment,  
-                         na.action = na.causalTree, 
+                         na.action = na.IVTree, 
                          split.Rule="CT", split.Honest=T, split.Bucket=F, bucketNum = 5,
                          bucketMax = 100, cv.option="CT", cv.Honest=T, minsize = 2L, 
                          propensity=mean(treatment), control, split.alpha = 0.5, cv.alpha = 0.5,  
@@ -139,7 +139,7 @@ propensityForest <- function(formula, data, treatment,
                          sample.size.total = floor(nrow(data) / 10), sample.size.train.frac = 1,
                          mtry = ceiling(ncol(data)/3), nodesize = 1, num.trees=nrow(data),ncolx=ncolx,ncov_sample=ncov_sample) {
   
-  # do not implement subset option of causalTree, inherited from rpart
+  # do not implement subset option of IVTree, inherited from rpart
   # do not implement weights and costs yet
   
   if(sample.size.train.frac != 1) {
@@ -235,7 +235,7 @@ propensityForest <- function(formula, data, treatment,
     # switch the names back in the data frame so that when we estimate treatment effects, will have the right outcome variables
     names(dataTree)[names(dataTree)==outcomename] <- "treattreat"
     names(dataTree)[names(dataTree)=="temptemp"] <- outcomename
-    tree.treatment <- estimate.causalTree(object=tree.propensity,data=dataTree, treatment=dataTree$treattreat)
+    tree.treatment <- estimate.IVTree(object=tree.propensity,data=dataTree, treatment=dataTree$treattreat)
     
     causalForest.hon$trees[[tree.index]] <- tree.treatment
     causalForest.hon$inbag[full.idx, tree.index] <- 1

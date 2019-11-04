@@ -29,7 +29,7 @@ honest.rparttree <-
     if (!length(wt)) wt <- rep(1, nrow(m))
     offset <- model.offset(m)
     # X <- rpart.matrix(m)
-    X <- causalTree.matrix(m)
+    X <- IVTree.matrix(m)
     nobs <- nrow(X)
     nvar <- ncol(X)
 ###
@@ -52,7 +52,7 @@ honest.rparttree <-
     if (any(est_wts < 0)) stop("negative weights not allowed")
     if (!length(est_wts)) est_wts <- rep(1, nrow(m2))
     est_offset <- model.offset(m2)
-    est_X <- causalTree.matrix(m2)
+    est_X <- IVTree.matrix(m2)
     est_nobs <- nrow(est_X)
     est_nvar <- ncol(est_X)
     
@@ -106,16 +106,16 @@ honest.rparttree <-
         ##   lock in the rpart package otherwise, so that we can still do
         ##   standalone debugging.
 	init <- if (missing(parms))
-            get(paste("causalTree", method, sep = "."),
+            get(paste("IVTree", method, sep = "."),
 	              envir = environment())(Y, offset)
 	            # envir = environment())(Y, offset, , wt)
         else
-            get(paste("causalTree", method, sep = "."),
+            get(paste("IVTree", method, sep = "."),
                 envir = environment())(Y, offset, parms)
                 # envir = environment())(Y, offset, parms, wt)
 	            
         ## avoid saving environment on fitted objects
-        ns <- asNamespace("causalTree")
+        ns <- asNamespace("IVTree")
         if (!is.null(init$print)) environment(init$print) <- ns
         if (!is.null(init$summary)) environment(init$summary) <- ns
         if (!is.null(init$text)) environment(init$text) <- ns
@@ -142,7 +142,7 @@ honest.rparttree <-
                  domain = NA)
     }
 
-    controls <- causalTree.control(...)
+    controls <- IVTree.control(...)
     if (!missing(control)) controls[names(control)] <- control
 
     xval <- controls$xval

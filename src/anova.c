@@ -1,8 +1,8 @@
 /*
  * The anova funciton inherited from rpart package. 
  */
-#include "causalTree.h"
-#include "causalTreeproto.h"
+#include "IVTree.h"
+#include "IVTreeproto.h"
 
 static double *sums, *wtsums, *treatment_effect;
 static double *wts, *trs, *trsums;

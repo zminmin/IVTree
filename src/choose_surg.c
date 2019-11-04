@@ -8,8 +8,8 @@
  *  y is coded as  +1=left, -1=right, 0=missing
  *
 */
-#include "causalTree.h"
-#include "causalTreeproto.h"
+#include "IVTree.h"
+#include "IVTreeproto.h"
 
 void
 choose_surg(int n1, int n2, int *y, double *x, int *order,

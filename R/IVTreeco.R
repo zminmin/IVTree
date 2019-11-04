@@ -1,11 +1,11 @@
 ## Compute the x-y coordinates for a tree
-causalTreeco <- function(tree, parms)
+IVTreeco <- function(tree, parms)
 {
     if (missing(parms)) {
         pn <- paste0("device", dev.cur())
-        if (!exists(pn, envir = causalTree_env, inherits = FALSE))
+        if (!exists(pn, envir = IVTree_env, inherits = FALSE))
             stop("no information available on parameters from previous call to plot()")
-        parms <- get(pn, envir = causalTree_env, inherits = FALSE)
+        parms <- get(pn, envir = IVTree_env, inherits = FALSE)
     }
 
     frame <- tree$frame

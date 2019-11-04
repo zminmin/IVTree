@@ -1,9 +1,9 @@
 /*
  *  For S's usage, convert the linked list data into matrix form
  */
-#include "causalTree.h"
+#include "IVTree.h"
 #include "node.h"
-#include "causalTreeproto.h"
+#include "IVTreeproto.h"
 
 /* These four preserve from call to call */
 static int ncnt, scnt, ccnt;

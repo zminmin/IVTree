@@ -1,7 +1,7 @@
 #
 # honest re-estimation and change the frame of object using estimation sample
 #
-honest.est.causalTree <- function(fit, x, wt, treatment, treatment1, IV, y)
+honest.est.IVTree <- function(fit, x, wt, treatment, treatment1, IV, y)
 {
     frame <- fit$frame
     
@@ -12,7 +12,7 @@ honest.est.causalTree <- function(fit, x, wt, treatment, treatment1, IV, y)
     vnum <- match(rownames(fit$split), colnames(x))
     if (any(is.na(vnum)))
         stop("Tree has variables not found in new data")
-    temp <- .Call(C_honest_estimate_causalTree,
+    temp <- .Call(C_honest_estimate_IVTree,
                   as.integer(dim(x)),
                   as.integer(dim(frame)[1L]),
                   as.integer(dim(fit$splits)),

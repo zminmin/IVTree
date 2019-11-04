@@ -26,8 +26,8 @@
 //#include "rpart.h"
 //#include "rpartproto.h"
 
-#include "causalTree.h"
-#include "causalTreeproto.h"
+#include "IVTree.h"
+#include "IVTreeproto.h"
 
 static void
 honest_estimate_rparttree0(const int *dimx, int nnode, int nsplit, const int *dimc,
@@ -101,7 +101,7 @@ for (i = 0; i < 3; i++) {
 ///
     n = dimx[0];
     for (i = 0; i < 4; i++) {
-	nodes[i] = &(nodes2[nnode * i]); //tbd: change this to above from causaltree?
+	nodes[i] = &(nodes2[nnode * i]); //tbd: change this to above from IVTree?
 	split[i] = &(split2[nsplit * i]);
     }
     Rprintf("inside honest C code fn: 5\n");

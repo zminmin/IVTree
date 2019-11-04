@@ -9,8 +9,8 @@
  * Graycode_init2 is called once for each orderable variable,
  *   the second argument is a vector that will be used to rank the variables
  */
-#include "causalTree.h"
-#include "causalTreeproto.h"
+#include "IVTree.h"
+#include "IVTreeproto.h"
 static int *gray;
 static int maxc, gsave;
 
@@ -93,7 +93,7 @@ graycode(void)
 	 *  The initial subset has everyone in the right group.  Each
 	 *  subset varies from the prior by only one member -- the
 	 *  following item changes groups: 1,2,1,4,1,2,1,8,1,2,1,4,1,...
-	 *  The outer loop only goes up to maxc-1: we know for causalTree that
+	 *  The outer loop only goes up to maxc-1: we know for IVTree that
 	 *    changing the allegiance of the last subject is never necessary
 	 */
 	for (i = 0; i < maxc - 1; i++) {

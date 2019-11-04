@@ -1,5 +1,5 @@
 /*
- *  Do causalTree predictions given the matrix form of the tree.
+ *  Do IVTree predictions given the matrix form of the tree.
  *
  *  Input
  *      dimx        : # of rows and columns in the new data
@@ -23,11 +23,11 @@
  *  Output
  *      where       : the "final" row in nodes for each observation
  */
-#include "causalTree.h"
-#include "causalTreeproto.h"
+#include "IVTree.h"
+#include "IVTreeproto.h"
 
     static void
-pred_causalTree0(const int *dimx, int nnode, int nsplit, const int *dimc,
+pred_IVTree0(const int *dimx, int nnode, int nsplit, const int *dimc,
         const int *nnum, const int *nodes2, const int *vnum,
         const double *split2, const int *csplit2, const int *usesur,
         const double *xdata2, const int *xmiss2, int *where)
@@ -131,13 +131,13 @@ next:
 #include <Rinternals.h>
 
     SEXP
-pred_causalTree(SEXP dimx, SEXP nnode, SEXP nsplit, SEXP dimc,
+pred_IVTree(SEXP dimx, SEXP nnode, SEXP nsplit, SEXP dimc,
         SEXP nnum, SEXP nodes2, SEXP vnum, SEXP split2,
         SEXP csplit2, SEXP usesur, SEXP xdata2, SEXP xmiss2)
 {
     int n = asInteger(dimx);
     SEXP where = PROTECT(allocVector(INTSXP, n));
-    pred_causalTree0(INTEGER(dimx), asInteger(nnode), asInteger(nsplit),
+    pred_IVTree0(INTEGER(dimx), asInteger(nnode), asInteger(nsplit),
             INTEGER(dimc), INTEGER(nnum), INTEGER(nodes2),
             INTEGER(vnum), REAL(split2), INTEGER(csplit2),
             INTEGER(usesur), REAL(xdata2), INTEGER(xmiss2),

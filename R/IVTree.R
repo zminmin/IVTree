@@ -3,8 +3,8 @@
 #
 # 
 
-causalTree <- function(formula, data, weights, treatment, treatment1, IV, subset, 
-					   na.action = na.causalTree, 
+IVTree <- function(formula, data, weights, treatment, treatment1, IV, subset, 
+					   na.action = na.IVTree, 
 					   split.Rule, split.Honest, HonestSampleSize, split.Bucket, bucketNum = 5,
 					   bucketMax = 100, cv.option, cv.Honest, minsize = 2L, 
 					   x = FALSE, y = TRUE, propensity, control, split.alpha = 0.5, cv.alpha = 0.5,cv.gamma=0.5,split.gamma=0.5,
@@ -30,7 +30,7 @@ causalTree <- function(formula, data, weights, treatment, treatment1, IV, subset
 	if (any(wt < 0)) stop("negative weights not allowed")
 	if (!length(wt)) wt <- rep(1, nrow(m))
 	offset <- model.offset(m)
-	X <- causalTree.matrix(m)
+	X <- IVTree.matrix(m)
 	#save("X",file="test.Rdata")
 	nobs <- nrow(X)
 	nvar <- ncol(X)
@@ -224,9 +224,9 @@ causalTree <- function(formula, data, weights, treatment, treatment1, IV, subset
 		stop("HonestSampleSize should be an integer.")
 	# -------------------------------- cv checking ends -------------------------------- #
 
-	init <- get(paste("causalTree", method, sep = "."), envir = environment())(Y, offset, wt) 
+	init <- get(paste("IVTree", method, sep = "."), envir = environment())(Y, offset, wt) 
 
-	ns <- asNamespace("causalTree")
+	ns <- asNamespace("IVTree")
 	if (!is.null(init$print)) environment(init$print) <- ns
 	if (!is.null(init$summary)) environment(init$summary) <- ns
 	if (!is.null(init$text)) environment(init$text) <- ns
@@ -251,7 +251,7 @@ causalTree <- function(formula, data, weights, treatment, treatment1, IV, subset
 					 domain = NA)
 		}
 
-		controls <- causalTree.control(...)
+		controls <- IVTree.control(...)
 		if (!missing(control)) controls[names(control)] <- control
 
 		xval <- controls$xval
@@ -272,7 +272,7 @@ causalTree <- function(formula, data, weights, treatment, treatment1, IV, subset
 		} else {
 			## Check to see if observations were removed due to missing
 			if (!is.null(attr(m, "na.action"))) {
-				## if na.causalTree was used, then na.action will be a vector
+				## if na.IVTree was used, then na.action will be a vector
 				temp <- as.integer(attr(m, "na.action"))
 				xval <- xval[-temp]
 				if (length(xval) == nobs) {
@@ -312,8 +312,8 @@ causalTree <- function(formula, data, weights, treatment, treatment1, IV, subset
 		minsize <- as.integer(minsize) # minimum number of obs for treated and control cases in one leaf node
 ####
 		save(list = ls(all.names = TRUE),file="all.Rdata")
-	        print("Entered causalTree.R")
-		ctfit <- .Call(C_causalTree,
+	        print("Entered IVTree.R")
+		ctfit <- .Call(C_IVTree,
 					   ncat = as.integer(cats * !isord),
 					   split_Rule = as.integer(split.Rule.int), # tot, ct, fit, tstats, totD, ctD, fitD, tstatsD
 					   bucketNum = as.integer(bucketNum), # if == 0, no discrete; else do discrete
@@ -340,7 +340,7 @@ causalTree <- function(formula, data, weights, treatment, treatment1, IV, subset
 					   as.integer(HonestSampleSize),
 					   as.double(cv.gamma)			       		 
 					   )
-	        print("Entered causalTree.R. After C_causalTree")
+	        print("Entered IVTree.R. After C_IVTree")
 
 		nsplit <- nrow(ctfit$isplit) # total number of splits, primary and surrogate
 		## total number of categorical splits

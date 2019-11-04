@@ -3,8 +3,8 @@
  */
 #include<stdio.h>
 #include <math.h>
-#include "causalTree.h"
-#include "causalTreeproto.h"
+#include "IVTree.h"
+#include "IVTreeproto.h"
 
 double
 tot_xpred(double *y, double wt, double treatment, double *yhat, double propensity) 

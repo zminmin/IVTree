@@ -1,7 +1,7 @@
 ## This routine sets up the callback code for user-written split
-##  routines in causalTree
+##  routines in IVTree
 ##
-causalTreecallback <- function(mlist, nobs, init)
+IVTreecallback <- function(mlist, nobs, init)
 {
     if (length(mlist) < 3L)
         stop("User written methods must have 3 functions")
