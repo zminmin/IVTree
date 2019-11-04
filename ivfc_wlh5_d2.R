@@ -203,8 +203,8 @@ for (n in c(1000, 2000, 3000, 4000, 5000)){#
   prediction=data.frame()
   freq_table=matrix(0, 30, ncol(data_all)-6)
 
-  print('Running time before tree construct:')
-  print(proc.time() - start_time)
+  # print('Running time before tree construct:')
+  # print(proc.time() - start_time)
 
   for (i in 1:100){
     #print(paste(k,n,i, collapse = ','))
@@ -232,8 +232,8 @@ for (n in c(1000, 2000, 3000, 4000, 5000)){#
   names(report.all)=c('no_leaf', 'mse', 'mincov', 'maxcov', 'cover_prob', 'mse')
   print(report.all)
 
-  print('Total running time for one case is:')
-  print(proc.time() - start_time)
+  # print('Total running time for one case is:')
+  # print(proc.time() - start_time)
 }
 }
 }
