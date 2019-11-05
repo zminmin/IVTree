@@ -2,7 +2,7 @@
 
 <!-- The _causalTree_ function builds a regression model and returns an _rpart_ object, which is the object derived from _rpart_ package, implementing many ideas in the CART (Classification and Regression Trees), written by Breiman, Friedman, Olshen and Stone. Like _rpart_, _causalTree_ builds a binary regression tree model in two stages, but focuses on estimating heterogeneous causal effect. -->
 
-The _honest.IVTree_ function builds a honest instrumental variable model and returns an _rpart_ object. The function inherits many ideas in the CART (Classficiation and Regression Trees by Breiman, Friedman, Olshen and Stone) and the causalTree (causal tree by Athey and Imbens). By specifying the instrumental variable in the model, tree built by _IVTree_ corrects for potential endogeneity issues in observational data.
+The _honest.IVTree_ function builds a honest instrumental variable tree model and returns an _rpart_ object. The function inherits many ideas in the CART (Classficiation and Regression Trees by Breiman, Friedman, Olshen and Stone) and the causalTree (causal tree by Athey and Imbens). By specifying the instrumental variable in the model, tree built by _IVTree_ corrects for potential endogeneity issues in observational data.
 
 
 To install this package in R, run the following commands:

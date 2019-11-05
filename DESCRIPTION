@@ -10,6 +10,5 @@ Suggests: survival
 License: GPL-2 | GPL-3
 LazyData: yes
 ByteCompile: yes
-Packaged: 2015-02-24 10:32:13 UTC; ripley
 Author: Guihua Wang [aut, cre]
 NeedsCompilation: yes

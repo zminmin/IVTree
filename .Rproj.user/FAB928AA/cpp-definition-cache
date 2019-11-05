@@ -39,11 +39,7 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/CT.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -58,11 +54,7 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/CTA_rundown.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -104,11 +96,7 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/CTD.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -123,11 +111,7 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/CTH_rundown.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -136,27 +120,19 @@
                 "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/IVTree.c",
                 "kind" : 6,
                 "line" : 61,
-                "name" : "IVTree(SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP, SEXP)",
+                "name" : "IVTree(int, int, int, int, int, int, int, int, int, int, int, int, int, int, int, int, int, int, int, int, int, int, int, int, int)",
                 "parent_name" : "",
                 "usr" : "c:@F@IVTree"
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/IVTree.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/IVTree.h",
-<<<<<<< Updated upstream
-        "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
+        "file_last_write" : 1572890402.000000
     },
     {
         "definitions" : [
@@ -198,21 +174,13 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/IVTree_callback.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/IVTreeproto.h",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -245,11 +213,7 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/anova.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -279,11 +243,7 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/branch.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -298,11 +258,7 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/bsplit.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -317,11 +273,7 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/choose_surg.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -345,11 +297,7 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/estimate_IVTree.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -391,11 +339,7 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/fit.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -410,11 +354,7 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/fitA_rundown.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -456,11 +396,7 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/fitD.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -475,11 +411,7 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/fitH_rundown.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -494,11 +426,7 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/fix_cp.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -522,11 +450,7 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/free_tree.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -574,11 +498,7 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/graycode.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -602,11 +522,7 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/honest_estimate_IVTree.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886932.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -630,11 +546,7 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/honest_estimate_rparttree.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -649,11 +561,7 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/init.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -668,11 +576,7 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/insert_split.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -687,11 +591,7 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/make_cp_list.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -706,11 +606,7 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/make_cp_table.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -725,11 +621,7 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/matching_rundown.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -744,11 +636,7 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/mysort.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -763,11 +651,7 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/myxval.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -854,11 +738,7 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/node.h",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -873,11 +753,7 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/nodesplit.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -892,11 +768,7 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/partition.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -938,11 +810,7 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/policy.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -957,11 +825,7 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/policyA_rundown.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -1003,11 +867,7 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/policyD.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -1022,11 +882,7 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/policyH_rundown.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -1068,11 +924,7 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/policysplit.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -1096,11 +948,7 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/pred_IVTree.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886986.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -1133,11 +981,7 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/print_tree.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -1152,11 +996,7 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/rpcountup.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -1171,11 +1011,7 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/rpmatrix.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -1190,11 +1026,7 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/surrogate.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -1236,11 +1068,7 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/tot.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -1282,11 +1110,7 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/totD.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -1301,11 +1125,7 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/totrundown.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -1347,11 +1167,7 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/tstats.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -1393,11 +1209,7 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/tstatsD.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -1439,11 +1251,7 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/user.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -1458,11 +1266,7 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/userA_rundown.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -1504,11 +1308,7 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/userD.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -1523,11 +1323,7 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/userH_rundown.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -1569,11 +1365,7 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/usersplit.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -1669,11 +1461,7 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/xevals.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     },
     {
         "definitions" : [
@@ -1697,10 +1485,6 @@
             }
         ],
         "file" : "C:/Users/mxz180015/Documents/GitHub/IVTree/src/xvalHelper.c",
-<<<<<<< Updated upstream
         "file_last_write" : 1572886543.000000
-=======
-        "file_last_write" : 1572885636.000000
->>>>>>> Stashed changes
     }
 ]
