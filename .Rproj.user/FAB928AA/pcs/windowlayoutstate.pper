@@ -7,7 +7,11 @@
     },
     "right" : {
         "panelheight" : 902,
+<<<<<<< Updated upstream
         "splitterpos" : 369,
+=======
+        "splitterpos" : 280,
+>>>>>>> Stashed changes
         "topwindowstate" : "NORMAL",
         "windowheight" : 940
     }
