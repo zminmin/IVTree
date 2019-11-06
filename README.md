@@ -17,9 +17,11 @@ Example usage:
 
 ```R
 library(IVTree)
-tree <- honest.IVTree(y~ x1 + x2 + x3 + x4, data = simulation.1, treatment = simulation.1$treatment,
-                   split.Rule = "CT", cv.option = "CT", split.Honest = T, cv.Honest = T, split.Bucket = F, 
-                   xval = 5, cp = 0, minsize = 20, propensity = 0.5)
+tree <- honest.IVTree(y~ x1 + x2 + x3 + x4, data = data_tr, treatment = data_tr$T1,
+					treatment1 = $T, IV = data_tr$IV,
+                	split.Rule = "CT", cv.option = "CT", 
+                	split.Honest = T, cv.Honest = T, split.Bucket = F, 
+                	xval = 5, cp = 0, minsize = 20, propensity = 0.5)
                   
 opcp <- tree$cptable[,1][which.min(tree$cptable[,4])]
 
@@ -32,4 +34,4 @@ rpart.plot(opfit)
 For More details, please check out briefintro.pdf.
 
 #### References
-Susan Athey, Guido Imbens. <b>Recursive Partitioning for Heterogeneous Causal Effects.</b> [<a href="http://arxiv.org/abs/1504.01132">link</a>]
+Guihua Wang, Jun Li, Wallace J. Hopp <b>An Instrumental Variable Tree Approach for Detecting Heterogeneous Treatment Effects in Observational Studies.</b> [<a href="https://poseidon01.ssrn.com/delivery.php?ID=723089121105084082064005067083015023018031035064008038064102018004098091117000067094037026034111123061001010127099119014085106105082056047035121068113017124123069066040043085098007072027126103092105068089003088095011102077025105123083026069068065102004&EXT=pdf">link</a>]
