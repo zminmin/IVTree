@@ -4,11 +4,11 @@
 
 honest.IVTree <- function(formula, data, weights, treatment, treatment1, IV, subset, 
 							  est_data, est_weights, est_treatment, est_treatment1, est_IV, est_subset,
-							  na.action = na.IVTree, split.Rule, split.Honest,
+							  na.action = na.IVTree, split.Honest,
 							  HonestSampleSize, split.Bucket, bucketNum = 10,
 							  bucketMax = 40, cv.option, cv.Honest, minsize = 2L, model = FALSE,
 							  x = FALSE, y = TRUE, propensity, control, split.alpha = 0.5, 
-							  cv.alpha = 0.5,cv.gamma=0.5,split.gamma=0.5, cost, ...)  { 
+							  cv.alpha = 0.5, cv.gamma=0.5, split.gamma=0.5, cost, ...)  { 
 
 
 	Call <- match.call()
@@ -96,10 +96,11 @@ honest.IVTree <- function(formula, data, weights, treatment, treatment1, IV, sub
 	}
 
 	## check the Split.Rule:
-	if (missing(split.Rule)) {
-		split.Rule <- "CT"
-		warning("The default split rule is 'CT'.")
-	}
+	# if (missing(split.Rule)) {
+	# 	split.Rule <- "CT"
+	# 	warning("The default split rule is 'CT'.")
+	# }
+	split.Rule <- "CT"
 
 	# check split.Bucket:
 	if (missing(split.Bucket)) {
@@ -236,6 +237,7 @@ honest.IVTree <- function(formula, data, weights, treatment, treatment1, IV, sub
 			# cv.Honest = T
 			cv.option <- paste(cv.option, 'H', sep = '')
 		} else {
+			# cv.Honest = F
 			cv.option <- paste(cv.option, 'A', sep = '')
 		}
 	}
