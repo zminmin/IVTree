@@ -110,7 +110,7 @@ honest.IVTree <- function(formula, data, weights, treatment, treatment1, IV, sub
 	} 
 	split.Bucket.num <- pmatch(split.Bucket, c(T, F))
 	if (is.na(split.Bucket.num))
-		stop("Invalid split.Honest input, split.Honest can be only TRUE or FALSE.")
+		stop("Invalid split.Bucket input, split.Bucket can be only TRUE or FALSE.")
 
 	if (!split.Bucket) {
 		# split.Bucket = F
@@ -141,29 +141,34 @@ honest.IVTree <- function(formula, data, weights, treatment, treatment1, IV, sub
 	# split.Rule <- c("TOT", "CT", "fit", "tstats", "TOTD", "CTD", "fitD", "tstatsD", "user", "userD","policy","policyD")[split.Rule.int]
 
 
-	## check the Split.Honest, for convenience
-	if (split.Rule.int %in% c(1)) {
-	# if (split.Rule.int %in% c(1, 5)) {
-		if (!missing(split.Honest)) {
-			warning("split.Honest is not used in your chosen splitting rule.")
-		}
-		if (!missing(split.alpha)) {
-			warning("split.alpha is not used in your chosen splitting rule. split.Honest set to FALSE")
-		}
-		split.Honest <- FALSE
-	} else {
-		if (missing(split.Honest)) {
-			split.Honest <- TRUE
-			warning("The default split.Honest = TRUE for your chosen splitting rule.")
-		}
+	
+	if (missing(split.Honest)) {
+		split.Honest <- TRUE
+		warning("The default split.Honest = TRUE for your chosen splitting rule.")
 	}
+	## check the Split.Honest, for convenience
+	# if (split.Rule.int %in% c(1, 5)) {
+	# 	if (!missing(split.Honest)) {
+	# 		warning("split.Honest is not used in your chosen splitting rule.")
+	# 	}
+	# 	if (!missing(split.alpha)) {
+	# 		warning("split.alpha is not used in your chosen splitting rule. split.Honest set to FALSE")
+	# 	}
+	# 	split.Honest <- FALSE
+	# } else {
+	# 	if (missing(split.Honest)) {
+	# 		split.Honest <- TRUE
+	# 		warning("The default split.Honest = TRUE for your chosen splitting rule.")
+	# 	}
+	# }
+
 
 	## check the Split.Honest == T/F
 	split.Honest.num <- pmatch(split.Honest, c(T, F))
 	if(is.na(split.Honest.num)) 
 		stop("Invalid split.Honest input, split.Honest can be only TRUE or FALSE.")
 
-	if (split.Honest == TRUE && split.Rule.int %in% c(1, 2)) {
+	if (split.Honest) {
 	# if (split.Honest == TRUE && split.Rule.int %in% c(2, 3, 4, 6, 7, 8, 9, 10,11,12)) {
 		# ct, fit, tstats, ctd, fitd, tstatsd, user, userd,policy,policyD:
 		if(missing(split.alpha)) {
@@ -185,8 +190,9 @@ honest.IVTree <- function(formula, data, weights, treatment, treatment1, IV, sub
 	      stop("Invalid input for split.gamma. split.gamma should between 0 and 1.")
 	    }
 	  }
-	} else if (split.Rule.int %in% c(1, 2)){
-	# } else if (split.Rule.int %in% c(2, 3, 4, 6, 7, 8, 9, 10,11,12)){
+	} 
+	else {
+	#else if (split.Rule.int %in% c(2, 3, 4, 6, 7, 8, 9, 10,11,12)){
 		# split.Honest = False
 		if (split.alpha != 1) 
 			warning("For dishonest(adaptive) splitting, split.alpha =  1.");
