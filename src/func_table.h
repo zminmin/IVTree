@@ -213,18 +213,18 @@ static struct {
     void (*eval) ();
     double (*error) ();
 } split_func_table[] = {
-    {totinit, tot, totss, totpred},
+    // {totinit, tot, totss, totpred},
     {CTinit, CT, CTss, CTpred},
-    {fitinit, fit, fitss, fitpred},
-    {tstatsinit, tstats, tstatsss, tstatspred},
-    {totDinit, totD, totDss, totDpred},
+    // {fitinit, fit, fitss, fitpred},
+    // {tstatsinit, tstats, tstatsss, tstatspred},
+    // {totDinit, totD, totDss, totDpred},
     {CTDinit, CTD, CTDss, CTDpred},
-    {fitDinit, fitD, fitDss, fitDpred},
-    {tstatsDinit, tstatsD, tstatsDss, tstatsDpred},
-    {userinit, user, userss, userpred},
-    {userDinit, userD, userDss, userDpred},
-    {policyinit, policy, policyss, policypred},
-    {policyDinit, policyD, policyDss, policyDpred},
+    // {fitDinit, fitD, fitDss, fitDpred},
+    // {tstatsDinit, tstatsD, tstatsDss, tstatsDpred},
+    // {userinit, user, userss, userpred},
+    // {userDinit, userD, userDss, userDpred},
+    // {policyinit, policy, policyss, policypred},
+    // {policyDinit, policyD, policyDss, policyDpred},
 };
 
 static struct {

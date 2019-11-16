@@ -115,57 +115,72 @@ myxval(int n_xval, CpTable cptable_head, int *x_grp, int maxcat, char **errmsg,
         
         (*ct_init) (k, ct.ytemp, maxcat, errmsg, &temp, 2, ct.wtemp, ct.trtemp, 
          bucketnum, bucketMax, &xtrain_to_est_ratio);
-        
+
+
         if (split_Rule == 1) {
-            //tot:
-            (*ct_eval) (k, ct.ytemp, xtree->response_est, xtree->controlMean, xtree->treatMean,
-             &(xtree->risk), ct.wtemp, ct.trtemp, ct.max_y, ct.propensity);
-        } else if (split_Rule == 2) {
             // ct:
             (*ct_eval) (k, ct.ytemp, xtree->response_est, xtree->controlMean, xtree->treatMean,
-             &(xtree->risk), ct.wtemp, ct.trtemp, ct.tr1temp, ct.IVtemp, ct.max_y, split_alpha, xtrain_to_est_ratio);
-        } else if (split_Rule == 3) {
-            // fit
-            (*ct_eval) (k, ct.ytemp, xtree->response_est, xtree->controlMean, xtree->treatMean, 
-             &(xtree->risk), ct.wtemp, ct.trtemp, ct.max_y, split_alpha, xtrain_to_est_ratio);
-        } else if (split_Rule == 4) {
-            // tstats
-            (*ct_eval) (k, ct.ytemp, xtree->response_est, xtree->controlMean, xtree->treatMean, 
-             &(xtree->risk), ct.wtemp, ct.trtemp, ct.max_y, split_alpha, xtrain_to_est_ratio);
-        } else if (split_Rule == 5) {
-            // totD
-            (*ct_eval) (k, ct.ytemp, xtree->response_est, xtree->controlMean, xtree->treatMean, 
-             &(xtree->risk), ct.wtemp, ct.trtemp, ct.max_y, ct.propensity);
-        } else if (split_Rule == 6) {
+             &(xtree->risk), ct.wtemp, ct.trtemp, ct.tr1temp, ct.IVtemp, ct.max_y, split_alpha, xtrain_to_est_ratio);          
+        }
+        else if (split_Rule == 2) {
             // CTD
             (*ct_eval) (k, ct.ytemp, xtree->response_est, xtree->controlMean, xtree->treatMean,
-             &(xtree->risk), ct.wtemp, ct.trtemp, ct.tr1temp, ct.IVtemp, ct.max_y, split_alpha, xtrain_to_est_ratio);
-        } else if (split_Rule == 7) {
-            // fitD:
-            (*ct_eval) (k, ct.ytemp, xtree->response_est, xtree->controlMean, xtree->treatMean, 
-             &(xtree->risk), ct.wtemp, ct.trtemp, ct.max_y, split_alpha, xtrain_to_est_ratio);
-        } else if (split_Rule == 8) {
-            //tstatsD:
-            (*ct_eval) (k, ct.ytemp, xtree->response_est, xtree->controlMean, xtree->treatMean, 
-             &(xtree->risk), ct.wtemp, ct.trtemp, ct.max_y, split_alpha, bucketnum, bucketMax,
-             xtrain_to_est_ratio);
-        } else if (split_Rule == 9) {
-            // user (set temporarily as CT)
-            (*ct_eval) (k, ct.ytemp, xtree->response_est, xtree->controlMean, xtree->treatMean,
-             &(xtree->risk), ct.wtemp, ct.trtemp, ct.max_y, split_alpha, xtrain_to_est_ratio);
-        } else if (split_Rule == 10) {
-            // userD (set temporarily as CTD)
-            (*ct_eval) (k, ct.ytemp, xtree->response_est, xtree->controlMean, xtree->treatMean,
-             &(xtree->risk), ct.wtemp, ct.trtemp, ct.max_y, split_alpha, xtrain_to_est_ratio);
-        }else if (split_Rule == 11) {
-          // policy
-          (*ct_eval) (k, ct.ytemp, xtree->response_est, xtree->controlMean, xtree->treatMean,
-           &(xtree->risk), ct.wtemp, ct.trtemp, ct.max_y, split_alpha, xtrain_to_est_ratio);
-        }else if (split_Rule == 12) {
-          // policyD
-          (*ct_eval) (k, ct.ytemp, xtree->response_est, xtree->controlMean, xtree->treatMean,
-           &(xtree->risk), ct.wtemp, ct.trtemp, ct.max_y, split_alpha, xtrain_to_est_ratio);
+             &(xtree->risk), ct.wtemp, ct.trtemp, ct.tr1temp, ct.IVtemp, ct.max_y, split_alpha, xtrain_to_est_ratio);          
         }
+        else {
+            Rprintf("Invalide split_Rule in myxval.c file");
+        }
+        
+        // if (split_Rule == 1) {
+        //     //tot:
+        //     (*ct_eval) (k, ct.ytemp, xtree->response_est, xtree->controlMean, xtree->treatMean,
+        //      &(xtree->risk), ct.wtemp, ct.trtemp, ct.max_y, ct.propensity);
+        // } else if (split_Rule == 2) {
+        //     // ct:
+        //     (*ct_eval) (k, ct.ytemp, xtree->response_est, xtree->controlMean, xtree->treatMean,
+        //      &(xtree->risk), ct.wtemp, ct.trtemp, ct.tr1temp, ct.IVtemp, ct.max_y, split_alpha, xtrain_to_est_ratio);
+        // } else if (split_Rule == 3) {
+        //     // fit
+        //     (*ct_eval) (k, ct.ytemp, xtree->response_est, xtree->controlMean, xtree->treatMean, 
+        //      &(xtree->risk), ct.wtemp, ct.trtemp, ct.max_y, split_alpha, xtrain_to_est_ratio);
+        // } else if (split_Rule == 4) {
+        //     // tstats
+        //     (*ct_eval) (k, ct.ytemp, xtree->response_est, xtree->controlMean, xtree->treatMean, 
+        //      &(xtree->risk), ct.wtemp, ct.trtemp, ct.max_y, split_alpha, xtrain_to_est_ratio);
+        // } else if (split_Rule == 5) {
+        //     // totD
+        //     (*ct_eval) (k, ct.ytemp, xtree->response_est, xtree->controlMean, xtree->treatMean, 
+        //      &(xtree->risk), ct.wtemp, ct.trtemp, ct.max_y, ct.propensity);
+        // } else if (split_Rule == 6) {
+        //     // CTD
+        //     (*ct_eval) (k, ct.ytemp, xtree->response_est, xtree->controlMean, xtree->treatMean,
+        //      &(xtree->risk), ct.wtemp, ct.trtemp, ct.tr1temp, ct.IVtemp, ct.max_y, split_alpha, xtrain_to_est_ratio);
+        // } else if (split_Rule == 7) {
+        //     // fitD:
+        //     (*ct_eval) (k, ct.ytemp, xtree->response_est, xtree->controlMean, xtree->treatMean, 
+        //      &(xtree->risk), ct.wtemp, ct.trtemp, ct.max_y, split_alpha, xtrain_to_est_ratio);
+        // } else if (split_Rule == 8) {
+        //     //tstatsD:
+        //     (*ct_eval) (k, ct.ytemp, xtree->response_est, xtree->controlMean, xtree->treatMean, 
+        //      &(xtree->risk), ct.wtemp, ct.trtemp, ct.max_y, split_alpha, bucketnum, bucketMax,
+        //      xtrain_to_est_ratio);
+        // } else if (split_Rule == 9) {
+        //     // user (set temporarily as CT)
+        //     (*ct_eval) (k, ct.ytemp, xtree->response_est, xtree->controlMean, xtree->treatMean,
+        //      &(xtree->risk), ct.wtemp, ct.trtemp, ct.max_y, split_alpha, xtrain_to_est_ratio);
+        // } else if (split_Rule == 10) {
+        //     // userD (set temporarily as CTD)
+        //     (*ct_eval) (k, ct.ytemp, xtree->response_est, xtree->controlMean, xtree->treatMean,
+        //      &(xtree->risk), ct.wtemp, ct.trtemp, ct.max_y, split_alpha, xtrain_to_est_ratio);
+        // }else if (split_Rule == 11) {
+        //   // policy
+        //   (*ct_eval) (k, ct.ytemp, xtree->response_est, xtree->controlMean, xtree->treatMean,
+        //    &(xtree->risk), ct.wtemp, ct.trtemp, ct.max_y, split_alpha, xtrain_to_est_ratio);
+        // }else if (split_Rule == 12) {
+        //   // policyD
+        //   (*ct_eval) (k, ct.ytemp, xtree->response_est, xtree->controlMean, xtree->treatMean,
+        //    &(xtree->risk), ct.wtemp, ct.trtemp, ct.max_y, split_alpha, xtrain_to_est_ratio);
+        // }
         
         xtree->complexity = xtree->risk;
 

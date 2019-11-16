@@ -97,8 +97,8 @@ honest.IVTree <- function(formula, data, weights, treatment, treatment1, IV, sub
 
 	## check the Split.Rule:
 	if (missing(split.Rule)) {
-		split.Rule <- "TOT"
-		warning("The default split rule is 'TOT'.")
+		split.Rule <- "CT"
+		warning("The default split rule is 'CT'.")
 	}
 
 	# check split.Bucket:
@@ -130,13 +130,19 @@ honest.IVTree <- function(formula, data, weights, treatment, treatment1, IV, sub
 		split.Rule <- paste(split.Rule, 'D', sep = '') 
 	}
 
-	split.Rule.int <- pmatch(split.Rule, c("TOT", "CT", "fit", "tstats", "TOTD", "CTD", "fitD", "tstatsD", "user", "userD","policy","policyD"))
+
+	split.Rule.int <- pmatch(split.Rule, c("CT", "CTD"))
 	if (is.na(split.Rule.int)) stop("Invalid splitting rule.")
-	split.Rule <- c("TOT", "CT", "fit", "tstats", "TOTD", "CTD", "fitD", "tstatsD", "user", "userD","policy","policyD")[split.Rule.int]
-   # print(split.Rule.int)
-   # print(split.Rule)
+	split.Rule <- c("CT", "CTD")[split.Rule.int]
+
+	# split.Rule.int <- pmatch(split.Rule, c("TOT", "CT", "fit", "tstats", "TOTD", "CTD", "fitD", "tstatsD", "user", "userD","policy","policyD"))
+	# if (is.na(split.Rule.int)) stop("Invalid splitting rule.")
+	# split.Rule <- c("TOT", "CT", "fit", "tstats", "TOTD", "CTD", "fitD", "tstatsD", "user", "userD","policy","policyD")[split.Rule.int]
+
+
 	## check the Split.Honest, for convenience
-	if (split.Rule.int %in% c(1, 5)) {
+	if (split.Rule.int %in% c(1)) {
+	# if (split.Rule.int %in% c(1, 5)) {
 		if (!missing(split.Honest)) {
 			warning("split.Honest is not used in your chosen splitting rule.")
 		}
@@ -156,7 +162,8 @@ honest.IVTree <- function(formula, data, weights, treatment, treatment1, IV, sub
 	if(is.na(split.Honest.num)) 
 		stop("Invalid split.Honest input, split.Honest can be only TRUE or FALSE.")
 
-	if (split.Honest == TRUE && split.Rule.int %in% c(2, 3, 4, 6, 7, 8, 9, 10,11,12)) {
+	if (split.Honest == TRUE && split.Rule.int %in% c(1, 2)) {
+	# if (split.Honest == TRUE && split.Rule.int %in% c(2, 3, 4, 6, 7, 8, 9, 10,11,12)) {
 		# ct, fit, tstats, ctd, fitd, tstatsd, user, userd,policy,policyD:
 		if(missing(split.alpha)) {
 			# set default honest splitting alpha to 0.5
@@ -177,7 +184,8 @@ honest.IVTree <- function(formula, data, weights, treatment, treatment1, IV, sub
 	      stop("Invalid input for split.gamma. split.gamma should between 0 and 1.")
 	    }
 	  }
-	} else if (split.Rule.int %in% c(2, 3, 4, 6, 7, 8, 9, 10,11,12)){
+	} else if (split.Rule.int %in% c(1, 2)){
+	# } else if (split.Rule.int %in% c(2, 3, 4, 6, 7, 8, 9, 10,11,12)){
 		# split.Honest = False
 		if (split.alpha != 1) 
 			warning("For dishonest(adaptive) splitting, split.alpha =  1.");
@@ -196,12 +204,13 @@ honest.IVTree <- function(formula, data, weights, treatment, treatment1, IV, sub
 	}
 
 
+	# no need to check since this is not for CT and CTD
 	# check propensity score:
-	if (split.Rule %in% c("TOT", "TOTD", "fit", "fitD")) {
-		if (propensity > 1 || propensity < 0) {
-			stop("Propensity score should be between 0 and 1.")
-		}
-	}
+		# if (split.Rule %in% c("TOT", "TOTD", "fit", "fitD")) {
+		# 	if (propensity > 1 || propensity < 0) {
+		# 		stop("Propensity score should be between 0 and 1.")
+		# 	}
+		# }
 
 	xvar <- apply(X, 2, var)
 	method <- "anova"
@@ -343,13 +352,14 @@ honest.IVTree <- function(formula, data, weights, treatment, treatment1, IV, sub
 		storage.mode(X) <- "double"
 		storage.mode(wt) <- "double"
 		storage.mode(treatment) <- "double"
-	        storage.mode(treatment1) <- "double"
+	    	storage.mode(treatment1) <- "double"
 		storage.mode(IV) <- "double"
 		minsize <- as.integer(minsize) # minimum number of obs for treated and control cases in one leaf node
 	        #print("Entered honest.IVTree.R. Before ctfit.")
 		ctfit <- .Call(C_IVTree,
 					   ncat = as.integer(cats * !isord),
-					   split_Rule = as.integer(split.Rule.int), # tot, ct, fit, tstats, totD, ctD, fitD, tstatsD
+					   # split_Rule = as.integer(split.Rule.int), # tot, ct, fit, tstats, totD, ctD, fitD, tstatsD
+					   split_Rule = as.integer(split.Rule.int), # ct, ctD
 					   bucketNum = as.integer(bucketNum), # if == 0, no discrete; else do discrete
 					   bucketMax = as.integer(bucketMax),
 					   method = as.integer(method.int),  # "anova" not changed yet
@@ -364,8 +374,8 @@ honest.IVTree <- function(formula, data, weights, treatment, treatment1, IV, sub
 					   X, # X features for model data
 					   wt, # for model data
 					   treatment, # for model data
-			                   treatment1,
-			       		   IV,
+			                	treatment1,
+			       		    	IV,
 					   as.integer(init$numy),
 					   as.double(cost),
 					   as.double(xvar), # for model daa

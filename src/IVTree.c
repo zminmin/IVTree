@@ -3,10 +3,15 @@
  *
  * Input variables:
  *      ncat    = # categories for each var, 0 for continuous variables.
+ *      
  *      split_Rule = 1 - TOT
  *                   2 - CT
  *                   3 - fit
  *                   4 - tstats
+        
+        ** new case **
+        split_Rule = 1 - CT
+
  *      Numbuckets = 0 - no discrete
  *                   o.w. - discrete
  *      
@@ -59,8 +64,8 @@
 
 SEXP
 IVTree(SEXP ncat2, SEXP split_Rule2, SEXP bucketnum2, SEXP bucketMax2, SEXP method2, 
-           SEXP crossmeth2, SEXP crosshonest2, SEXP opt2,
-           SEXP minsize2, SEXP p2, SEXP xvals2, SEXP xgrp2,
+        SEXP crossmeth2, SEXP crosshonest2, SEXP opt2,
+        SEXP minsize2, SEXP p2, SEXP xvals2, SEXP xgrp2,
         SEXP ymat2, SEXP xmat2, SEXP wt2, SEXP treatment2, SEXP treatment12, SEXP IV2, SEXP ny2, SEXP cost2, 
         SEXP xvar2, SEXP split_alpha2, SEXP cv_alpha2, SEXP NumHonest2, SEXP gamma2)
 {
@@ -142,13 +147,9 @@ IVTree(SEXP ncat2, SEXP split_Rule2, SEXP bucketnum2, SEXP bucketMax2, SEXP meth
     NumHonest = asInteger(NumHonest2);
 
     int split_id, cv_id;
-    char getchar1;
     
-    R_FlushConsole();
-    //R_Process();
-    //Rprintf("test print\n");
-    //printf("test print2\n");
-    //getchar1=getchar();
+    // R_FlushConsole();
+
     /*
      * initialize the splitting functions from the function table
      */
@@ -319,55 +320,73 @@ IVTree(SEXP ncat2, SEXP split_Rule2, SEXP bucketnum2, SEXP bucketMax2, SEXP meth
     tree->sum_tr = temp2;
     tree->parent = NULL;
 
+
     if (split_Rule == 1) {
-        //tot:
-        (*ct_eval) (n, ct.ydata, tree->response_est, tree->controlMean, tree->treatMean, 
-         &(tree->risk), wt, treatment, ct.max_y, ct.propensity);
-    } else if (split_Rule == 2) {
         // ct:
         (*ct_eval) (n, ct.ydata, tree->response_est, tree->controlMean, tree->treatMean, 
          &(tree->risk), wt, treatment, treatment1, IV, ct.max_y, split_alpha, train_to_est_ratio);
-    } else if (split_Rule == 3) {
-        //fit
-        (*ct_eval) (n, ct.ydata, tree->response_est, tree->controlMean, tree->treatMean, 
-         &(tree->risk), wt, treatment, ct.max_y, split_alpha, train_to_est_ratio);
-    } else if (split_Rule == 4) {
-        // tstats
-        (*ct_eval) (n, ct.ydata, tree->response_est, tree->controlMean, tree->treatMean,
-         &(tree->risk), wt, treatment, ct.max_y, split_alpha, train_to_est_ratio);
-    } else if (split_Rule == 5) {
-        // totD
-        (*ct_eval) (n, ct.ydata, tree->response_est, tree->controlMean, tree->treatMean,
-         &(tree->risk), wt, treatment, ct.max_y, ct.propensity);
-    } else if (split_Rule == 6) {
+    }
+    else if (split_Rule == 2) {
         //CTD
         (*ct_eval) (n, ct.ydata, tree->response_est, tree->controlMean, tree->treatMean, 
          &(tree->risk), wt, treatment, treatment1, IV, ct.max_y, split_alpha, train_to_est_ratio);
-    } else if (split_Rule == 7) {
-        // fitD
-        (*ct_eval) (n, ct.ydata, tree->response_est, tree->controlMean, tree->treatMean, 
-         &(tree->risk), wt, treatment, ct.max_y, split_alpha, train_to_est_ratio);
-    } else if (split_Rule == 8) {
-        //tstatsD:
-        (*ct_eval) (n, ct.ydata, tree->response_est, tree->controlMean, tree->treatMean, 
-         &(tree->risk), wt, treatment, ct.max_y, split_alpha, train_to_est_ratio);
-    } else if (split_Rule == 9) {
-        // user (temporarily set as CT)
-        (*ct_eval) (n, ct.ydata, tree->response_est, tree->controlMean, tree->treatMean, 
-         &(tree->risk), wt, treatment, ct.max_y, split_alpha, train_to_est_ratio);
-    } else if (split_Rule == 10) {
-        // userD (temporarily set as CTD)
-        (*ct_eval) (n, ct.ydata, tree->response_est, tree->controlMean, tree->treatMean, 
-         &(tree->risk), wt, treatment, ct.max_y, split_alpha, train_to_est_ratio);
-    }else if (split_Rule == 11) {
-      // policy
-      (*ct_eval) (n, ct.ydata, tree->response_est, tree->controlMean, tree->treatMean, 
-       &(tree->risk), wt, treatment, ct.max_y, split_alpha, train_to_est_ratio);
-    } else if (split_Rule == 12) {
-      // policyD
-      (*ct_eval) (n, ct.ydata, tree->response_est, tree->controlMean, tree->treatMean, 
-       &(tree->risk), wt, treatment, ct.max_y, split_alpha, train_to_est_ratio);
     }
+    else{
+        Rprintf("Invalide split_Rule in IVTree.c file");
+    }
+
+    // if (split_Rule == 1) {
+    //     //tot:
+    //     (*ct_eval) (n, ct.ydata, tree->response_est, tree->controlMean, tree->treatMean, 
+    //      &(tree->risk), wt, treatment, ct.max_y, ct.propensity);
+    // } else if (split_Rule == 2) {
+    //     // ct:
+    //     (*ct_eval) (n, ct.ydata, tree->response_est, tree->controlMean, tree->treatMean, 
+    //      &(tree->risk), wt, treatment, treatment1, IV, ct.max_y, split_alpha, train_to_est_ratio);
+    // } else if (split_Rule == 3) {
+    //     //fit
+    //     (*ct_eval) (n, ct.ydata, tree->response_est, tree->controlMean, tree->treatMean, 
+    //      &(tree->risk), wt, treatment, ct.max_y, split_alpha, train_to_est_ratio);
+    // } else if (split_Rule == 4) {
+    //     // tstats
+    //     (*ct_eval) (n, ct.ydata, tree->response_est, tree->controlMean, tree->treatMean,
+    //      &(tree->risk), wt, treatment, ct.max_y, split_alpha, train_to_est_ratio);
+    // } else if (split_Rule == 5) {
+    //     // totD
+    //     (*ct_eval) (n, ct.ydata, tree->response_est, tree->controlMean, tree->treatMean,
+    //      &(tree->risk), wt, treatment, ct.max_y, ct.propensity);
+    // } else if (split_Rule == 6) {
+    //     //CTD
+    //     (*ct_eval) (n, ct.ydata, tree->response_est, tree->controlMean, tree->treatMean, 
+    //      &(tree->risk), wt, treatment, treatment1, IV, ct.max_y, split_alpha, train_to_est_ratio);
+    // } else if (split_Rule == 7) {
+    //     // fitD
+    //     (*ct_eval) (n, ct.ydata, tree->response_est, tree->controlMean, tree->treatMean, 
+    //      &(tree->risk), wt, treatment, ct.max_y, split_alpha, train_to_est_ratio);
+    // } else if (split_Rule == 8) {
+    //     //tstatsD:
+    //     (*ct_eval) (n, ct.ydata, tree->response_est, tree->controlMean, tree->treatMean, 
+    //      &(tree->risk), wt, treatment, ct.max_y, split_alpha, train_to_est_ratio);
+    // } else if (split_Rule == 9) {
+    //     // user (temporarily set as CT)
+    //     (*ct_eval) (n, ct.ydata, tree->response_est, tree->controlMean, tree->treatMean, 
+    //      &(tree->risk), wt, treatment, ct.max_y, split_alpha, train_to_est_ratio);
+    // } else if (split_Rule == 10) {
+    //     // userD (temporarily set as CTD)
+    //     (*ct_eval) (n, ct.ydata, tree->response_est, tree->controlMean, tree->treatMean, 
+    //      &(tree->risk), wt, treatment, ct.max_y, split_alpha, train_to_est_ratio);
+    // }else if (split_Rule == 11) {
+    //   // policy
+    //   (*ct_eval) (n, ct.ydata, tree->response_est, tree->controlMean, tree->treatMean, 
+    //    &(tree->risk), wt, treatment, ct.max_y, split_alpha, train_to_est_ratio);
+    // } else if (split_Rule == 12) {
+    //   // policyD
+    //   (*ct_eval) (n, ct.ydata, tree->response_est, tree->controlMean, tree->treatMean, 
+    //    &(tree->risk), wt, treatment, ct.max_y, split_alpha, train_to_est_ratio);
+    // }
+
+
+
     tree->complexity = tree->risk;
     ct.alpha = ct.complexity * tree->risk;
 
