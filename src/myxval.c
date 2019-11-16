@@ -197,40 +197,56 @@ myxval(int n_xval, CpTable cptable_head, int *x_grp, int maxcat, char **errmsg,
       
         for(i = k; i < ct.n; i++) {
             j = ct.sorts[0][i];
+
+
+
             if (crossmeth == 1) {
-                // tot
-                totrundown(xtree, j, cp, xpred, xtemp);
-            } else if (crossmeth == 2) {
-                // matching
-                neighbor = findNeighbor(j, k);
-                matching_rundown(xtree, j, neighbor, cp, xpred, xpred2, xtemp);
-            } else if (crossmeth == 3) {
-                //fit-honest: alpha need to change to cv.alpha, discriminate with split.alpha
-                fitH_rundown(xtree, j, cp, xpred, xtemp, k, cv_alpha, xtrain_to_est_ratio);
-            } else if (crossmeth == 4) {
-                // fit-adaptive:
-                fitA_rundown(xtree, j, cp, xpred, xtemp, k);
-                
-            } else if (crossmeth == 5) {
                 //CT- honest
                 CTH_rundown(xtree, j, cp, xpred, xtemp, k, cv_alpha, xtrain_to_est_ratio, ct.propensity);
-                
-            } else if (crossmeth == 6) {
+            } 
+            else if (crossmeth == 2) {
                 //CT- dishonest
                 CTA_rundown(xtree, j, cp, xpred, xtemp, k, cv_alpha);
-            } else if (crossmeth == 7) {
-                // user - honest (set as CT - honest temporarily)
-                userH_rundown(xtree, j, cp, xpred, xtemp, k, cv_alpha, xtrain_to_est_ratio, ct.propensity);
-            } else if (crossmeth == 8) {
-                // user - dishonest (set as CT - dishonest temporarily)
-                userA_rundown(xtree, j, cp, xpred, xtemp, k, cv_alpha);
-            }else if (crossmeth == 9) {
-              // user - honest (set as CT - honest temporarily)
-              policyH_rundown(xtree, j, cp, xpred, xtemp, k, cv_alpha, xtrain_to_est_ratio, ct.propensity);
-            }else if (crossmeth == 10) {
-              // user - dishonest (set as CT - dishonest temporarily)
-              policyA_rundown(xtree, j, cp, xpred, xtemp, k, cv_alpha, gamma);
+            } 
+            else {
+                Rprintf("Invalide crossmeth in myxval.c file");
             }
+
+
+            // if (crossmeth == 1) {
+            //     // tot
+            //     totrundown(xtree, j, cp, xpred, xtemp);
+            // } else if (crossmeth == 2) {
+            //     // matching
+            //     neighbor = findNeighbor(j, k);
+            //     matching_rundown(xtree, j, neighbor, cp, xpred, xpred2, xtemp);
+            // } else if (crossmeth == 3) {
+            //     //fit-honest: alpha need to change to cv.alpha, discriminate with split.alpha
+            //     fitH_rundown(xtree, j, cp, xpred, xtemp, k, cv_alpha, xtrain_to_est_ratio);
+            // } else if (crossmeth == 4) {
+            //     // fit-adaptive:
+            //     fitA_rundown(xtree, j, cp, xpred, xtemp, k);
+                
+            // } else if (crossmeth == 5) {
+            //     //CT- honest
+            //     CTH_rundown(xtree, j, cp, xpred, xtemp, k, cv_alpha, xtrain_to_est_ratio, ct.propensity);
+                
+            // } else if (crossmeth == 6) {
+            //     //CT- dishonest
+            //     CTA_rundown(xtree, j, cp, xpred, xtemp, k, cv_alpha);
+            // } else if (crossmeth == 7) {
+            //     // user - honest (set as CT - honest temporarily)
+            //     userH_rundown(xtree, j, cp, xpred, xtemp, k, cv_alpha, xtrain_to_est_ratio, ct.propensity);
+            // } else if (crossmeth == 8) {
+            //     // user - dishonest (set as CT - dishonest temporarily)
+            //     userA_rundown(xtree, j, cp, xpred, xtemp, k, cv_alpha);
+            // }else if (crossmeth == 9) {
+            //   // user - honest (set as CT - honest temporarily)
+            //   policyH_rundown(xtree, j, cp, xpred, xtemp, k, cv_alpha, xtrain_to_est_ratio, ct.propensity);
+            // }else if (crossmeth == 10) {
+            //   // user - dishonest (set as CT - dishonest temporarily)
+            //   policyA_rundown(xtree, j, cp, xpred, xtemp, k, cv_alpha, gamma);
+            // }
 
 
 #if DEBUG > 1

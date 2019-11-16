@@ -6,7 +6,7 @@ honest.IVTree <- function(formula, data, weights, treatment, treatment1, IV, sub
 							  est_data, est_weights, est_treatment, est_treatment1, est_IV, est_subset,
 							  na.action = na.IVTree, split.Honest,
 							  HonestSampleSize, split.Bucket, bucketNum = 10,
-							  bucketMax = 40, cv.option, cv.Honest, minsize = 2L, model = FALSE,
+							  bucketMax = 40, cv.Honest, cv.option, minsize = 2L, model = FALSE,
 							  x = FALSE, y = TRUE, propensity, control, split.alpha = 0.5, 
 							  cv.alpha = 0.5, cv.gamma=0.5, split.gamma=0.5, cost, ...)  { 
 
@@ -134,7 +134,7 @@ honest.IVTree <- function(formula, data, weights, treatment, treatment1, IV, sub
 
 	split.Rule.int <- pmatch(split.Rule, c("CT", "CTD"))
 	if (is.na(split.Rule.int)) stop("Invalid splitting rule.")
-	split.Rule <- c("CT", "CTD")[split.Rule.int]
+	# split.Rule <- c("CT", "CTD")[split.Rule.int]
 
 	# split.Rule.int <- pmatch(split.Rule, c("TOT", "CT", "fit", "tstats", "TOTD", "CTD", "fitD", "tstatsD", "user", "userD","policy","policyD"))
 	# if (is.na(split.Rule.int)) stop("Invalid splitting rule.")
@@ -224,35 +224,62 @@ honest.IVTree <- function(formula, data, weights, treatment, treatment1, IV, sub
 	method.int <- 1
 
 	# ------------------------------------- cv begins -------------------------------------- #
+	cv.option.t <- 'CT'
+
 	if (missing(cv.option)) {
 		# temporarily, no crossvalidation 
 		warning("Miss 'cv.option', choose not to do cross validations.")
-		cv.option <-"none"
+		cv.option.t <- "none"
 		xval <- 0
 	} 
 
+	cv.option.num1 <- pmatch(cv.option, c(T, F))
+	if (is.na(cv.option.num1)) 
+		stop ("Invalid cv.option cv.option should be TRUE or FALSE.")
+
+
+	if (!cv.option) {
+		# cv.option == F
+		cv.option.t <- "none"
+		xval <- 0
+	} 
+
+
 	if(missing(cv.Honest)) {
 		cv.Honest <- TRUE
+		warning("The default cv.Honest = TRUE for your chosen splitting rule.")
 	}
 	cv.Honest.num <- pmatch(cv.Honest, c(T, F))
 	if (is.na(cv.Honest.num)) 
 		stop ("Invalid cv.Honest. cv.Honest should be TRUE or FALSE.")
 
-	if (cv.option == 'CT' || cv.option == 'fit') {
-		if (cv.Honest) {
-			# cv.Honest = T
-			cv.option <- paste(cv.option, 'H', sep = '')
-		} else {
-			# cv.Honest = F
-			cv.option <- paste(cv.option, 'A', sep = '')
-		}
-	}
 
-	cv.option.num <- pmatch(cv.option, c("TOT", "matching", "fitH", "fitA", "CTH", "CTA", "userH", "userA", "none"))
-	if(is.na(cv.option.num)) stop("Invalid cv option.") 
+	if (cv.Honest) {
+		# cv.Honest = T
+		cv.option.t <- paste(cv.option.t, 'H', sep = '')
+	} else {
+		# cv.Honest = F
+		cv.option.t <- paste(cv.option.t, 'A', sep = '')
+	}
+	
+
+	# if (cv.option.t == 'CT' || cv.option.t == 'fit') {
+	# 	if (cv.Honest) {
+	# 		# cv.Honest = T
+	# 		cv.option.t <- paste(cv.option.t, 'H', sep = '')
+	# 	} else {
+	# 		# cv.Honest = F
+	# 		cv.option.t <- paste(cv.option.t, 'A', sep = '')
+	# 	}
+	# }
+
+	# cv.option.t.num <- pmatch(cv.option.t, c("TOT", "matching", "fitH", "fitA", "CTH", "CTA", "userH", "userA", "none"))
+	cv.option.t.num <- pmatch(cv.option.t, c("CTH", "CTA", "none"))
+	if(is.na(cv.option.t.num)) stop("Invalid cv option.") 
 
 	# check cv.alpha
-	if (cv.option.num %in% c(1, 2, 4, 6)) {
+	# if (cv.option.t.num %in% c(1, 2, 4, 6)) {
+	if (cv.option.t.num %in% c(2)) {
 		if (!missing(cv.alpha))
 			warning("cv.alpha is not used in your chosen cross validation method.")
 	} 
@@ -371,7 +398,8 @@ honest.IVTree <- function(formula, data, weights, treatment, treatment1, IV, sub
 					   bucketNum = as.integer(bucketNum), # if == 0, no discrete; else do discrete
 					   bucketMax = as.integer(bucketMax),
 					   method = as.integer(method.int),  # "anova" not changed yet
-					   crossmeth = as.integer(cv.option.num), # tot, ct, fit, tstats
+					   # crossmeth = as.integer(cv.option.t.num), # tot, ct, fit, tstats
+					   crossmeth = as.integer(cv.option.t.num), # ct
 					   crossHonest = as.integer(cv.Honest.num),
 					   as.double(unlist(controls)), # control list in rpart
 					   minsize, # minsize = min_node_size

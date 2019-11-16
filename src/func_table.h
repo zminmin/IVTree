@@ -231,16 +231,16 @@ static struct {
 
     double (* xeval)();
 } cv_func_table[] = {
-    {tot_xpred},
-    {matching_xpred},
-    {fitH_xpred},
-    {fitA_xpred},
+    // {tot_xpred},
+    // {matching_xpred},
+    // {fitH_xpred},
+    // {fitA_xpred},
     {CTH_xpred},
     {CTA_xpred},
-    {userH_xpred},
-    {userA_xpred},
-    {policyH_xpred},
-    {policyA_xpred},
+    // {userH_xpred},
+    // {userA_xpred},
+    // {policyH_xpred},
+    // {policyA_xpred},
 };
 
 #define NUM_SPLIT_RULE 12

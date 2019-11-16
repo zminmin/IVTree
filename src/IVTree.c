@@ -21,6 +21,10 @@
  *                  4 - fitA
  *                  5 - CTH
  *                  6 - CTA
+
+        ** new case **
+        crossmeth = 1 - CTH
+                    2 - CTA
  *                  
  *      opt  =  vector of options.  Same order as IVTree.control, as a vector
  *                   of doubles.
