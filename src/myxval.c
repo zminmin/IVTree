@@ -118,7 +118,7 @@ myxval(int n_xval, CpTable cptable_head, int *x_grp, int maxcat, char **errmsg,
 
 
         if (split_Rule == 1) {
-            // ct:
+            // CT:
             (*ct_eval) (k, ct.ytemp, xtree->response_est, xtree->controlMean, xtree->treatMean,
              &(xtree->risk), ct.wtemp, ct.trtemp, ct.tr1temp, ct.IVtemp, ct.max_y, split_alpha, xtrain_to_est_ratio);          
         }

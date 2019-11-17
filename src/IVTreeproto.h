@@ -55,24 +55,24 @@ void ctmatrix(pNode me, int *numcat, double **dsplit, int **isplit,
 	      int **csplit, double **dnode, int **inode, int id);
 
 
-void totrundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp);
-void matching_rundown(pNode tree, int obs, int neighbor, double *cp, double *xpred, 
-                     double *xpred2, double *xtemp);
-void fitH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k,
-                  double alpha, double xtrain_to_est_ratio);
-void fitA_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k);
+// void totrundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp);
+// void matching_rundown(pNode tree, int obs, int neighbor, double *cp, double *xpred, 
+//                      double *xpred2, double *xtemp);
+// void fitH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k,
+//                   double alpha, double xtrain_to_est_ratio);
+// void fitA_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k);
 
 void CTH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k, 
                  double alpha, double xtrain_to_est_ratio, double propensity);
 void CTA_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k, double alpha);
 
-void userH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k, 
-                 double alpha, double xtrain_to_est_ratio, double propensity);
-void userA_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k, double alpha);
+// void userH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k, 
+//                  double alpha, double xtrain_to_est_ratio, double propensity);
+// void userA_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k, double alpha);
 
-void policyH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k, 
-                   double alpha, double xtrain_to_est_ratio, double propensity);
-void policyA_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k, double alpha, double gamma);
+// void policyH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k, 
+//                    double alpha, double xtrain_to_est_ratio, double propensity);
+// void policyA_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k, double alpha, double gamma);
 
 void surrogate(pNode me, int n1, int n2);
 
