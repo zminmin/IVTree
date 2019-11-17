@@ -6,3 +6,4 @@ extra
 src/*.o
 src/*.so
 src/*.dll
+IVTree.Rproj
