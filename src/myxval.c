@@ -20,7 +20,7 @@ myxval(int n_xval, CpTable cptable_head, int *x_grp, int maxcat, char **errmsg,
     CpTable cplist;
     double temp;
     double old_wt, total_wt;
-    int neighbor; // nearest neighbor number
+    // int neighbor; // nearest neighbor number
     alphasave = ct.alpha;
     double xtrain_to_est_ratio = 0.;
     

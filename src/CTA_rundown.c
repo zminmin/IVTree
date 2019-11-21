@@ -94,8 +94,8 @@ CTA_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k
             tree->xcontrolMean[0] = con_mean;
         }
         
-        double tree_tr_mean = tree->treatMean[0];
-        double tree_con_mean = tree->controlMean[0];
+        // double tree_tr_mean = tree->treatMean[0];
+        // double tree_con_mean = tree->controlMean[0];
 
         //xtemp[i] = (*ct_xeval)(ct.ydata[obs2], ct.wt[obs2], ct.treatment[obs2], 
         //            tr_mean, con_mean, tree_tr_mean, tree_con_mean, alpha);
@@ -107,12 +107,12 @@ CTA_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k
 
 oops:;
     if (ct.usesurrogate < 2) {  /* must have hit a missing value */
-	for (i = 0; i < ct.num_unique_cp; i++)
-	    xpred[i] = otree->response_est[0];
+    	for (i = 0; i < ct.num_unique_cp; i++)
+    	    xpred[i] = otree->response_est[0];
 
-	xtemp[i] = (*ct_xeval)(ct.ydata[obs2], ct.wt[obs2], ct.treatment[obs2], tr_mean, con_mean);
-	Rprintf("oops number %d.\n", opnumber++);
-  return;
+    	xtemp[i] = (*ct_xeval)(ct.ydata[obs2], ct.wt[obs2], ct.treatment[obs2], tr_mean, con_mean);
+    	Rprintf("oops number %d.\n", opnumber++);
+        return;
     }
     warning("Warning message--see rundown.c");
 }

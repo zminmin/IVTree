@@ -26,7 +26,7 @@ CTH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k
     double tr_mean, con_mean;
     double tr_sqr_sum, con_sqr_sum;
     double consums, trsums, cons, trs;
-    double tr_var, con_var;
+    // double tr_var, con_var;
     double xz_sum, xy_sum, x_sum, y_sum, z_sum;
     double yz_sum, xx_sum, yy_sum, zz_sum;
     int n;
@@ -97,20 +97,20 @@ CTH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k
 
         if (trs == 0) {
             tr_mean = tree->parent->xtreatMean[0];
-            tr_var = 0;
+            // tr_var = 0;
         } else {
             tr_mean = trsums / trs;
             tree->xtreatMean[0] = tr_mean;
-            tr_var = tr_sqr_sum / trs - tr_mean * tr_mean;
+            // tr_var = tr_sqr_sum / trs - tr_mean * tr_mean;
         }
         
         if (cons == 0) {
             con_mean = tree->parent->xcontrolMean[0];
-            con_var = 0;
+            // con_var = 0;
         } else {
             con_mean = consums / cons;
             tree->xcontrolMean[0] = con_mean;
-            con_var = con_sqr_sum / cons - con_mean * con_mean;
+            // con_var = con_sqr_sum / cons - con_mean * con_mean;
         }
         
         //xtemp[i] = (*ct_xeval)(ct.ydata[obs2], ct.wt[obs2], ct.treatment[obs2], tr_mean, 
@@ -125,17 +125,18 @@ CTH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k
 	}
         double effect = alpha_1;
         double alpha_0 = (z_sum - alpha_1 * y_sum) / n;
-	double beta_1;
-	if (n * xx_sum - x_sum * x_sum == 0){
-		beta_1 = 0.;
-	}
-	else{
-		beta_1 = (n * xy_sum - x_sum * y_sum) / (n * xx_sum - x_sum * x_sum);
-	}    
-        double beta_0 = (y_sum - beta_1 * x_sum) / n;
+	// double beta_1;
+	// if (n * xx_sum - x_sum * x_sum == 0){
+	// 	beta_1 = 0.;
+	// }
+	// else{
+	// 	beta_1 = (n * xy_sum - x_sum * y_sum) / (n * xx_sum - x_sum * x_sum);
+	// }    
+    
+    // double beta_0 = (y_sum - beta_1 * x_sum) / n;
         //Rprintf("Enter CTH_rundown.\n");
 	//double numerator = (ct.ydata[obs2][0] - alpha_0 - alpha_1 * ct.treatment1[obs2]) * (ct.ydata[obs2][0] - alpha_0 - alpha_1 * ct.treatment1[obs2]);
-        double numerator = (zz_sum + n * alpha_0 * alpha_0 + alpha_1 * alpha_1 * yy_sum - 2 * alpha_0 * z_sum - 2 * alpha_1 * yz_sum + 2 * alpha_0 * alpha_1 * y_sum)/n;
+    double numerator = (zz_sum + n * alpha_0 * alpha_0 + alpha_1 * alpha_1 * yy_sum - 2 * alpha_0 * z_sum - 2 * alpha_1 * yz_sum + 2 * alpha_0 * alpha_1 * y_sum)/n;
         //double denominator = n * beta_0 * beta_0 + beta_1 * beta_1 * xx_sum + y_sum * y_sum / n + 2 * beta_0 * beta_1 * x_sum - 2 * beta_0 * y_sum - 2 * beta_1 * x_sum * y_sum / n;
 	double denominator =  1 / (xx_sum / n - (x_sum / n) * (x_sum / n)) * (xy_sum / n - x_sum/n * y_sum / n) * (xy_sum / n - x_sum/n * y_sum / n) * n;   
 	//Rprintf("numerator, numberator1, denominator, denominator1 are %.4f, %.4f, %.4f, %.4f.\n", numerator, numerator1, denominator, denominator1);
@@ -151,13 +152,13 @@ CTH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k
 
 oops:;
     if (ct.usesurrogate < 2) {  /* must have hit a missing value */
-	Rprintf("Entered CTH_rundown.c. Double check.\n");
-	for (i = 0; i < ct.num_unique_cp; i++)
-	    xpred[i] = otree->response_est[0];
+    	Rprintf("Entered CTH_rundown.c. Double check.\n");
+    	for (i = 0; i < ct.num_unique_cp; i++)
+    	    xpred[i] = otree->response_est[0];
 
-	xtemp[i] = (*ct_xeval)(ct.ydata[obs2], ct.wt[obs2], ct.treatment[obs2], tr_mean, con_mean);
-	Rprintf("oops number %d.\n", opnumber++);
-  return;
+    	xtemp[i] = (*ct_xeval)(ct.ydata[obs2], ct.wt[obs2], ct.treatment[obs2], tr_mean, con_mean);
+    	Rprintf("oops number %d.\n", opnumber++);
+    return;
     }
     warning("Warning message--see rundown.c");
 }

@@ -91,12 +91,12 @@ IVTree(SEXP ncat2, SEXP split_Rule2, SEXP bucketnum2, SEXP bucketMax2, SEXP meth
     int *savesort = NULL /* -Wall */ ;
     double *dptr;               /* temp */
     int *iptr;
-    int method;
+    // int method;
     int split_Rule;
     int bucketnum;  
     int bucketMax;
     int crossmeth;
-    int crosshonest;
+    // int crosshonest;
     /*
      * pointers to R objects
      */
@@ -142,9 +142,9 @@ IVTree(SEXP ncat2, SEXP split_Rule2, SEXP bucketnum2, SEXP bucketMax2, SEXP meth
     split_alpha = asReal(split_alpha2);
     cv_alpha = asReal(cv_alpha2);
     gamma=asReal(gamma2);
-    method = asInteger(method2); 
+    // method = asInteger(method2); 
     crossmeth = asInteger(crossmeth2);
-    crosshonest = asInteger(crosshonest2);
+    // crosshonest = asInteger(crosshonest2);
     split_Rule = asInteger(split_Rule2);
     bucketnum  = asInteger(bucketnum2);
     bucketMax = asInteger(bucketMax2);
