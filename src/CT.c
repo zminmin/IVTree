@@ -363,6 +363,7 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
             } else
                 tsplit[i] = 0;
         }
+        
         graycode_init2(nclass, countn, treatment_effect);
         
         /*

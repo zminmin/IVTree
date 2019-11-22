@@ -1,8 +1,7 @@
 #
 #  The recursive partitioning function, for R
 #
-honest.rparttree <-
-    function(formula, data, weights, subset, est_data,est_weights, na.action = na.rpart, method,
+honest.rparttree <- function(formula, data, weights, subset, est_data,est_weights, na.action = na.rpart, method,
              model = FALSE, x = FALSE, y = TRUE, parms, control, cost, ...)
 {
     Call <- match.call()
