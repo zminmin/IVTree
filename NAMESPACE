@@ -1,6 +1,6 @@
 useDynLib(IVTree, .registration = TRUE, .fixes = "C_")
 
-export(IVTree, honest.IVTree, na.IVTree, estimate.IVTree, IVTree.matrix, IVForest, propensityForest,honest.rparttree)
+export(IVTree, honest.IVTree, na.IVTree, estimate.IVTree, IVTree.matrix, IVForest, propensityForest, honest.rparttree)
 
 importFrom(grDevices, dev.cur, dev.off)
 importFrom(graphics, plot, text)
