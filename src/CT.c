@@ -96,7 +96,7 @@ void CTss(int n, double *y[], double *value, double *con_mean, double *tr_mean,
         tr_var = tr_sqr_sum / ttreat - temp1 * temp1 / (ttreat * ttreat);
         con_var = con_sqr_sum / (twt - ttreat) - temp0 * temp0 / ((twt - ttreat) * (twt - ttreat));
         *risk = 4 * twt * max_y * max_y - alpha * twt * effect * effect + 
-        (1 - alpha) * (1 + train_to_est_ratio) * twt * (tr_var /ttreat  + con_var / (twt - ttreat));
+                (1 - alpha) * (1 + train_to_est_ratio) * twt * (tr_var /ttreat  + con_var / (twt - ttreat));
     }
             
 }
