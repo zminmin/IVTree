@@ -182,30 +182,30 @@ extern double CTA_xpred(double *y, double wt, double treatment, double tr_mean, 
 
     
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-extern int anovainit(int n, double *y[], int maxcat, char **error,
-  	     double *parm, int *size, int who, double *wt, double *treatment);
+// extern int anovainit(int n, double *y[], int maxcat, char **error,
+//   	     double *parm, int *size, int who, double *wt, double *treatment);
 
 
-extern void anovass(int n, double *y[], double *value, double *risk,
-  	    double *wt, double *treatment, double max_y);
+// extern void anovass(int n, double *y[], double *value, double *risk,
+//   	    double *wt, double *treatment, double max_y);
 
 
-extern void anova(int n, double *y[], double *x, int nclass,
-  	  int edge, double *improve, double *split, int *csplit,
-		  double myrisk, double *wt, double *treatment, int minsize);
+// extern void anova(int n, double *y[], double *x, int nclass,
+//   	  int edge, double *improve, double *split, int *csplit,
+// 		  double myrisk, double *wt, double *treatment, int minsize);
 
-extern double anovapred(double *y, double wt, double treatment, double *yhat, double p);
+// extern double anovapred(double *y, double wt, double treatment, double *yhat, double p);
 
 
-static struct {
-    int (*init_split) ();
-    void (*choose_split) ();
-    void (*eval) ();
-    double (*error) ();
-} func_table[] = {
-    {anovainit, anova, anovass, anovapred}, // test for TOT:
-};
-#define NUM_METHODS 1        /* size of the above structure */  
+// static struct {
+//     int (*init_split) ();
+//     void (*choose_split) ();
+//     void (*eval) ();
+//     double (*error) ();
+// } func_table[] = {
+//     {anovainit, anova, anovass, anovapred}, // test for TOT:
+// };
+// #define NUM_METHODS 1        /* size of the above structure */  
 
 static struct {
     int (*init_split) ();
