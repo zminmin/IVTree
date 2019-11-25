@@ -84,5 +84,5 @@ void myxval(int n_xval, CpTable cptable_head, int *x_grp, int maxcat, char **err
 
 
 /* ---------------------- for xvalHelper --------------------- */
-int findNeighbor(int obs, int k);
+// int findNeighbor(int obs, int k);
 double measureDistance(int i, int j);
