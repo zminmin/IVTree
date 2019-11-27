@@ -5,7 +5,7 @@ library(rpart)
 library(rpart.plot)
 library(reshape2)
 library(plyr)
-library(grf)
+# library(grf)
 
 
 library(IVTree)
@@ -24,4 +24,7 @@ centering <- function(X, Y, W, Z) {
           
   data <- cbind(X, Y = Y - Y.hat, T = W - W.hat, IV = Z - Z.hat)
 }
+
+
+
 
