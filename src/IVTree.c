@@ -63,7 +63,7 @@
 #include "IVTreeproto.h"
 
 
-#include <time.h>
+// #include <time.h>
 
 
 SEXP
@@ -76,10 +76,10 @@ IVTree(SEXP ncat2, SEXP split_Rule2, SEXP bucketnum2, SEXP bucketMax2, SEXP meth
 
 
     //=============================//
-    clock_t start_time, midpoint_time, end_time;
-    int ifShowTime = 0;
+    // clock_t start_time, midpoint_time, end_time;
+    // int ifShowTime = 0;
 
-    start_time = clock();
+    // start_time = clock();
 
 
     //Rprintf("Entered IVTree.c.");    
@@ -396,10 +396,10 @@ IVTree(SEXP ncat2, SEXP split_Rule2, SEXP bucketnum2, SEXP bucketMax2, SEXP meth
 
 
 
-    midpoint_time = clock();
-    if(ifShowTime == 1){
-        Rprintf("Time check point one: %.3f \n", ((double) (midpoint_time - start_time)) / CLOCKS_PER_SEC);
-    }
+    // midpoint_time = clock();
+    // if(ifShowTime == 1){
+    //     Rprintf("Time check point one: %.3f \n", ((double) (midpoint_time - start_time)) / CLOCKS_PER_SEC);
+    // }
         
 
 
@@ -523,10 +523,10 @@ IVTree(SEXP ncat2, SEXP split_Rule2, SEXP bucketnum2, SEXP bucketMax2, SEXP meth
 
 
 
-    end_time = clock();
-    if(ifShowTime == 1){    
-        Rprintf("Time check point two: %.3f \n", ((double) (end_time - start_time)) / CLOCKS_PER_SEC);
-    }
+    // end_time = clock();
+    // if(ifShowTime == 1){    
+    //     Rprintf("Time check point two: %.3f \n", ((double) (end_time - start_time)) / CLOCKS_PER_SEC);
+    // }
 
     /* Create the output list */
     int nout = catcount > 0 ? 7 : 6;

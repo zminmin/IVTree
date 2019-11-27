@@ -1,3 +1,17 @@
+#'
+#' 
+#' 
+#'
+#' @title ...
+#' @description ...
+
+#' @param ... ....
+#' @param ... ....
+#' @return ....
+#' @export
+#' @useDynLib IVTree, .registration = TRUE, .fixes = "C_"
+
+
 #
 #  The honest re-estimation function.
 #

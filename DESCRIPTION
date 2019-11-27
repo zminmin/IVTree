@@ -7,8 +7,10 @@ Description: An implementation of most of the functionality of the instrumental 
 Title: Instrumental Variable Tree
 Depends: R (>= 2.15.0), graphics, stats, grDevices, rpart, rpart.plot, data.table
 Suggests: survival
+Encoding: UTF-8
 License: GPL-2 | GPL-3
-LazyData: yes
+LazyData: true
 ByteCompile: yes
 Author: Guihua Wang [aut, cre]
 NeedsCompilation: yes
+RoxygenNote: 7.0.0
