@@ -41,36 +41,39 @@ IVTree_mod <- function(form, data_tr, data_es, data_te){
 }
 
 
-load(data\"CONFIG-1-0.6-0.5-5-1000.rda")
+
+load("data/data_all.RData")
+load("data/data_te.RData")
 
 
-report=data.frame()
-prediction=data.frame()
-freq_table=matrix(0, 30, ncol(data_all)-6)
+
+report = data.frame()
+report.all=data.frame()
+prediction = data.frame()
+freq_table = matrix(0, 30, ncol(data_all)-6)
 
 for (i in 1:100){
+  n <- nrow(data_all)
 	train_ind <- sample(1:(n), size = n/2)
-	data_tr=data_all[train_ind,]
-	data_es=data_all[-train_ind,]
+	data_tr = data_all[train_ind,]
+	data_es = data_all[-train_ind,]
 
-	temp=IV_causalTree_mod(form, data_tr, data_es, data_te)
-	mse=mean((temp$prediction-data_te$kappa)^2)
-	report=rbind(report, c(temp$nodes, mse, temp$mincov, temp$maxcov))
+  form <- paste('Y ~', paste(paste0('X', 1:(4)), collapse = ' + '))
 
-	prediction=rbind(prediction, temp[[2]])
-	freq_table=freq_table + temp$split_freq
+	temp = IVTree_mod(form, data_tr, data_es, data_te)
+	mse = mean((temp$prediction-data_te$kappa)^2)
+	report = rbind(report, c(temp$nodes, mse, temp$mincov, temp$maxcov))
+
+	prediction = rbind(prediction, temp[[2]])
+	freq_table = freq_table + temp$split_freq
 }
 
-names(report)=c('no_leaf', 'mse', 'mincov', 'maxcov')
-temp2=apply(prediction, 2, function(x)quantile(x,c(0.025,0.975)))
-report$cover_prob=mean(data_te$kappa<=temp2[2,] & data_te$kappa>=temp2[1,])
-temp3=apply(prediction, 2, function(x)mean(x))
+names(report) = c('no_leaf', 'mse', 'mincov', 'maxcov')
+temp2 = apply(prediction, 2, function(x)quantile(x,c(0.025,0.975)))
+report$cover_prob = mean(data_te$kappa<=temp2[2,] & data_te$kappa>=temp2[1,])
+temp3 = apply(prediction, 2, function(x)mean(x))
 report$mse_all = mean((temp3-data_te$kappa)^2)
-report$mse_all
+# report$mse_all
 report.all = rbind(report.all, colMeans(report))
 names(report.all)=c('no_leaf', 'mse', 'mincov', 'maxcov', 'cover_prob', 'mse')
 print(report.all)
-
-
-
-
