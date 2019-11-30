@@ -221,4 +221,4 @@ for (n in c(1000, 2000, 3000, 4000, 5000)){#
 print(report.all)
 report.all
 
-# target beat time is about 20 seconds
+# target beat time is about 20 seconds/
