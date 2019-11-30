@@ -43,6 +43,12 @@ load("data/data_all.RData")
 load("data/data_te.RData")
 
 
+# ============ if the original data is not centered, center ===================
+# there are five X, one Y, one instrumental variable IV and one W named as T1
+# data_all = data.centering(data_all[,1:4], data_all$Y, data_all$T1, data_all$IV) 
+# ============ ******************************************** ===================
+
+
 
 report = data.frame()
 report.all=data.frame()
