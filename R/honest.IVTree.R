@@ -10,6 +10,7 @@
 #' @return ....
 #' @export
 #' @useDynLib IVTree, .registration = TRUE, .fixes = "C_"
+#' @importFrom stats model.frame
 
 
 #
@@ -22,7 +23,7 @@ honest.IVTree <- function(formula, data, weights, treatment, treatment1, IV, sub
 							  HonestSampleSize, split.Bucket, bucketNum = 10,
 							  bucketMax = 40, cv.Honest, cv.option, minsize = 2L, model = FALSE,
 							  x = FALSE, y = TRUE, propensity, control, split.alpha = 0.5, 
-							  cv.alpha = 0.5, cv.gamma=0.5, split.gamma=0.5, cost, ...)  { 
+							  cv.alpha = 0.5, cv.gamma = 0.5, split.gamma = 0.5, cost, ...)  { 
 
 
 	Call <- match.call()
@@ -33,7 +34,8 @@ honest.IVTree <- function(formula, data, weights, treatment, treatment1, IV, sub
 	if (indx[1] == 0L) stop("a 'formula' argument is required")
 	temp <- Call[c(1L, indx)]      
 	temp$na.action <- na.action  
-	temp[[1L]] <- quote(stats::model.frame) 
+	# temp[[1L]] <- quote(stats::model.frame) # old
+	temp[[1L]] <- quote(model.frame)	# new
 	m <- eval.parent(temp)
 
 
@@ -77,7 +79,8 @@ honest.IVTree <- function(formula, data, weights, treatment, treatment1, IV, sub
 	temp2 <- Call[c(1L, indx2)]
 	temp2$na.action <- na.action
 	names(temp2) <- gsub("est_", "", names(temp2))
-	temp2[[1L]] <- quote(stats::model.frame)
+	# temp2[[1L]] <- quote(stats::model.frame) # old
+	temp2[[1L]] <- quote(model.frame)	# new
 	m2 <- eval.parent(temp2)
 	# honest data set used for later:
 	est_Y <- model.response(m2)
@@ -223,6 +226,7 @@ honest.IVTree <- function(formula, data, weights, treatment, treatment1, IV, sub
 		}
 		
 	}
+
 
 
 	# no need to check since this is not for CT and CTD

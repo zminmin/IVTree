@@ -1,3 +1,6 @@
+#' @importFrom stats model.frame
+
+
 estimate.IVTree <- function(object, data, weights, treatment, na.action = na.IVTree)
 {
     if (!inherits(object, "rpart")) stop("Not a legitimate \"rpart\" object")

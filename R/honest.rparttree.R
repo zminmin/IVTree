@@ -1,3 +1,5 @@
+#' @importFrom stats model.frame
+
 #
 #  The recursive partitioning function, for R
 #
@@ -14,7 +16,8 @@ honest.rparttree <- function(formula, data, weights, subset, est_data,est_weight
         if (indx[1] == 0L) stop("a 'formula' argument is required")
         temp <- Call[c(1L, indx)]      # only keep the arguments we wanted
         temp$na.action <- na.action    # This one has a default
-        temp[[1L]] <- quote(stats::model.frame) # change the function called
+        # temp[[1L]] <- quote(stats::model.frame) # change the function called (old)
+        temp[[1L]] <- quote(model.frame) # change the function called
         m <- eval.parent(temp)
     }
 
@@ -43,7 +46,8 @@ honest.rparttree <- function(formula, data, weights, subset, est_data,est_weight
     temp2 <- Call[c(1L, indx2)]
     temp2$na.action <- na.action
     names(temp2) <- gsub("est_", "", names(temp2))
-    temp2[[1L]] <- quote(stats::model.frame)
+    # temp2[[1L]] <- quote(stats::model.frame) # (old)
+    temp2[[1L]] <- quote(model.frame)
     m2 <- eval.parent(temp2)
     # honest data set used for later:
     est_Y <- model.response(m2)

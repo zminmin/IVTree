@@ -49,6 +49,8 @@ report.all=data.frame()
 prediction = data.frame()
 freq_table = matrix(0, 30, ncol(data_all)-6)
 
+
+
 for (i in 1:100){
   n <- nrow(data_all)
 	train_ind <- sample(1:(n), size = n/2)

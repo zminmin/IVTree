@@ -1,3 +1,7 @@
+#' @importFrom stats model.frame
+
+
+
 # get model frame of IVTree, same as rpart
 model.frame.IVTree <- function(formula, ...)
 {

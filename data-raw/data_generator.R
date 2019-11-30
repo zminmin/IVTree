@@ -1,7 +1,6 @@
 ## This is to generate simulation data
 
-
-library(grf)
+#' @importFrom grf regression_forest
 
 
 centering <- function(X, Y, W, Z){
