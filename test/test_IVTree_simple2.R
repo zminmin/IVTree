@@ -1,3 +1,7 @@
+# This program tests out the features of the IVTree package
+# IV Forest (multiple IV Tree) are constructed
+
+
 library(IVTree)
 
 
@@ -44,7 +48,7 @@ load("data/data_te.RData")
 
 
 # ============ if the original data is not centered, center ===================
-# there are five X, one Y, one instrumental variable IV and one W named as T1
+# there are four X, one Y, one instrumental variable IV and one W named as T1
 # data_all = data.centering(data_all[,1:4], data_all$Y, data_all$T1, data_all$IV) 
 # ============ ******************************************** ===================
 
