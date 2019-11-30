@@ -13,10 +13,7 @@ library(devtools)
 install_github("gweehwa/IVTree")
 ```
 
-Example usage: check sample code in test directory
-
-
-For More details, please check out briefintro.pdf.
+Example usage can be found in test directory. For More details, please check out briefintro.pdf.
 
 #### References
 Guihua Wang, Jun Li, Wallace J. Hopp. <b>An Instrumental Variable Tree Approach for Detecting Heterogeneous Treatment Effects in Observational Studies.</b> [<a href="https://poseidon01.ssrn.com/delivery.php?ID=723089121105084082064005067083015023018031035064008038064102018004098091117000067094037026034111123061001010127099119014085106105082056047035121068113017124123069066040043085098007072027126103092105068089003088095011102077025105123083026069068065102004&EXT=pdf">link</a>]
