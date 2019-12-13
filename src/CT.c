@@ -88,7 +88,7 @@ void CTss(int n, double *y[], double *value, double *con_mean, double *tr_mean,
     *risk = 4 * twt * max_y * max_y - alpha * twt * effect * effect + (1 - alpha) * (1 + train_to_est_ratio) * twt * (numerator / denominator);
 
     // PARAMETER!    
-    if(abs(n * xy_sum - x_sum * y_sum) <= 0 * n * n){
+    if(fabs(n * xy_sum - x_sum * y_sum) <= 0 * n * n){
         Rprintf("Entered CT.c. Invalid IV.\n");
         effect = temp1 / ttreat - temp0 / (twt - ttreat);  
         *value = effect;
@@ -170,7 +170,7 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
     node_effect = alpha * temp * temp * right_wt - (1 - alpha) * (1 + train_to_est_ratio) * right_wt * (numerator / denominator);
     
     // PARAMETER!        
-    if(abs(right_n * right_xy_sum - right_x_sum * right_y_sum) <= 0 * right_n * right_n){
+    if(fabs(right_n * right_xy_sum - right_x_sum * right_y_sum) <= 0 * right_n * right_n){
             Rprintf("Entered CT.c. Invalid IV.\n");
             temp = right_tr_sum / right_tr - (right_sum - right_tr_sum) / (right_wt - right_tr);
             tr_var = right_tr_sqr_sum / right_tr - right_tr_sum * right_tr_sum / (right_tr * right_tr);
@@ -257,7 +257,7 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
                 //Rprintf("Entered CT.c. Left treatment effect, num, den, effect and obs are %.2f, %.2f, %.2f, %.2f, %.2f.\n", left_temp, numerator, denominator, left_effect, left_wt);
                 
                 // PARAMETER!                    
-                if(abs(left_n * left_xy_sum - left_x_sum * left_y_sum) <= 0 * left_n * left_n){
+                if(fabs(left_n * left_xy_sum - left_x_sum * left_y_sum) <= 0 * left_n * left_n){
                     Rprintf("Entered CT.c. Invalid IV.\n");
                     left_temp = left_tr_sum / left_tr - (left_sum - left_tr_sum) / (left_wt - left_tr);
                     left_tr_var = left_tr_sqr_sum / left_tr - 
@@ -290,7 +290,7 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
                 //Rprintf("Entered CT.c. Right treatment effect, num, dem, effect and obs are %.2f, %.2f, %.2f, %.2f, %.2f.\n", right_temp, numerator, denominator, right_effect, right_wt);
 
                 // PARAMETER!                    
-                if(abs(right_n * right_xy_sum - right_x_sum * right_y_sum) <= 0 * right_n * right_n){
+                if(fabs(right_n * right_xy_sum - right_x_sum * right_y_sum) <= 0 * right_n * right_n){
                     Rprintf("Entered CT.c. Invalid IV.\n");
                     right_temp = right_tr_sum / right_tr - (right_sum - right_tr_sum) / (right_wt - right_tr);
                     right_tr_var = right_tr_sqr_sum / right_tr -

@@ -14,4 +14,4 @@ LazyData: true
 ByteCompile: yes
 Author: Guihua Wang [aut, cre]
 NeedsCompilation: yes
-RoxygenNote: 7.0.0
+RoxygenNote: 7.0.2
