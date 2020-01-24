@@ -18,7 +18,7 @@ Example usage:
 ```R
 library(IVTree)
 tree <- honest.IVTree(y~ x1 + x2 + x3 + x4, data = data_tr, treatment = data_tr$T1, 
-			treatment1 = $T, IV = data_tr$IV, split.Rule = "CT", 
+			treatment1 = data_tr$T, IV = data_tr$IV, split.Rule = "CT", 
 			cv.option = "CT", split.Honest = T, cv.Honest = T, 
 			split.Bucket = F, xval = 5, cp = 0, minsize = 20, propensity = 0.5)
                   
