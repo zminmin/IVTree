@@ -39,6 +39,9 @@ data_es = data_all[-train_ind,]
 
 form <- paste('Y ~', paste(paste0('X', 1:(4)), collapse = ' + '))
 
-ivtree = IVTree_mod(form, data_tr, data_es, data_te, if_prune = TRUE)
+for(i in 1:200){
+  ivtree = IVTree_mod(form, data_tr, data_es, data_te, if_prune = TRUE)
+}
 
-rpart.plot(ivtree)
+
+# rpart.plot(ivtree)

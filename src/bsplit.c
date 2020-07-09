@@ -43,7 +43,6 @@ bsplit(pNode me, int n1, int n2, int minsize, int split_Rule, double alpha, int 
      */
     me->primary = (pSplit) NULL;
     for (i = 0; i < ct.nvar; i++) {
-    //Rprintf("Entered bsplit.c. Total and current variables are %.2d, %.2d", ct.nvar, i);
         index = ct.sorts[i];
         nc = ct.numcat[i];
         /* extract x and y data */
@@ -59,7 +58,7 @@ bsplit(pNode me, int n1, int n2, int minsize, int split_Rule, double alpha, int 
                 trtemp[k] = ct.treatment[kk];
                 tr1temp[k] = ct.treatment1[kk];
                 IVtemp[k] = ct.IV[kk];
-                k++;
+                ++k;
             }
         }
         
@@ -82,65 +81,6 @@ bsplit(pNode me, int n1, int n2, int minsize, int split_Rule, double alpha, int 
             Rprintf("Invalide split_Rule in bsplit.c file");
         }
         
-        // if (split_Rule == 1) {
-        //     //tot
-        //     (*ct_choose) (k, ytemp, xtemp, nc, ct.min_node, &improve, 
-        //      &split, ct.csplit, me->risk, wtemp, trtemp, ct.propensity, minsize);
-        // } else if (split_Rule == 2) {
-        //     //CT
-        //     (*ct_choose) (k, ytemp, xtemp, nc, ct.min_node, &improve, 
-        //      &split, ct.csplit, me->risk, wtemp, trtemp, tr1temp, IVtemp, minsize, alpha, train_to_est_ratio);
-        // } else if (split_Rule == 3) {
-        //     //fit
-        //     (*ct_choose) (k, ytemp, xtemp, nc, ct.min_node, &improve, 
-        //      &split, ct.csplit, me->risk, wtemp, trtemp, minsize, alpha, train_to_est_ratio);
-        // } else if (split_Rule == 4) {
-        //     //tstats
-        //     (*ct_choose) (k, ytemp, xtemp, nc, ct.min_node, &improve, 
-        //      &split, ct.csplit, me->risk, wtemp, trtemp, minsize, alpha, train_to_est_ratio);
-        // } else if (split_Rule == 5) {
-        //     // totD
-        //     (*ct_choose) (k, ytemp, xtemp, nc, ct.min_node, &improve, 
-        //      &split, ct.csplit, me->risk, wtemp, trtemp, ct.propensity, minsize,
-        //      bucketnum, bucketMax);
-        // } else if (split_Rule == 6) {
-        //     //CTD
-        //     (*ct_choose) (k, ytemp, xtemp, nc, ct.min_node, &improve, 
-        //      &split, ct.csplit, me->risk, wtemp, trtemp, tr1temp, IVtemp, minsize, alpha,
-        //      bucketnum, bucketMax, train_to_est_ratio);
-        // } else if (split_Rule == 7) {
-        //     //fitD
-        //     (*ct_choose) (k, ytemp, xtemp, nc, ct.min_node, &improve, 
-        //      &split, ct.csplit, me->risk, wtemp, trtemp, minsize, 
-        //      bucketnum, bucketMax, alpha, train_to_est_ratio);
-        // } else if (split_Rule == 8) {
-        //     //tstatsD
-        //     (*ct_choose) (k, ytemp, xtemp, nc, ct.min_node, &improve, 
-        //      &split, ct.csplit, me->risk, wtemp, trtemp, minsize, alpha, 
-        //      bucketnum, bucketMax, train_to_est_ratio);
-        // } else if (split_Rule == 9) {
-        //     // user (temporarily set as CT)
-        //     (*ct_choose) (k, ytemp, xtemp, nc, ct.min_node, &improve, 
-        //      &split, ct.csplit, me->risk, wtemp, trtemp, minsize, alpha, train_to_est_ratio);
-        // } else if (split_Rule == 10) {
-        //     // userD (temporarily set as CTD)
-        //     (*ct_choose) (k, ytemp, xtemp, nc, ct.min_node, &improve, 
-        //      &split, ct.csplit, me->risk, wtemp, trtemp, minsize, alpha,
-        //      bucketnum, bucketMax, train_to_est_ratio);
-        // }else if (split_Rule == 11) {
-        //   // policy
-        //   (*ct_choose) (k, ytemp, xtemp, nc, ct.min_node, &improve, 
-        //    &split, ct.csplit, me->risk, wtemp, trtemp, minsize, alpha, train_to_est_ratio);
-        // }else if (split_Rule == 12) {
-        //   // policyD
-        //   (*ct_choose) (k, ytemp, xtemp, nc, ct.min_node, &improve, 
-        //    &split, ct.csplit, me->risk, wtemp, trtemp, minsize, alpha,
-        //    bucketnum, bucketMax, train_to_est_ratio);
-        // }
-
-
-
-
 
         /*
          * Originally, this just said "if (improve > 0)", but rounding

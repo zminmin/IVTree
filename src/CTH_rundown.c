@@ -44,16 +44,17 @@ CTH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k
         trsums = 0.;
         tr_sqr_sum = 0.;
         con_sqr_sum = 0.;
-	n = 0;
-	xz_sum = 0.;
-	xy_sum = 0.;
-	x_sum = 0.;
-	y_sum = 0.;
-	z_sum = 0.;
+
+    	n = 0;
+    	xz_sum = 0.;
+    	xy_sum = 0.;
+    	x_sum = 0.;
+    	y_sum = 0.;
+    	z_sum = 0.;
         yz_sum = 0.;
-	xx_sum = 0.;
-	yy_sum = 0.;
-	zz_sum = 0.;
+    	xx_sum = 0.;
+    	yy_sum = 0.;
+    	zz_sum = 0.;
         
         while (cp[i] < tree->complexity) {
 	        tree = branch(tree, obs);
@@ -82,10 +83,11 @@ CTH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k
                     trsums += *ct.ydata[tmp_obs] * ct.wt[tmp_obs];
                     tr_sqr_sum += (*ct.ydata[tmp_obs]) * (*ct.ydata[tmp_obs]) * ct.wt[tmp_obs];
                 }
-		n++;
-		xz_sum += ct.IV[tmp_obs] * *ct.ydata[tmp_obs];
+                
+                ++n;
+                xz_sum += ct.IV[tmp_obs] * *ct.ydata[tmp_obs];
                 xy_sum += ct.IV[tmp_obs] * ct.treatment1[tmp_obs];
-		x_sum += ct.IV[tmp_obs];
+                x_sum += ct.IV[tmp_obs];
                 y_sum += ct.treatment1[tmp_obs];
                 z_sum += *ct.ydata[tmp_obs];
                 yz_sum += *ct.ydata[tmp_obs] * ct.treatment1[tmp_obs];
@@ -97,55 +99,38 @@ CTH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k
 
         if (trs == 0) {
             tr_mean = tree->parent->xtreatMean[0];
-            // tr_var = 0;
         } else {
             tr_mean = trsums / trs;
             tree->xtreatMean[0] = tr_mean;
-            // tr_var = tr_sqr_sum / trs - tr_mean * tr_mean;
         }
         
         if (cons == 0) {
             con_mean = tree->parent->xcontrolMean[0];
-            // con_var = 0;
         } else {
             con_mean = consums / cons;
             tree->xcontrolMean[0] = con_mean;
-            // con_var = con_sqr_sum / cons - con_mean * con_mean;
         }
         
-        //xtemp[i] = (*ct_xeval)(ct.ydata[obs2], ct.wt[obs2], ct.treatment[obs2], tr_mean, 
-        //            con_mean, trs, cons, alpha, xtrain_to_est_ratio, propensity);
-	double alpha_1;
+        double alpha_1;
 // PARAMETER!	    
-	if (fabs(n * xy_sum - x_sum * y_sum) <= 0.1 * n * n){
-		alpha_1 = 0.;
-	}
-	else{
-		alpha_1 = (n * xz_sum - x_sum * z_sum) / (n * xy_sum - x_sum * y_sum);
-	}
+    	if (fabs(n * xy_sum - x_sum * y_sum) <= 0.1 * n * n){
+    		alpha_1 = 0.;
+    	}
+    	else{
+    		alpha_1 = (n * xz_sum - x_sum * z_sum) / (n * xy_sum - x_sum * y_sum);
+    	}
         double effect = alpha_1;
         double alpha_0 = (z_sum - alpha_1 * y_sum) / n;
-	// double beta_1;
-	// if (n * xx_sum - x_sum * x_sum == 0){
-	// 	beta_1 = 0.;
-	// }
-	// else{
-	// 	beta_1 = (n * xy_sum - x_sum * y_sum) / (n * xx_sum - x_sum * x_sum);
-	// }    
-    
-    // double beta_0 = (y_sum - beta_1 * x_sum) / n;
-        //Rprintf("Enter CTH_rundown.\n");
-	//double numerator = (ct.ydata[obs2][0] - alpha_0 - alpha_1 * ct.treatment1[obs2]) * (ct.ydata[obs2][0] - alpha_0 - alpha_1 * ct.treatment1[obs2]);
-    double numerator = (zz_sum + n * alpha_0 * alpha_0 + alpha_1 * alpha_1 * yy_sum - 2 * alpha_0 * z_sum - 2 * alpha_1 * yz_sum + 2 * alpha_0 * alpha_1 * y_sum)/n;
-        //double denominator = n * beta_0 * beta_0 + beta_1 * beta_1 * xx_sum + y_sum * y_sum / n + 2 * beta_0 * beta_1 * x_sum - 2 * beta_0 * y_sum - 2 * beta_1 * x_sum * y_sum / n;
-	double denominator =  1 / (xx_sum / n - (x_sum / n) * (x_sum / n)) * (xy_sum / n - x_sum/n * y_sum / n) * (xy_sum / n - x_sum/n * y_sum / n) * n;   
-	//Rprintf("numerator, numberator1, denominator, denominator1 are %.4f, %.4f, %.4f, %.4f.\n", numerator, numerator1, denominator, denominator1);
-	double tmp;
-	if (n > 2 && denominator!=0) {
-            tmp = numerator / denominator / (n - 2);
+
+        double numerator = (zz_sum + n * alpha_0 * alpha_0 + alpha_1 * alpha_1 * yy_sum - 2 * alpha_0 * z_sum - 2 * alpha_1 * yz_sum + 2 * alpha_0 * alpha_1 * y_sum)/n;
+        double denominator =  1 / (xx_sum / n - (x_sum / n) * (x_sum / n)) * (xy_sum / n - x_sum/n * y_sum / n) * (xy_sum / n - x_sum/n * y_sum / n) * n;   
+        double tmp;
+        if (n > 2 && denominator!=0) {
+                tmp = numerator / denominator / (n - 2);
         } else {
             tmp = 0.;
         }  
+        
         xtemp[i] = 4 * ct.max_y * ct.max_y - alpha * effect * effect + (1 + xtrain_to_est_ratio / (ct.NumXval - 1)) * (1 - alpha) * tmp;
     }
     return;
