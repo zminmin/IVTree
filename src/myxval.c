@@ -76,7 +76,7 @@ myxval(int n_xval, CpTable cptable_head, int *x_grp, int maxcat, char **errmsg,
         }
 
         /*
-         *  Fix up the y vector, and save a list of "left out" obs *   in
+         * Fix up the y vector, and save a list of "left out" obs *   in
          * the tail, unused end of ct.sorts[0][i];
          */
         last = k;

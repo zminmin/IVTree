@@ -73,16 +73,7 @@ IVTree(SEXP ncat2, SEXP split_Rule2, SEXP bucketnum2, SEXP bucketMax2, SEXP meth
         SEXP ymat2, SEXP xmat2, SEXP wt2, SEXP treatment2, SEXP treatment12, SEXP IV2, SEXP ny2, SEXP cost2, 
         SEXP xvar2, SEXP split_alpha2, SEXP cv_alpha2, SEXP NumHonest2, SEXP gamma2)
 {
-
-
-    //=============================//
-    // clock_t start_time, midpoint_time, end_time;
-    // int ifShowTime = 0;
-
-    // start_time = clock();
-
-
-    //Rprintf("Entered IVTree.c.");    
+   
     pNode tree;          /* top node of the tree */
     char *errmsg;
     int i, j, k, n;
@@ -339,70 +330,9 @@ IVTree(SEXP ncat2, SEXP split_Rule2, SEXP bucketnum2, SEXP bucketMax2, SEXP meth
         Rprintf("Invalide split_Rule in IVTree.c file");
     }
 
-    // if (split_Rule == 1) {
-    //     //tot:
-    //     (*ct_eval) (n, ct.ydata, tree->response_est, tree->controlMean, tree->treatMean, 
-    //      &(tree->risk), wt, treatment, ct.max_y, ct.propensity);
-    // } else if (split_Rule == 2) {
-    //     // ct:
-    //     (*ct_eval) (n, ct.ydata, tree->response_est, tree->controlMean, tree->treatMean, 
-    //      &(tree->risk), wt, treatment, treatment1, IV, ct.max_y, split_alpha, train_to_est_ratio);
-    // } else if (split_Rule == 3) {
-    //     //fit
-    //     (*ct_eval) (n, ct.ydata, tree->response_est, tree->controlMean, tree->treatMean, 
-    //      &(tree->risk), wt, treatment, ct.max_y, split_alpha, train_to_est_ratio);
-    // } else if (split_Rule == 4) {
-    //     // tstats
-    //     (*ct_eval) (n, ct.ydata, tree->response_est, tree->controlMean, tree->treatMean,
-    //      &(tree->risk), wt, treatment, ct.max_y, split_alpha, train_to_est_ratio);
-    // } else if (split_Rule == 5) {
-    //     // totD
-    //     (*ct_eval) (n, ct.ydata, tree->response_est, tree->controlMean, tree->treatMean,
-    //      &(tree->risk), wt, treatment, ct.max_y, ct.propensity);
-    // } else if (split_Rule == 6) {
-    //     //CTD
-    //     (*ct_eval) (n, ct.ydata, tree->response_est, tree->controlMean, tree->treatMean, 
-    //      &(tree->risk), wt, treatment, treatment1, IV, ct.max_y, split_alpha, train_to_est_ratio);
-    // } else if (split_Rule == 7) {
-    //     // fitD
-    //     (*ct_eval) (n, ct.ydata, tree->response_est, tree->controlMean, tree->treatMean, 
-    //      &(tree->risk), wt, treatment, ct.max_y, split_alpha, train_to_est_ratio);
-    // } else if (split_Rule == 8) {
-    //     //tstatsD:
-    //     (*ct_eval) (n, ct.ydata, tree->response_est, tree->controlMean, tree->treatMean, 
-    //      &(tree->risk), wt, treatment, ct.max_y, split_alpha, train_to_est_ratio);
-    // } else if (split_Rule == 9) {
-    //     // user (temporarily set as CT)
-    //     (*ct_eval) (n, ct.ydata, tree->response_est, tree->controlMean, tree->treatMean, 
-    //      &(tree->risk), wt, treatment, ct.max_y, split_alpha, train_to_est_ratio);
-    // } else if (split_Rule == 10) {
-    //     // userD (temporarily set as CTD)
-    //     (*ct_eval) (n, ct.ydata, tree->response_est, tree->controlMean, tree->treatMean, 
-    //      &(tree->risk), wt, treatment, ct.max_y, split_alpha, train_to_est_ratio);
-    // }else if (split_Rule == 11) {
-    //   // policy
-    //   (*ct_eval) (n, ct.ydata, tree->response_est, tree->controlMean, tree->treatMean, 
-    //    &(tree->risk), wt, treatment, ct.max_y, split_alpha, train_to_est_ratio);
-    // } else if (split_Rule == 12) {
-    //   // policyD
-    //   (*ct_eval) (n, ct.ydata, tree->response_est, tree->controlMean, tree->treatMean, 
-    //    &(tree->risk), wt, treatment, ct.max_y, split_alpha, train_to_est_ratio);
-    // }
-
-
 
     tree->complexity = tree->risk;
     ct.alpha = ct.complexity * tree->risk;
-
-
-
-    // midpoint_time = clock();
-    // if(ifShowTime == 1){
-    //     Rprintf("Time check point one: %.3f \n", ((double) (midpoint_time - start_time)) / CLOCKS_PER_SEC);
-    // }
-        
-
-
 
 
     /*
@@ -521,12 +451,6 @@ IVTree(SEXP ncat2, SEXP split_Rule2, SEXP bucketnum2, SEXP bucketMax2, SEXP meth
         } while (j >= nodecount);
     }
 
-
-
-    // end_time = clock();
-    // if(ifShowTime == 1){    
-    //     Rprintf("Time check point two: %.3f \n", ((double) (end_time - start_time)) / CLOCKS_PER_SEC);
-    // }
 
     /* Create the output list */
     int nout = catcount > 0 ? 7 : 6;

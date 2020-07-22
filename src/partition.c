@@ -60,8 +60,8 @@ partition(int nodenum, pNode splitnode, double *sumrisk, int n1, int n2,
 		      j = -(1 + j);   /* if missing, value = -(1+ true index) */
 	      ct.wtemp[k] = ct.wt[j];
           ct.trtemp[k] = ct.treatment[j];
-	  ct.tr1temp[k] = ct.treatment1[j];
-	  ct.IVtemp[k] = ct.IV[j];
+          ct.tr1temp[k] = ct.treatment1[j];
+          ct.IVtemp[k] = ct.IV[j];
 	      ct.ytemp[k] = ct.ydata[j];
 	      twt += ct.wt[j];
           ttr += ct.treatment[j] * ct.wt[j];
@@ -82,56 +82,6 @@ partition(int nodenum, pNode splitnode, double *sumrisk, int n1, int n2,
 	    else{
 	    	Rprintf("Invalide split_Rule in partition.c file");
 	    }
-
-	    // if (split_Rule == 1) {
-	    //     // tot
-	    //     (*ct_eval) (n, ct.ytemp, me->response_est, me->controlMean, me->treatMean, 
-     //      &(me->risk), ct.wtemp, ct.trtemp, ct.max_y, ct.propensity);
-	    // } else if (split_Rule == 2) {
-	    //     // ct
-	    //     (*ct_eval) (n, ct.ytemp, me->response_est, me->controlMean, me->treatMean, 
-     //      &(me->risk), ct.wtemp, ct.trtemp, ct.tr1temp, ct.IVtemp, ct.max_y, alpha, train_to_est_ratio);
-	    // } else if (split_Rule == 3) {
-	    //     // fit
-	    //     (*ct_eval) (n, ct.ytemp, me->response_est, me->controlMean, me->treatMean,
-     //      &(me->risk), ct.wtemp, ct.trtemp, ct.max_y, alpha, train_to_est_ratio);
-	    // } else if (split_Rule == 4) {
-	    //     //tstats
-	    //     (*ct_eval) (n, ct.ytemp, me->response_est, me->controlMean, me->treatMean, 
-     //      &(me->risk), ct.wtemp, ct.trtemp, ct.max_y, alpha, train_to_est_ratio);
-	    // } else if (split_Rule == 5) {
-	    //     // totD
-	    //     (*ct_eval) (n, ct.ytemp, me->response_est, me->controlMean, me->treatMean,
-     //      &(me->risk), ct.wtemp, ct.trtemp, ct.max_y, ct.propensity);
-	    // } else if (split_Rule == 6) {
-	    //     // CTD
-	    //     (*ct_eval) (n, ct.ytemp, me->response_est, me->controlMean, me->treatMean, 
-     //      &(me->risk), ct.wtemp, ct.trtemp, ct.tr1temp, ct.IVtemp, ct.max_y, alpha, train_to_est_ratio);
-	    // } else if (split_Rule == 7) {
-	    //     //fitD
-	    //     (*ct_eval) (n, ct.ytemp, me->response_est, me->controlMean, me->treatMean, 
-     //      &(me->risk), ct.wtemp, ct.trtemp, ct.max_y, alpha, train_to_est_ratio);
-	    // } else if (split_Rule == 8) {
-	    //     //tstatsD
-	    //     (*ct_eval) (n, ct.ytemp, me->response_est, me->controlMean, me->treatMean, 
-     //      &(me->risk), ct.wtemp, ct.trtemp, ct.max_y, alpha, train_to_est_ratio);
-	    // } else if (split_Rule == 9) {
-	    //     // user (temporarily set as CT)
-	    //     (*ct_eval) (n, ct.ytemp, me->response_est, me->controlMean, me->treatMean, 
-     //      &(me->risk), ct.wtemp, ct.trtemp, ct.max_y, alpha, train_to_est_ratio);
-	    // } else if (split_Rule == 10) {
-	    //     // userD (temporarily set as CTD)
-	    //     (*ct_eval) (n, ct.ytemp, me->response_est, me->controlMean, me->treatMean, 
-     //      &(me->risk), ct.wtemp, ct.trtemp, ct.max_y, alpha, train_to_est_ratio);
-	    // }else if (split_Rule == 11) {
-	    //   // policy (temporarily set as CTD)
-	    //   (*ct_eval) (n, ct.ytemp, me->response_est, me->controlMean, me->treatMean, 
-     //    &(me->risk), ct.wtemp, ct.trtemp, ct.max_y, alpha, train_to_est_ratio);
-	    // }else if (split_Rule == 12) {
-	    //   // policyD (temporarily set as CTD)
-	    //   (*ct_eval) (n, ct.ytemp, me->response_est, me->controlMean, me->treatMean, 
-     //    &(me->risk), ct.wtemp, ct.trtemp, ct.max_y, alpha, train_to_est_ratio);
-	    // }
 
 	    me->num_obs = n;
 	    me->sum_wt = twt;

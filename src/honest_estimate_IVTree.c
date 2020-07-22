@@ -205,21 +205,13 @@ next:
         int origindx = invertdx[i];
         //base case
         if (trs[origindx] != 0 && cons[origindx] != 0) {
-            //double tr_mean = trsums[origindx] * 1.0 / trs[origindx];
-            //double con_mean = consums[origindx] * 1.0 / cons[origindx];
-            //yval1[origindx] = tr_mean - con_mean;            
-            //dev1[origindx] = trsqrsums[origindx] - trs[origindx] * tr_mean * tr_mean 
-            //    + consqrsums[origindx] - cons[origindx] * con_mean * con_mean;
             double alpha_1 = (n1[origindx] * xz_sum[origindx] - x_sum[origindx] * z_sum[origindx]) / (n1[origindx] * xy_sum[origindx] - x_sum[origindx] * y_sum[origindx]);
             double alpha_0 = (z_sum[origindx] - alpha_1 * y_sum[origindx]) / n1[origindx];
-            // double beta_1 = (n1[origindx] * xy_sum[origindx] - x_sum[origindx] * y_sum[origindx]) / (n1[origindx] * xx_sum[origindx] - x_sum[origindx] * x_sum[origindx]);
-            // double beta_0 = (y_sum[origindx] - beta_1 * x_sum[origindx]) / n1[origindx];
             yval1[origindx] = alpha_1;
             double numerator = (zz_sum[origindx] + n1[origindx] * alpha_0 * alpha_0 + alpha_1 * alpha_1 * yy_sum[origindx] - 2 * alpha_0 * z_sum[origindx] - 2 * alpha_1 * yz_sum[origindx] + 2 * alpha_0 * alpha_1 * y_sum[origindx])/(n1[origindx]-2);
             double denominator = 1/(xx_sum[origindx] / n1[origindx] - (x_sum[origindx] / n1[origindx]) * (x_sum[origindx] / n1[origindx])) *
                               (xy_sum[origindx] / n1[origindx] - x_sum[origindx]/n1[origindx] * y_sum[origindx] / n1[origindx]) * 
                               (xy_sum[origindx] / n1[origindx] - x_sum[origindx]/n1[origindx] * y_sum[origindx] / n1[origindx]) * n1[origindx];  
-            //double denominator = n1[origindx] * beta_0 * beta_0 + beta_1 * beta_1 * xx_sum[origindx] + y_sum[origindx] * y_sum[origindx] / n1[origindx] + 2 * beta_0 * beta_1 * x_sum[origindx] - 2 * beta_0 * y_sum[origindx] - 2 * beta_1 * x_sum[origindx] * y_sum[origindx] / n1[origindx];
             dev1[origindx] = numerator / denominator;
         } else {
             int parentdx = invertdx[i / 2];
