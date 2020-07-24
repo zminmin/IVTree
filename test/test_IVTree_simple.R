@@ -44,4 +44,4 @@ for(i in 1:200){
 }
 
 
-# rpart.plot(ivtree)
+rpart.plot(ivtree)
