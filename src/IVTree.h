@@ -34,11 +34,11 @@
 #else
 #define EXTERN extern
 #endif
-
-#ifndef DEBUG
-#define DEBUG 1
-#endif
-
+/*
+*#ifndef DEBUG
+*#define DEBUG 1
+*#endif
+*/
 EXTERN struct {
     double complexity;
     double alpha;
