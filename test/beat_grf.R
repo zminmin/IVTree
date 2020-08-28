@@ -1,26 +1,137 @@
+library(grf)
+
+centering <- function(X, Y, W, Z){
+
+forest.Y <- regression_forest(X, Y)
+Y.hat = predict(forest.Y)$predictions
+        
+forest.W <- regression_forest(X, W)
+W.hat = predict(forest.W)$predictions
+
+forest.Z <- regression_forest(X, Z)
+Z.hat = predict(forest.Z)$predictions
+        
+data <- cbind(X, Y = Y - Y.hat, T = W - W.hat, IV = Z - Z.hat)
+
+data 
+}
 
 
-
-data_build_01 <- function(n, m){
+data_build_01 <- function(n, m, cp1, cp2){
 # output form: (X1 - Xm, IV, T, Y)
 
-	# generate X
-	x_number <- m
-	dt <- sample(c(0, 0.5, 1, 1.5, 2), size = x_number*n, replace = TRUE, prob = c(0.15, 0.2, 0.3, 0.2, 0.15))
-	dim(dt) <- c(n, x_number)
+	dt <- rnorm(n * m, mean=0, sd=sqrt(1))
+	dim(dt) <- c(n, m)
 	dt <- data.frame(dt)
-	names(dt) <- c(paste0('X', 1:x_number))
+	names(dt) <- c(paste0('X', 1:m))	
+	dt$eta <- rowSums(dt[,1:round(0.8*m)])
 
-	# generate treatment and IV
+# linear
+	# dt$kappa <- dt$X2
+# symmetric 
+	# dt$kappa <- (dt$X2>0)*(-dt$X2+1) + (dt$X2<0)*(dt$X2+1)
+# asymmetrical
+	# dt$kappa <- (dt$X2>0)*(-dt$X2+1) + (dt$X2<0)*(dt$X2+2)
+# sin
+	# dt$kappa <- sin(pi*dt$X2)
+# cos
+	# dt$kappa <- cos(pi*dt$X2)
+# cos2
+	dt$kappa <- cos(2*pi*dt$X2)
+
 	dt$phi <- rnorm(n, mean=0, sd=sqrt(1))
 	dt$IV <- rnorm(n)
-	dt$T <- dt$IV + dt$phi
+	dt$T <- cp1*dt$IV + cp2*dt$phi + sqrt(2/pi-cp1^2-cp2^2)*rnorm(n)
 	dt$T <- (sign(dt$T)+1)/2
-	
-	# generate outcome
-	dt$Y <- dt$X1 + dt$X2 + dt$T*(-(dt$X2-1)^2+2) + dt$phi  + rnorm(n, sd = 0.1)
+	dt$Y <- dt$eta + dt$T * dt$kappa + dt$phi + rnorm(n, sd = 0.1)
+	dt1 <- centering(dt[,1:m], dt$Y, dt$T, dt$IV)
+	dt1$kappa = dt$kappa
+	dt1$T1 = dt$T
+	dt1$IV = dt$IV
+	dt1
 
-	return(dt)
+	return(dt1)
+}
+
+
+data_build_02 <- function(n, m, cp1, cp2){
+# output form: (X1 - Xm, IV, T, Y)
+
+	dt <- rnorm(n * m, mean=0, sd=sqrt(1))
+	dim(dt) <- c(n, m)
+	dt <- data.frame(dt)
+	names(dt) <- c(paste0('X', 1:m))	
+	dt$eta <- rowSums(dt[,1:round(0.8*m)])
+	
+# linear
+	# dt$kappa <- dt$X2
+# symmetric 
+	# dt$kappa <- (dt$X2>0)*(-dt$X2+1) + (dt$X2<0)*(dt$X2+1)
+# asymmetrical
+	# dt$kappa <- (dt$X2>0)*(-dt$X2+1) + (dt$X2<0)*(dt$X2+2)
+# sin
+	# dt$kappa <- sin(pi*dt$X2)
+# cos
+	# dt$kappa <- cos(pi*dt$X2)
+# cos2
+	dt$kappa <- cos(2*pi*dt$X2)
+
+	dt$phi <- rnorm(n, mean=0, sd=sqrt(1))
+	dt$IV <- rnorm(n)
+	# only half IV works
+	rdom <- rbinom(n, 1, 0.5)
+	dt$T <- cp1*dt$IV*rdom + cp2*dt$phi + sqrt(2/pi-cp1^2-cp2^2)*rnorm(n)
+	dt$T <- (sign(dt$T)+1)/2
+	dt$Y <- dt$eta + dt$T * dt$kappa + dt$phi + rnorm(n, sd = 0.1)
+	dt1 <- centering(dt[,1:m], dt$Y, dt$T, dt$IV)
+	dt1$kappa = dt$kappa
+	dt1$T1 = dt$T
+	dt1$IV = dt$IV
+	dt1
+
+	return(dt1)
+}
+
+
+data_build_03 <- function(n, m, cp1, cp2){
+# output form: (X1 - Xm, IV, T, Y)
+
+	dt <- rnorm(n * m, mean=0, sd=sqrt(1))
+	dim(dt) <- c(n, m)
+	dt <- data.frame(dt)
+	names(dt) <- c(paste0('X', 1:m))	
+	dt$eta <- rowSums(dt[,1:round(0.8*m)])
+
+# linear
+	# dt$kappa <- dt$X2
+# symmetric 
+	# dt$kappa <- (dt$X2>0)*(-dt$X2+1) + (dt$X2<0)*(dt$X2+1)
+# asymmetrical
+	# dt$kappa <- (dt$X2>0)*(-dt$X2+1) + (dt$X2<0)*(dt$X2+2)
+# sin
+	# dt$kappa <- sin(pi*dt$X2)
+# cos
+	# dt$kappa <- cos(pi*dt$X2)
+# cos2
+	dt$kappa <- cos(2*pi*dt$X2)
+
+	dt$phi <- rnorm(n, mean=0, sd=sqrt(1))
+	dt$IV <- rnorm(n)
+
+	# IV and T correlated if X2 > 0
+	# dt$T <- (dt$X2>0)*cp1*dt$IV + cp2*dt$phi + sqrt(2/pi-cp1^2-cp2^2)*rnorm(n)
+	# IV and T correlated if X1 > 0
+	dt$T <- (dt$X1>0)*cp1*dt$IV + cp2*dt$phi + sqrt(2/pi-cp1^2-cp2^2)*rnorm(n)
+	
+	dt$T <- (sign(dt$T)+1)/2
+	dt$Y <- dt$eta + dt$T * dt$kappa + dt$phi + rnorm(n, sd = 0.1)
+	dt1 <- centering(dt[,1:m], dt$Y, dt$T, dt$IV)
+	dt1$kappa = dt$kappa
+	dt1$T1 = dt$T
+	dt1$IV = dt$IV
+	dt1
+
+	return(dt1)
 }
 
 
@@ -91,6 +202,10 @@ cutting_point <- function(dt, m){
 		for(j in 1:break_number){
 			left <- dt[which(dt[,i] <= unique_value[j]),]
 			right <- dt[which(dt[,i] > unique_value[j]),]
+			# minimal node is 10
+			if(nrow(left) <= 10 || nrow(right) <= 10){
+				next
+			}
 
 			# get CART children node MSE
 			left_average <- mean(left$rho)
@@ -114,7 +229,7 @@ cutting_point <- function(dt, m){
 			denominator <- sum((left$IV - left_average_IV)*(left$T - left_average_treatment))
 			if(abs(denominator)<0.0001){
 				print("zero denominator in left node")
-				return(0)
+				next
 			}
 			left_treatment_effect <- numerator / denominator
 
@@ -125,7 +240,7 @@ cutting_point <- function(dt, m){
 			denominator <- sum((right$IV - right_average_IV)*(right$T - right_average_treatment))
 			if(abs(denominator)<0.0001){
 				print("zero denominator in right node")
-				return(0)
+				next
 			}
 			right_treatment_effect <- numerator / denominator			
 
@@ -139,17 +254,28 @@ cutting_point <- function(dt, m){
 		}
 	}
 
-	
+
 	return(list(grf_splitting_feature, grf_splitting_value, ivt_splitting_feature, ivt_splitting_value))
 }
 
 
 
-n = 10000
+n = 1000
 m = 3
-te1 = data_build_01(n, m)
-res = cutting_point(te1, m)
-print(res)
+cp1 = 0.6
+cp2 = 0.5
+times = 100
+result <- matrix(0, times, 4)
+for(i in 1:times){
+	print(i)
+	te1 = data_build_03(n, m, cp1, cp2)
+	res = cutting_point(te1, m)
+	for (j in 1:4) {
+		result[i,j] = res[[j]]
+	}
+}
+colSums(result[,c(1,3)]==2)
+
 
 
 
