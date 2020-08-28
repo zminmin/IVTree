@@ -45,7 +45,7 @@ void CTss(int n, double *y[], double *value, double *con_mean, double *tr_mean,
     double temp0 = 0., temp1 = 0., twt = 0.; /* sum of the weights */ 
     double ttreat = 0.;
     double effect;
-    double tr_var, con_var;
+    // double tr_var, con_var;
     double con_sqr_sum = 0., tr_sqr_sum = 0.;
     double xz_sum = 0., xy_sum = 0., x_sum = 0., y_sum = 0., z_sum = 0.;
     double yz_sum = 0., xx_sum = 0., yy_sum = 0., zz_sum = 0.;
@@ -85,15 +85,44 @@ void CTss(int n, double *y[], double *value, double *con_mean, double *tr_mean,
     *risk = 4 * twt * max_y * max_y - alpha * twt * effect * effect + (1 - alpha) * (1 + train_to_est_ratio) * twt * (numerator / denominator);
 
     // PARAMETER!    
-    if(fabs(n * xy_sum - x_sum * y_sum) <= 0 * n * n){
-        Rprintf("Entered CT.c. Invalid IV.\n");
-        effect = temp1 / ttreat - temp0 / (twt - ttreat);  
-        *value = effect;
-        tr_var = tr_sqr_sum / ttreat - temp1 * temp1 / (ttreat * ttreat);
-        con_var = con_sqr_sum / (twt - ttreat) - temp0 * temp0 / ((twt - ttreat) * (twt - ttreat));
-        *risk = 4 * twt * max_y * max_y - alpha * twt * effect * effect + 
-                (1 - alpha) * (1 + train_to_est_ratio) * twt * (tr_var /ttreat  + con_var / (twt - ttreat));
+    double b1_hat = (n * xy_sum - x_sum * y_sum) / (n * xx_sum - x_sum * x_sum);
+    double y_mean = y_sum / n;
+    double b0_hat = y_mean - b1_hat * x_sum / n;
+    double y_hat_temp = 0.0;
+    double MSM_temp = 0.0;
+    double MSE_temp = 0.0;
+    for(i = 0; i < n; ++i){
+        y_hat_temp = b0_hat + b1_hat * IV[i];
+        MSM_temp += (y_hat_temp - y_mean) * (y_hat_temp - y_mean);
+        MSE_temp += (y_hat_temp - IV[i]) * (y_hat_temp - IV[i]);
     }
+    MSE_temp = MSE_temp / (n-1);
+    if(MSM_temp / MSE_temp < 1.0){
+        Rprintf("Entered CTss (a week IV).\n"); 
+        double alpha_1_temp = (n * yz_sum - y_sum * z_sum) / 
+                              (n * yy_sum - y_sum * y_sum);
+        *value = alpha_1_temp;
+        double alpha_0_temp = (z_sum - alpha_1_temp * y_sum) / n;
+        double mu = 0.0;
+        for (int ji = 0; ji < n; ++ji){
+            mu += (*y[ji] - alpha_0_temp - alpha_1_temp * treatment1[ji]) * 
+                  (*y[ji] - alpha_0_temp - alpha_1_temp * treatment1[ji]);
+        }
+        mu = mu / (n-2);
+        double var_alpha_1_est = mu / (yy_sum - y_sum * y_sum / n);
+        effect = alpha_1_temp;
+        *risk = 4 * twt * max_y * max_y - alpha * twt * effect * effect + 
+                (1 - alpha) * (1 + train_to_est_ratio) * twt * (var_alpha_1_est);
+    }    
+    // if(fabs(n * xy_sum - x_sum * y_sum) <= 0.0 * n * n){
+    //     Rprintf("Entered CTss Invalid IV.\n");
+    //     effect = temp1 / ttreat - temp0 / (twt - ttreat);  
+    //     *value = effect;
+    //     tr_var = tr_sqr_sum / ttreat - temp1 * temp1 / (ttreat * ttreat);
+    //     con_var = con_sqr_sum / (twt - ttreat) - temp0 * temp0 / ((twt - ttreat) * (twt - ttreat));
+    //     *risk = 4 * twt * max_y * max_y - alpha * twt * effect * effect + 
+    //             (1 - alpha) * (1 + train_to_est_ratio) * twt * (tr_var /ttreat  + con_var / (twt - ttreat));
+    // }
             
 }
 
@@ -117,7 +146,7 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
     double left_temp, right_temp;
     int min_node_size = minsize;
     
-    double tr_var, con_var;
+    // double tr_var, con_var;
     double right_sqr_sum, right_tr_sqr_sum, left_sqr_sum, left_tr_sqr_sum;
     double left_tr_var, left_con_var, right_tr_var, right_con_var;
 
@@ -163,17 +192,46 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
 
     node_effect = alpha * temp * temp * right_wt - (1 - alpha) * (1 + train_to_est_ratio) * right_wt * (numerator / denominator);
     
-    // PARAMETER!        
-    if(fabs(right_n * right_xy_sum - right_x_sum * right_y_sum) <= 0 * right_n * right_n){
-            Rprintf("Entered CT.c. Invalid IV.\n");
-            temp = right_tr_sum / right_tr - (right_sum - right_tr_sum) / (right_wt - right_tr);
-            tr_var = right_tr_sqr_sum / right_tr - right_tr_sum * right_tr_sum / (right_tr * right_tr);
-            con_var = (right_sqr_sum - right_tr_sqr_sum) / (right_wt - right_tr)
-                - (right_sum - right_tr_sum) * (right_sum - right_tr_sum) 
-                / ((right_wt - right_tr) * (right_wt - right_tr));
-            node_effect = alpha * temp * temp * right_wt - (1 - alpha) * (1 + train_to_est_ratio) 
-                * right_wt * (tr_var / right_tr  + con_var / (right_wt - right_tr));
+    // PARAMETER! 
+    double right_b1_hat = (right_n * right_xy_sum - right_x_sum * right_y_sum) / (right_n * right_xx_sum - right_x_sum * right_x_sum);
+    double right_y_mean = right_y_sum / right_n;
+    double right_b0_hat = right_y_mean - right_b1_hat * right_x_sum / right_n;
+    double right_y_hat_temp = 0.0;
+    double right_MSM_temp = 0.0;
+    double right_MSE_temp = 0.0;
+    for(int i_i_t = 0; i_i_t <right_n; ++i_i_t){
+        right_y_hat_temp = right_b0_hat + right_b1_hat * IV[i_i_t];
+        right_MSM_temp += (right_y_hat_temp - right_y_mean) * (right_y_hat_temp - right_y_mean);
+        right_MSE_temp += (right_y_hat_temp - IV[i_i_t]) * (right_y_hat_temp - IV[i_i_t]);
     }
+    right_MSE_temp = right_MSE_temp / (right_n-1);
+    if(right_MSM_temp / right_MSE_temp < 1.0){
+        Rprintf("Entered CT parent (a week IV).\n");
+        double alpha_1_temp = (right_n * right_yz_sum - right_y_sum * right_z_sum) / 
+                              (right_n * right_yy_sum - right_y_sum * right_y_sum);
+        double alpha_0_temp = (right_z_sum - alpha_1_temp * right_y_sum) / right_n;
+        double mu = 0.0;
+        for (int ji = 0; ji < right_n; ++ji){
+            mu += (*y[ji] - alpha_0_temp - alpha_1_temp * treatment1[ji]) * 
+                  (*y[ji] - alpha_0_temp - alpha_1_temp * treatment1[ji]);
+        }
+        mu = mu / (right_n-2);
+        double var_alpha_1_est = mu / (right_yy_sum - right_y_sum * right_y_sum / right_n);
+
+        temp = alpha_1_temp;
+        node_effect = alpha * temp * temp * right_wt - (1 - alpha) * (1 + train_to_est_ratio) 
+            * right_wt * (var_alpha_1_est);
+    }       
+    // if(fabs(right_n * right_xy_sum - right_x_sum * right_y_sum) <= 0 * right_n * right_n){
+    //         Rprintf("Entered CT.c. Invalid IV.\n");
+    //         temp = right_tr_sum / right_tr - (right_sum - right_tr_sum) / (right_wt - right_tr);
+    //         tr_var = right_tr_sqr_sum / right_tr - right_tr_sum * right_tr_sum / (right_tr * right_tr);
+    //         con_var = (right_sqr_sum - right_tr_sqr_sum) / (right_wt - right_tr)
+    //             - (right_sum - right_tr_sum) * (right_sum - right_tr_sum) 
+    //             / ((right_wt - right_tr) * (right_wt - right_tr));
+    //         node_effect = alpha * temp * temp * right_wt - (1 - alpha) * (1 + train_to_est_ratio) 
+    //             * right_wt * (tr_var / right_tr  + con_var / (right_wt - right_tr));
+    // }
     
     if (nclass == 0) {
         /* continuous predictor */
@@ -243,19 +301,48 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
                     * left_wt * (numerator / denominator);
 
                 
-                // PARAMETER!                    
-                if(fabs(left_n * left_xy_sum - left_x_sum * left_y_sum) <= 0 * left_n * left_n){
-                    Rprintf("Entered CT.c. Invalid IV.\n");
-                    left_temp = left_tr_sum / left_tr - (left_sum - left_tr_sum) / (left_wt - left_tr);
-                    left_tr_var = left_tr_sqr_sum / left_tr - 
-                        left_tr_sum  * left_tr_sum / (left_tr * left_tr);
-                    left_con_var = (left_sqr_sum - left_tr_sqr_sum) / (left_wt - left_tr)  
-                        - (left_sum - left_tr_sum) * (left_sum - left_tr_sum)
-                        / ((left_wt - left_tr) * (left_wt - left_tr));        
-                    left_effect = alpha * left_temp * left_temp * left_wt
-                            - (1 - alpha) * (1 + train_to_est_ratio) * left_wt 
-                        * (left_tr_var / left_tr + left_con_var / (left_wt - left_tr));
+                // PARAMETER! 
+                double left_b1_hat = (left_n * left_xy_sum - left_x_sum * left_y_sum) / (left_n * left_xx_sum - left_x_sum * left_x_sum);
+                double left_y_mean = left_y_sum / left_n;
+                double left_b0_hat = left_y_mean - left_b1_hat * left_x_sum / left_n;
+                double left_y_hat_temp = 0.0;
+                double left_MSM_temp = 0.0;
+                double left_MSE_temp = 0.0;
+                for(int i_f_t = 0; i_f_t < (i+1); ++i_f_t){
+                    left_y_hat_temp = left_b0_hat + left_b1_hat * IV[i_f_t];
+                    left_MSM_temp += (left_y_hat_temp - left_y_mean) * (left_y_hat_temp - left_y_mean);
+                    left_MSE_temp += (left_y_hat_temp - IV[i_f_t]) * (left_y_hat_temp - IV[i_f_t]);
                 }
+                left_MSE_temp = left_MSE_temp / (left_n-1);
+                if(left_MSM_temp / left_MSE_temp < 1.0){
+                    Rprintf("Entered CT left (a week IV).\n");
+                    double alpha_1_temp = (left_n * left_yz_sum - left_y_sum * left_z_sum) / 
+                                          (left_n * left_yy_sum - left_y_sum * left_y_sum);
+                    double alpha_0_temp = (left_z_sum - alpha_1_temp * left_y_sum) / left_n;
+                    double mu = 0.0;
+                    for (int ji = 0; ji < left_n; ++ji){
+                        mu += (*y[ji] - alpha_0_temp - alpha_1_temp * treatment1[ji]) * 
+                              (*y[ji] - alpha_0_temp - alpha_1_temp * treatment1[ji]);
+                    }
+                    mu = mu / (left_n-2);
+                    double var_alpha_1_est = mu / (left_yy_sum - left_y_sum * left_y_sum / left_n);
+
+                    left_temp = alpha_1_temp;
+                    left_effect = alpha * left_temp * left_temp * left_wt
+                            - (1 - alpha) * (1 + train_to_est_ratio) * left_wt * (var_alpha_1_est);
+                }                    
+                // if(fabs(left_n * left_xy_sum - left_x_sum * left_y_sum) <= 0 * left_n * left_n){
+                //     Rprintf("Entered CT.c. Invalid IV.\n");
+                //     left_temp = left_tr_sum / left_tr - (left_sum - left_tr_sum) / (left_wt - left_tr);
+                //     left_tr_var = left_tr_sqr_sum / left_tr - 
+                //         left_tr_sum  * left_tr_sum / (left_tr * left_tr);
+                //     left_con_var = (left_sqr_sum - left_tr_sqr_sum) / (left_wt - left_tr)  
+                //         - (left_sum - left_tr_sum) * (left_sum - left_tr_sum)
+                //         / ((left_wt - left_tr) * (left_wt - left_tr));        
+                //     left_effect = alpha * left_temp * left_temp * left_wt
+                //             - (1 - alpha) * (1 + train_to_est_ratio) * left_wt 
+                //         * (left_tr_var / left_tr + left_con_var / (left_wt - left_tr));
+                // }
                 
 
                 alpha_1 = (right_n * right_xz_sum - right_x_sum * right_z_sum) / (right_n * right_xy_sum - right_x_sum * right_y_sum);
@@ -272,19 +359,48 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
                      * right_wt * (numerator / denominator);
 
 
-                // PARAMETER!                    
-                if(fabs(right_n * right_xy_sum - right_x_sum * right_y_sum) <= 0 * right_n * right_n){
-                    Rprintf("Entered CT.c. Invalid IV.\n");
-                    right_temp = right_tr_sum / right_tr - (right_sum - right_tr_sum) / (right_wt - right_tr);
-                    right_tr_var = right_tr_sqr_sum / right_tr -
-                        right_tr_sum * right_tr_sum / (right_tr * right_tr);
-                    right_con_var = (right_sqr_sum - right_tr_sqr_sum) / (right_wt - right_tr)
-                        - (right_sum - right_tr_sum) * (right_sum - right_tr_sum) 
-                        / ((right_wt - right_tr) * (right_wt - right_tr));
-                    right_effect = alpha * right_temp * right_temp * right_wt
-                            - (1 - alpha) * (1 + train_to_est_ratio) * right_wt * 
-                                (right_tr_var / right_tr + right_con_var / (right_wt - right_tr));
+                // PARAMETER!
+                right_b1_hat = (right_n * right_xy_sum - right_x_sum * right_y_sum) / (right_n * right_xx_sum - right_x_sum * right_x_sum);
+                right_y_mean = right_y_sum / right_n;
+                right_b0_hat = right_y_mean - right_b1_hat * right_x_sum / right_n;
+                right_y_hat_temp = 0.0;
+                right_MSM_temp = 0.0;
+                right_MSE_temp = 0.0;
+                for(int i_f_t = (i+1); i_f_t < n; ++i_f_t){
+                    right_y_hat_temp = right_b0_hat + right_b1_hat * IV[i_f_t];
+                    right_MSM_temp += (right_y_hat_temp - right_y_mean) * (right_y_hat_temp - right_y_mean);
+                    right_MSE_temp += (right_y_hat_temp - IV[i_f_t]) * (right_y_hat_temp - IV[i_f_t]);
                 }
+                right_MSE_temp = right_MSE_temp / (right_n-1);
+                if(right_MSM_temp / right_MSE_temp < 1.0){
+                    Rprintf("Entered CT right (a week IV).\n");
+                    double alpha_1_temp = (right_n * right_yz_sum - right_y_sum * right_z_sum) / 
+                                          (right_n * right_yy_sum - right_y_sum * right_y_sum);
+                    double alpha_0_temp = (right_z_sum - alpha_1_temp * right_y_sum) / right_n;
+                    double mu = 0.0;
+                    for (int ji = (i+1); ji < n; ++ji){
+                        mu += (*y[ji] - alpha_0_temp - alpha_1_temp * treatment1[ji]) * 
+                              (*y[ji] - alpha_0_temp - alpha_1_temp * treatment1[ji]);
+                    }
+                    mu = mu / (right_n-2);
+                    double var_alpha_1_est = mu / (right_yy_sum - right_y_sum * right_y_sum / right_n);
+
+                    right_temp = alpha_1_temp;
+                    right_effect = alpha * right_temp * right_temp * right_wt
+                            - (1 - alpha) * (1 + train_to_est_ratio) * right_wt * (var_alpha_1_est);                   
+                }                    
+                // if(fabs(right_n * right_xy_sum - right_x_sum * right_y_sum) <= 0 * right_n * right_n){
+                //     Rprintf("Entered CT.c. Invalid IV.\n");
+                //     right_temp = right_tr_sum / right_tr - (right_sum - right_tr_sum) / (right_wt - right_tr);
+                //     right_tr_var = right_tr_sqr_sum / right_tr -
+                //         right_tr_sum * right_tr_sum / (right_tr * right_tr);
+                //     right_con_var = (right_sqr_sum - right_tr_sqr_sum) / (right_wt - right_tr)
+                //         - (right_sum - right_tr_sum) * (right_sum - right_tr_sum) 
+                //         / ((right_wt - right_tr) * (right_wt - right_tr));
+                //     right_effect = alpha * right_temp * right_temp * right_wt
+                //             - (1 - alpha) * (1 + train_to_est_ratio) * right_wt * 
+                //                 (right_tr_var / right_tr + right_con_var / (right_wt - right_tr));
+                // }
 
 
                 temp = left_effect + right_effect - node_effect;
