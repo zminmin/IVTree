@@ -14,6 +14,8 @@
 #define _(String) (String)
 #endif
 
+#define F_test_threshold 3.0
+
 /*
  * Memory defined with R_alloc is removed automatically
  *  That with "CALLOC" I have to remove myself.  Use the

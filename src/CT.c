@@ -88,26 +88,18 @@ void CTss(int n, double *y[], double *value, double *con_mean, double *tr_mean,
     double b1_hat = (n * xy_sum - x_sum * y_sum) / (n * xx_sum - x_sum * x_sum);
     double y_mean = y_sum / n;
     double b0_hat = y_mean - b1_hat * x_sum / n;
-    double y_hat_temp = 0.0;
-    double MSM_temp = 0.0;
-    double MSE_temp = 0.0;
-    for(i = 0; i < n; ++i){
-        y_hat_temp = b0_hat + b1_hat * IV[i];
-        MSM_temp += (y_hat_temp - y_mean) * (y_hat_temp - y_mean);
-        MSE_temp += (y_hat_temp - IV[i]) * (y_hat_temp - IV[i]);
-    }
-    MSE_temp = MSE_temp / (n-1);
-    if(MSM_temp / MSE_temp < 1.0){
+    double MSM_temp = b1_hat * b1_hat * xx_sum + 2.0 * b0_hat * b1_hat * x_sum - 2.0 * n * b0_hat * y_mean 
+                      - 2.0 * b1_hat * y_mean * x_sum + n * b0_hat * b0_hat + n * y_mean * y_mean;
+    double MSE_temp = n * b0_hat * b0_hat + 2.0 * b0_hat * b1_hat * y_sum - 2.0 * b0_hat * y_sum
+                      - 2.0 * b1_hat * yy_sum + b1_hat * b1_hat * yy_sum + yy_sum;
+    MSE_temp = MSE_temp / (n-2);
+    if(MSM_temp / MSE_temp < F_test_threshold){
         Rprintf("Entered CTss (a week IV).\n"); 
-        double alpha_1_temp = (n * yz_sum - y_sum * z_sum) / 
-                              (n * yy_sum - y_sum * y_sum);
+        double alpha_1_temp = (n * yz_sum - y_sum * z_sum) / (n * yy_sum - y_sum * y_sum);
         *value = alpha_1_temp;
         double alpha_0_temp = (z_sum - alpha_1_temp * y_sum) / n;
-        double mu = 0.0;
-        for (int ji = 0; ji < n; ++ji){
-            mu += (*y[ji] - alpha_0_temp - alpha_1_temp * treatment1[ji]) * 
-                  (*y[ji] - alpha_0_temp - alpha_1_temp * treatment1[ji]);
-        }
+        double mu = zz_sum - 2.0 * alpha_0_temp * z_sum - 2.0 * alpha_1_temp * yz_sum
+                    + 2.0 * alpha_0_temp * alpha_1_temp * y_sum + n * alpha_0_temp * alpha_0_temp + alpha_1_temp * alpha_1_temp * yy_sum;
         mu = mu / (n-2);
         double var_alpha_1_est = mu / (yy_sum - y_sum * y_sum / n);
         effect = alpha_1_temp;
@@ -196,25 +188,17 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
     double right_b1_hat = (right_n * right_xy_sum - right_x_sum * right_y_sum) / (right_n * right_xx_sum - right_x_sum * right_x_sum);
     double right_y_mean = right_y_sum / right_n;
     double right_b0_hat = right_y_mean - right_b1_hat * right_x_sum / right_n;
-    double right_y_hat_temp = 0.0;
-    double right_MSM_temp = 0.0;
-    double right_MSE_temp = 0.0;
-    for(int i_i_t = 0; i_i_t <right_n; ++i_i_t){
-        right_y_hat_temp = right_b0_hat + right_b1_hat * IV[i_i_t];
-        right_MSM_temp += (right_y_hat_temp - right_y_mean) * (right_y_hat_temp - right_y_mean);
-        right_MSE_temp += (right_y_hat_temp - IV[i_i_t]) * (right_y_hat_temp - IV[i_i_t]);
-    }
-    right_MSE_temp = right_MSE_temp / (right_n-1);
-    if(right_MSM_temp / right_MSE_temp < 1.0){
+    double right_MSM_temp = right_b1_hat * right_b1_hat * right_xx_sum + 2.0 * right_b0_hat * right_b1_hat * right_x_sum - 2.0 * right_n * right_b0_hat * right_y_mean 
+                            - 2.0 * right_b1_hat * right_y_mean * right_x_sum + right_n * right_b0_hat * right_b0_hat + right_n * right_y_mean * right_y_mean;
+    double right_MSE_temp = right_n * right_b0_hat * right_b0_hat + 2.0 * right_b0_hat * right_b1_hat * right_y_sum - 2.0 * right_b0_hat * right_y_sum
+                            - 2.0 * right_b1_hat * right_yy_sum + right_b1_hat * right_b1_hat * right_yy_sum + right_yy_sum;
+    right_MSE_temp = right_MSE_temp / (right_n-2);
+    if(right_MSM_temp / right_MSE_temp < F_test_threshold){
         Rprintf("Entered CT parent (a week IV).\n");
-        double alpha_1_temp = (right_n * right_yz_sum - right_y_sum * right_z_sum) / 
-                              (right_n * right_yy_sum - right_y_sum * right_y_sum);
+        double alpha_1_temp = (right_n * right_yz_sum - right_y_sum * right_z_sum) / (right_n * right_yy_sum - right_y_sum * right_y_sum);
         double alpha_0_temp = (right_z_sum - alpha_1_temp * right_y_sum) / right_n;
-        double mu = 0.0;
-        for (int ji = 0; ji < right_n; ++ji){
-            mu += (*y[ji] - alpha_0_temp - alpha_1_temp * treatment1[ji]) * 
-                  (*y[ji] - alpha_0_temp - alpha_1_temp * treatment1[ji]);
-        }
+        double mu = right_zz_sum - 2.0 * alpha_0_temp * right_z_sum - 2.0 * alpha_1_temp * right_yz_sum
+                        + 2.0 * alpha_0_temp * alpha_1_temp * right_y_sum + right_n * alpha_0_temp * alpha_0_temp + alpha_1_temp * alpha_1_temp * right_yy_sum;
         mu = mu / (right_n-2);
         double var_alpha_1_est = mu / (right_yy_sum - right_y_sum * right_y_sum / right_n);
 
@@ -305,25 +289,17 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
                 double left_b1_hat = (left_n * left_xy_sum - left_x_sum * left_y_sum) / (left_n * left_xx_sum - left_x_sum * left_x_sum);
                 double left_y_mean = left_y_sum / left_n;
                 double left_b0_hat = left_y_mean - left_b1_hat * left_x_sum / left_n;
-                double left_y_hat_temp = 0.0;
-                double left_MSM_temp = 0.0;
-                double left_MSE_temp = 0.0;
-                for(int i_f_t = 0; i_f_t < (i+1); ++i_f_t){
-                    left_y_hat_temp = left_b0_hat + left_b1_hat * IV[i_f_t];
-                    left_MSM_temp += (left_y_hat_temp - left_y_mean) * (left_y_hat_temp - left_y_mean);
-                    left_MSE_temp += (left_y_hat_temp - IV[i_f_t]) * (left_y_hat_temp - IV[i_f_t]);
-                }
-                left_MSE_temp = left_MSE_temp / (left_n-1);
-                if(left_MSM_temp / left_MSE_temp < 1.0){
+                double left_MSM_temp = left_b1_hat * left_b1_hat * left_xx_sum + 2.0 * left_b0_hat * left_b1_hat * left_x_sum - 2.0 * left_n * left_b0_hat * left_y_mean 
+                                       - 2.0 * left_b1_hat * left_y_mean * left_x_sum + left_n * left_b0_hat * left_b0_hat + left_n * left_y_mean * left_y_mean;
+                double left_MSE_temp = left_n * left_b0_hat * left_b0_hat + 2.0 * left_b0_hat * left_b1_hat * left_y_sum - 2.0 * left_b0_hat * left_y_sum
+                                       - 2.0 * left_b1_hat * left_yy_sum + left_b1_hat * left_b1_hat * left_yy_sum + left_yy_sum;
+                left_MSE_temp = left_MSE_temp / (left_n-2);
+                if(left_MSM_temp / left_MSE_temp < F_test_threshold){
                     Rprintf("Entered CT left (a week IV).\n");
-                    double alpha_1_temp = (left_n * left_yz_sum - left_y_sum * left_z_sum) / 
-                                          (left_n * left_yy_sum - left_y_sum * left_y_sum);
+                    double alpha_1_temp = (left_n * left_yz_sum - left_y_sum * left_z_sum) / (left_n * left_yy_sum - left_y_sum * left_y_sum);
                     double alpha_0_temp = (left_z_sum - alpha_1_temp * left_y_sum) / left_n;
-                    double mu = 0.0;
-                    for (int ji = 0; ji < left_n; ++ji){
-                        mu += (*y[ji] - alpha_0_temp - alpha_1_temp * treatment1[ji]) * 
-                              (*y[ji] - alpha_0_temp - alpha_1_temp * treatment1[ji]);
-                    }
+                    double mu = left_zz_sum - 2.0 * alpha_0_temp * left_z_sum - 2.0 * alpha_1_temp * left_yz_sum
+                                + 2.0 * alpha_0_temp * alpha_1_temp * left_y_sum + left_n * alpha_0_temp * alpha_0_temp + alpha_1_temp * alpha_1_temp * left_yy_sum;
                     mu = mu / (left_n-2);
                     double var_alpha_1_est = mu / (left_yy_sum - left_y_sum * left_y_sum / left_n);
 
@@ -363,25 +339,17 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
                 right_b1_hat = (right_n * right_xy_sum - right_x_sum * right_y_sum) / (right_n * right_xx_sum - right_x_sum * right_x_sum);
                 right_y_mean = right_y_sum / right_n;
                 right_b0_hat = right_y_mean - right_b1_hat * right_x_sum / right_n;
-                right_y_hat_temp = 0.0;
-                right_MSM_temp = 0.0;
-                right_MSE_temp = 0.0;
-                for(int i_f_t = (i+1); i_f_t < n; ++i_f_t){
-                    right_y_hat_temp = right_b0_hat + right_b1_hat * IV[i_f_t];
-                    right_MSM_temp += (right_y_hat_temp - right_y_mean) * (right_y_hat_temp - right_y_mean);
-                    right_MSE_temp += (right_y_hat_temp - IV[i_f_t]) * (right_y_hat_temp - IV[i_f_t]);
-                }
-                right_MSE_temp = right_MSE_temp / (right_n-1);
-                if(right_MSM_temp / right_MSE_temp < 1.0){
+                right_MSM_temp = right_b1_hat * right_b1_hat * right_xx_sum + 2.0 * right_b0_hat * right_b1_hat * right_x_sum - 2.0 * right_n * right_b0_hat * right_y_mean 
+                                 - 2.0 * right_b1_hat * right_y_mean * right_x_sum + right_n * right_b0_hat * right_b0_hat + right_n * right_y_mean * right_y_mean;
+                right_MSE_temp = right_n * right_b0_hat * right_b0_hat + 2.0 * right_b0_hat * right_b1_hat * right_y_sum - 2.0 * right_b0_hat * right_y_sum
+                                 - 2.0 * right_b1_hat * right_yy_sum + right_b1_hat * right_b1_hat * right_yy_sum + right_yy_sum;
+                right_MSE_temp = right_MSE_temp / (right_n-2);
+                if(right_MSM_temp / right_MSE_temp < F_test_threshold){
                     Rprintf("Entered CT right (a week IV).\n");
-                    double alpha_1_temp = (right_n * right_yz_sum - right_y_sum * right_z_sum) / 
-                                          (right_n * right_yy_sum - right_y_sum * right_y_sum);
+                    double alpha_1_temp = (right_n * right_yz_sum - right_y_sum * right_z_sum) / (right_n * right_yy_sum - right_y_sum * right_y_sum);
                     double alpha_0_temp = (right_z_sum - alpha_1_temp * right_y_sum) / right_n;
-                    double mu = 0.0;
-                    for (int ji = (i+1); ji < n; ++ji){
-                        mu += (*y[ji] - alpha_0_temp - alpha_1_temp * treatment1[ji]) * 
-                              (*y[ji] - alpha_0_temp - alpha_1_temp * treatment1[ji]);
-                    }
+                    double mu = right_zz_sum - 2.0 * alpha_0_temp * right_z_sum - 2.0 * alpha_1_temp * right_yz_sum
+                                + 2.0 * alpha_0_temp * alpha_1_temp * right_y_sum + right_n * alpha_0_temp * alpha_0_temp + alpha_1_temp * alpha_1_temp * right_yy_sum;
                     mu = mu / (right_n-2);
                     double var_alpha_1_est = mu / (right_yy_sum - right_y_sum * right_y_sum / right_n);
 

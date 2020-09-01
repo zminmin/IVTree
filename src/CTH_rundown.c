@@ -112,26 +112,65 @@ CTH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k
         }
         
         double alpha_1;
-// PARAMETER!	    
-    	if (fabs(n * xy_sum - x_sum * y_sum) <= 0.1 * n * n){
-    		alpha_1 = 0.;
-    	}
-    	else{
-    		alpha_1 = (n * xz_sum - x_sum * z_sum) / (n * xy_sum - x_sum * y_sum);
-    	}
-        double effect = alpha_1;
-        double alpha_0 = (z_sum - alpha_1 * y_sum) / n;
+// PARAMETER!
+        double b1_hat = (n * xy_sum - x_sum * y_sum) / (n * xx_sum - x_sum * x_sum);
+        double y_mean = y_sum / n;
+        double b0_hat = y_mean - b1_hat * x_sum / n;
+        double MSM_temp = b1_hat * b1_hat * xx_sum + 2.0 * b0_hat * b1_hat * x_sum - 2.0 * n * b0_hat * y_mean 
+                          - 2.0 * b1_hat * y_mean * x_sum + n * b0_hat * b0_hat + n * y_mean * y_mean;
+        double MSE_temp = n * b0_hat * b0_hat + 2.0 * b0_hat * b1_hat * y_sum - 2.0 * b0_hat * y_sum
+                          - 2.0 * b1_hat * yy_sum + b1_hat * b1_hat * yy_sum + yy_sum;
+        MSE_temp = MSE_temp / (n-2); 
+        if(MSM_temp / MSE_temp < F_test_threshold){
+            Rprintf("Entered CTH_rundown (a week IV).\n"); 
+            alpha_1 = (n * yz_sum - y_sum * z_sum) / (n * yy_sum - y_sum * y_sum);
+            
+            double effect = alpha_1;
+            double alpha_0 = (z_sum - alpha_1 * y_sum) / n;
 
-        double numerator = (zz_sum + n * alpha_0 * alpha_0 + alpha_1 * alpha_1 * yy_sum - 2 * alpha_0 * z_sum - 2 * alpha_1 * yz_sum + 2 * alpha_0 * alpha_1 * y_sum)/n;
-        double denominator =  1 / (xx_sum / n - (x_sum / n) * (x_sum / n)) * (xy_sum / n - x_sum/n * y_sum / n) * (xy_sum / n - x_sum/n * y_sum / n) * n;   
-        double tmp;
-        if (n > 2 && denominator!=0) {
-                tmp = numerator / denominator / (n - 2);
-        } else {
-            tmp = 0.;
-        }  
+            double mu = zz_sum - 2.0 * alpha_0 * z_sum - 2.0 * alpha_1 * yz_sum
+                        + 2.0 * alpha_0 * alpha_1 * y_sum + n * alpha_0 * alpha_0 + alpha_1 * alpha_1 * yy_sum;
+            mu = mu / (n-2);
+            double var_alpha_1_est = mu / (yy_sum - y_sum * y_sum / n);
+
+            xtemp[i] = 4 * ct.max_y * ct.max_y - alpha * effect * effect + (1 + xtrain_to_est_ratio / (ct.NumXval - 1)) * (1 - alpha) * var_alpha_1_est;
+        } 
+        else{
+            alpha_1 = (n * xz_sum - x_sum * z_sum) / (n * xy_sum - x_sum * y_sum);
+
+            double effect = alpha_1;
+            double alpha_0 = (z_sum - alpha_1 * y_sum) / n;
+
+            double numerator = (zz_sum + n * alpha_0 * alpha_0 + alpha_1 * alpha_1 * yy_sum - 2 * alpha_0 * z_sum - 2 * alpha_1 * yz_sum + 2 * alpha_0 * alpha_1 * y_sum)/n;
+            double denominator =  1 / (xx_sum / n - (x_sum / n) * (x_sum / n)) * (xy_sum / n - x_sum/n * y_sum / n) * (xy_sum / n - x_sum/n * y_sum / n) * n;   
+            double tmp;
+            if (n > 2 && denominator!=0) {
+                    tmp = numerator / denominator / (n - 2);
+            } else {
+                tmp = 0.;
+            }  
+            
+            xtemp[i] = 4 * ct.max_y * ct.max_y - alpha * effect * effect + (1 + xtrain_to_est_ratio / (ct.NumXval - 1)) * (1 - alpha) * tmp;
+        } 
+    	// if (fabs(n * xy_sum - x_sum * y_sum) <= 0.1 * n * n){
+    	// 	alpha_1 = 0.;
+    	// }
+    	// else{
+    	// 	alpha_1 = (n * xz_sum - x_sum * z_sum) / (n * xy_sum - x_sum * y_sum);
+    	// }
+        // double effect = alpha_1;
+        // double alpha_0 = (z_sum - alpha_1 * y_sum) / n;
+
+        // double numerator = (zz_sum + n * alpha_0 * alpha_0 + alpha_1 * alpha_1 * yy_sum - 2 * alpha_0 * z_sum - 2 * alpha_1 * yz_sum + 2 * alpha_0 * alpha_1 * y_sum)/n;
+        // double denominator =  1 / (xx_sum / n - (x_sum / n) * (x_sum / n)) * (xy_sum / n - x_sum/n * y_sum / n) * (xy_sum / n - x_sum/n * y_sum / n) * n;   
+        // double tmp;
+        // if (n > 2 && denominator!=0) {
+        //         tmp = numerator / denominator / (n - 2);
+        // } else {
+        //     tmp = 0.;
+        // }  
         
-        xtemp[i] = 4 * ct.max_y * ct.max_y - alpha * effect * effect + (1 + xtrain_to_est_ratio / (ct.NumXval - 1)) * (1 - alpha) * tmp;
+        // xtemp[i] = 4 * ct.max_y * ct.max_y - alpha * effect * effect + (1 + xtrain_to_est_ratio / (ct.NumXval - 1)) * (1 - alpha) * tmp;
     }
     return;
 

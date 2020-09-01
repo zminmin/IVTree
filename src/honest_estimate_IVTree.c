@@ -205,14 +205,36 @@ next:
         int origindx = invertdx[i];
         //base case
         if (trs[origindx] != 0 && cons[origindx] != 0) {
-            double alpha_1 = (n1[origindx] * xz_sum[origindx] - x_sum[origindx] * z_sum[origindx]) / (n1[origindx] * xy_sum[origindx] - x_sum[origindx] * y_sum[origindx]);
-            double alpha_0 = (z_sum[origindx] - alpha_1 * y_sum[origindx]) / n1[origindx];
-            yval1[origindx] = alpha_1;
-            double numerator = (zz_sum[origindx] + n1[origindx] * alpha_0 * alpha_0 + alpha_1 * alpha_1 * yy_sum[origindx] - 2 * alpha_0 * z_sum[origindx] - 2 * alpha_1 * yz_sum[origindx] + 2 * alpha_0 * alpha_1 * y_sum[origindx])/(n1[origindx]-2);
-            double denominator = 1/(xx_sum[origindx] / n1[origindx] - (x_sum[origindx] / n1[origindx]) * (x_sum[origindx] / n1[origindx])) *
-                              (xy_sum[origindx] / n1[origindx] - x_sum[origindx]/n1[origindx] * y_sum[origindx] / n1[origindx]) * 
-                              (xy_sum[origindx] / n1[origindx] - x_sum[origindx]/n1[origindx] * y_sum[origindx] / n1[origindx]) * n1[origindx];  
-            dev1[origindx] = numerator / denominator;
+
+            double b1_hat = (n1[origindx] * xy_sum[origindx] - x_sum[origindx] * y_sum[origindx]) / (n1[origindx] * xx_sum[origindx] - x_sum[origindx] * x_sum[origindx]);
+            double y_mean = y_sum[origindx] / n1[origindx];
+            double b0_hat = y_mean - b1_hat * x_sum[origindx] / n1[origindx];
+            double MSM_temp = b1_hat * b1_hat * xx_sum[origindx] + 2.0 * b0_hat * b1_hat * x_sum[origindx] - 2.0 * n1[origindx] * b0_hat * y_mean 
+                              - 2.0 * b1_hat * y_mean * x_sum[origindx] + n1[origindx] * b0_hat * b0_hat + n1[origindx] * y_mean * y_mean;
+            double MSE_temp = n1[origindx] * b0_hat * b0_hat + 2.0 * b0_hat * b1_hat * y_sum[origindx] - 2.0 * b0_hat * y_sum[origindx]
+                              - 2.0 * b1_hat * yy_sum[origindx] + b1_hat * b1_hat * yy_sum[origindx] + yy_sum[origindx];
+            MSE_temp = MSE_temp / (n1[origindx]-2); 
+            if(MSM_temp / MSE_temp < F_test_threshold){
+                Rprintf("Entered honest_estimate_IVTree (a week IV).\n"); 
+                double alpha_1 = (n1[origindx] * yz_sum[origindx] - y_sum[origindx] * z_sum[origindx]) / (n1[origindx] * yy_sum[origindx] - y_sum[origindx] * y_sum[origindx]);
+                double alpha_0 = (z_sum[origindx] - alpha_1 * y_sum[origindx]) / n1[origindx];
+                yval1[origindx] = alpha_1;
+                double mu = zz_sum[origindx] - 2.0 * alpha_0 * z_sum[origindx] - 2.0 * alpha_1 * yz_sum[origindx]
+                        + 2.0 * alpha_0 * alpha_1 * y_sum[origindx] + n1[origindx] * alpha_0 * alpha_0 + alpha_1 * alpha_1 * yy_sum[origindx];
+                mu = mu / (n1[origindx]-2);
+                double var_alpha_1_est = mu / (yy_sum[origindx] - y_sum[origindx] * y_sum[origindx] / n1[origindx]);
+                dev1[origindx] = var_alpha_1_est;
+            }
+            else{
+                double alpha_1 = (n1[origindx] * xz_sum[origindx] - x_sum[origindx] * z_sum[origindx]) / (n1[origindx] * xy_sum[origindx] - x_sum[origindx] * y_sum[origindx]);
+                double alpha_0 = (z_sum[origindx] - alpha_1 * y_sum[origindx]) / n1[origindx];
+                yval1[origindx] = alpha_1;
+                double numerator = (zz_sum[origindx] + n1[origindx] * alpha_0 * alpha_0 + alpha_1 * alpha_1 * yy_sum[origindx] - 2 * alpha_0 * z_sum[origindx] - 2 * alpha_1 * yz_sum[origindx] + 2 * alpha_0 * alpha_1 * y_sum[origindx])/(n1[origindx]-2);
+                double denominator = 1/(xx_sum[origindx] / n1[origindx] - (x_sum[origindx] / n1[origindx]) * (x_sum[origindx] / n1[origindx])) *
+                                  (xy_sum[origindx] / n1[origindx] - x_sum[origindx]/n1[origindx] * y_sum[origindx] / n1[origindx]) * 
+                                  (xy_sum[origindx] / n1[origindx] - x_sum[origindx]/n1[origindx] * y_sum[origindx] / n1[origindx]) * n1[origindx];  
+                dev1[origindx] = numerator / denominator;                
+            }
         } else {
             int parentdx = invertdx[i / 2];
             yval1[origindx] = yval1[parentdx];
