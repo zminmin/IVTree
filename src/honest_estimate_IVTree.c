@@ -215,7 +215,7 @@ next:
                               - 2.0 * b1_hat * yy_sum[origindx] + b1_hat * b1_hat * yy_sum[origindx] + yy_sum[origindx];
             MSE_temp = MSE_temp / (n1[origindx]-2); 
             if(MSM_temp / MSE_temp < F_test_threshold){
-                Rprintf("Entered honest_estimate_IVTree (a week IV).\n"); 
+            //    Rprintf("Entered honest_estimate_IVTree (a week IV).\n"); 
                 double alpha_1 = (n1[origindx] * yz_sum[origindx] - y_sum[origindx] * z_sum[origindx]) / (n1[origindx] * yy_sum[origindx] - y_sum[origindx] * y_sum[origindx]);
                 double alpha_0 = (z_sum[origindx] - alpha_1 * y_sum[origindx]) / n1[origindx];
                 yval1[origindx] = alpha_1;
