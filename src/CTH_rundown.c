@@ -122,7 +122,7 @@ CTH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k
                           - 2.0 * b1_hat * yy_sum + b1_hat * b1_hat * yy_sum + yy_sum;
         MSE_temp = MSE_temp / (n-2); 
         if(MSM_temp / MSE_temp < F_test_threshold){
-            Rprintf("Entered CTH_rundown (a week IV).\n"); 
+        //    Rprintf("Entered CTH_rundown (a week IV).\n"); 
             alpha_1 = (n * yz_sum - y_sum * z_sum) / (n * yy_sum - y_sum * y_sum);
             
             double effect = alpha_1;
@@ -176,7 +176,7 @@ CTH_rundown(pNode tree, int obs, double *cp, double *xpred, double *xtemp, int k
 
 oops:;
     if (ct.usesurrogate < 2) {  /* must have hit a missing value */
-    	Rprintf("Entered CTH_rundown.c. Double check.\n");
+    //	Rprintf("Entered CTH_rundown.c. Double check.\n");
     	for (i = 0; i < ct.num_unique_cp; i++)
     	    xpred[i] = otree->response_est[0];
 
