@@ -94,7 +94,7 @@ void CTss(int n, double *y[], double *value, double *con_mean, double *tr_mean,
                       - 2.0 * b1_hat * yy_sum + b1_hat * b1_hat * yy_sum + yy_sum;
     MSE_temp = MSE_temp / (n-2);
     if(MSM_temp / MSE_temp < F_test_threshold){
-        Rprintf("Entered CTss (a week IV).\n"); 
+    //    Rprintf("Entered CTss (a week IV).\n"); 
         double alpha_1_temp = (n * yz_sum - y_sum * z_sum) / (n * yy_sum - y_sum * y_sum);
         *value = alpha_1_temp;
         double alpha_0_temp = (z_sum - alpha_1_temp * y_sum) / n;
@@ -194,7 +194,7 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
                             - 2.0 * right_b1_hat * right_yy_sum + right_b1_hat * right_b1_hat * right_yy_sum + right_yy_sum;
     right_MSE_temp = right_MSE_temp / (right_n-2);
     if(right_MSM_temp / right_MSE_temp < F_test_threshold){
-        Rprintf("Entered CT parent (a week IV).\n");
+    //    Rprintf("Entered CT parent (a week IV).\n");
         double alpha_1_temp = (right_n * right_yz_sum - right_y_sum * right_z_sum) / (right_n * right_yy_sum - right_y_sum * right_y_sum);
         double alpha_0_temp = (right_z_sum - alpha_1_temp * right_y_sum) / right_n;
         double mu = right_zz_sum - 2.0 * alpha_0_temp * right_z_sum - 2.0 * alpha_1_temp * right_yz_sum
@@ -295,7 +295,7 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
                                        - 2.0 * left_b1_hat * left_yy_sum + left_b1_hat * left_b1_hat * left_yy_sum + left_yy_sum;
                 left_MSE_temp = left_MSE_temp / (left_n-2);
                 if(left_MSM_temp / left_MSE_temp < F_test_threshold){
-                    Rprintf("Entered CT left (a week IV).\n");
+                //    Rprintf("Entered CT left (a week IV).\n");
                     double alpha_1_temp = (left_n * left_yz_sum - left_y_sum * left_z_sum) / (left_n * left_yy_sum - left_y_sum * left_y_sum);
                     double alpha_0_temp = (left_z_sum - alpha_1_temp * left_y_sum) / left_n;
                     double mu = left_zz_sum - 2.0 * alpha_0_temp * left_z_sum - 2.0 * alpha_1_temp * left_yz_sum
@@ -345,7 +345,7 @@ void CT(int n, double *y[], double *x, int nclass, int edge, double *improve, do
                                  - 2.0 * right_b1_hat * right_yy_sum + right_b1_hat * right_b1_hat * right_yy_sum + right_yy_sum;
                 right_MSE_temp = right_MSE_temp / (right_n-2);
                 if(right_MSM_temp / right_MSE_temp < F_test_threshold){
-                    Rprintf("Entered CT right (a week IV).\n");
+                //    Rprintf("Entered CT right (a week IV).\n");
                     double alpha_1_temp = (right_n * right_yz_sum - right_y_sum * right_z_sum) / (right_n * right_yy_sum - right_y_sum * right_y_sum);
                     double alpha_0_temp = (right_z_sum - alpha_1_temp * right_y_sum) / right_n;
                     double mu = right_zz_sum - 2.0 * alpha_0_temp * right_z_sum - 2.0 * alpha_1_temp * right_yz_sum
