@@ -14,7 +14,7 @@
 #define _(String) (String)
 #endif
 
-#define F_test_threshold 3.0
+#define F_test_threshold 0.01
 
 /*
  * Memory defined with R_alloc is removed automatically
